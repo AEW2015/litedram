@@ -120,7 +120,7 @@ def get_ddr2_phy_init_sequence(phy_settings, timing_settings):
 # DDR3 ---------------------------------------------------------------------------------------------
 
 def get_ddr3_phy_init_sequence(phy_settings, timing_settings):
-    cl  = phy_settings.cl
+    cl  = phy_settings.cl + 1
     bl  = 8
     cwl = phy_settings.cwl
 
