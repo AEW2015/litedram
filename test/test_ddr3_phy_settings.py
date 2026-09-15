@@ -57,6 +57,15 @@ class TestDDR3PHYSettings(unittest.TestCase):
         with self.assertRaises(ValueError):
             GW5DDRPHY(self.get_pads(), sys_clk_freq=50e6, dll_off=True, cwl=5)
 
+    def test_gw2_dll_off(self):
+        phy = GW2DDRPHY(self.get_pads(), sys_clk_freq=50e6, dll_off=True)
+        self.assertTrue(phy.settings.dll_off)
+        self.assertEqual((phy.settings.cl, phy.settings.cwl), (6, 6))
+        self.assertEqual((phy.settings.rdphase, phy.settings.wrphase), (0, 0))
+        self.assertEqual(phy.settings.delays, 256)
+        with self.assertRaises(ValueError):
+            GW2DDRPHY(self.get_pads(), sys_clk_freq=50e6, dll_off=True, cwl=5)
+
     def test_write_latency_matches_phy_pipeline(self):
         for name, phy_cls, write_latency_offset in self.phys:
             for sys_clk_freq in self.sys_clk_freqs:
