@@ -123,7 +123,8 @@ class GW2DDRPHY(Module, AutoCSR):
         cwl          = None,
         cmd_delay    = 0,
         clk_polarity = 0,
-        dm_remapping = None):
+        dm_remapping = None,
+        dll_off      = False):
         assert isinstance(cmd_delay, int) and cmd_delay < 128
         pads        = PHYPadsCombiner(pads)
         memtype     = "DDR3"
@@ -140,7 +141,14 @@ class GW2DDRPHY(Module, AutoCSR):
         # Init -------------------------------------------------------------------------------------
         self.submodules.init = GW2DDRPHYInit()
 
+        pause = Signal()
+        self.specials += MultiReg(self.init.pause, pause, "sys")
+
         # Parameters -------------------------------------------------------------------------------
+        if dll_off:
+            if cl not in (None, 6) or cwl not in (None, 6):
+                raise ValueError("DDR3 DLL-off mode requires CL=6 and CWL=6.")
+            cl, cwl = 6, 6
         cl  = get_default_cl( memtype, tck) if cl  is None else cl
         cwl = get_default_cwl(memtype, tck) if cwl is None else cwl
         cl_sys_latency  = get_sys_latency(nphases, cl)
@@ -151,6 +159,7 @@ class GW2DDRPHY(Module, AutoCSR):
 
         self._rdly_dq_rst         = CSR()
         self._rdly_dq_inc         = CSR()
+        self._rdly_dq_dir         = CSRStorage()
         self._rdly_dq_bitslip_rst = CSR()
         self._rdly_dq_bitslip     = CSR()
 
@@ -178,8 +187,9 @@ class GW2DDRPHY(Module, AutoCSR):
             write_latency = cwl_sys_latency - 1,
             read_leveling = True,
             bitslips      = 4,
-            delays        = 8,
+            delays        = 256,
         )
+        self.settings.dll_off = dll_off
 
         # DFI Interface ----------------------------------------------------------------------------
         self.dfi = dfi = Interface(addressbits, bankbits, nranks, 4*databits, nphases)
@@ -199,7 +209,7 @@ class GW2DDRPHY(Module, AutoCSR):
                 pad_clk = Signal()
                 self.specials += Instance("OSER4",
                     p_TXCLK_POL = 0b0,
-                    i_RESET = ResetSignal("sys"),
+                    i_RESET = self.init.reset,
                     i_PCLK  = ClockSignal("sys"),
                     i_FCLK  = ClockSignal("sys2x"),
                     **{f"i_TX{n}": 0b0 for n in range(2)},
@@ -245,7 +255,7 @@ class GW2DDRPHY(Module, AutoCSR):
                     pad_oddrx2f = Signal()
                     self.specials += Instance("OSER4",
                         p_TXCLK_POL = 0b0,
-                        i_RESET = ResetSignal("sys"),
+                        i_RESET = self.init.reset,
                         i_PCLK = ClockSignal("sys"),
                         i_FCLK = ClockSignal("sys2x"),
                         **{f"i_TX{n}": 0b0 for n in range(2)},
@@ -277,26 +287,21 @@ class GW2DDRPHY(Module, AutoCSR):
             dqsw     = Signal()
             rdpntr   = Signal(3)
             wrpntr   = Signal(3)
-            rdly     = Signal(3)
             burstdet = Signal()
-            self.sync += [
-                If(self._dly_sel.storage[i] & self._rdly_dq_rst.wr_stb, rdly.eq(0)),
-                If(self._dly_sel.storage[i] & self._rdly_dq_inc.wr_stb, rdly.eq(rdly + 1))
-            ]
             self.specials += Instance("DQS",
                 p_DQS_MODE = "X2_DDR3",
                 # Clocks / Reset
-                i_RESET    = ResetSignal("sys"),
+                i_RESET    = self.init.reset,
                 i_PCLK     = ClockSignal("sys"),
                 i_FCLK     = ClockSignal("sys2x"),
                 i_DLLSTEP  = self.init.delay,
-                i_HOLD     = self.init.pause | self._dly_sel.storage[i],
+                i_HOLD     = pause | self._dly_sel.storage[i],
 
                 # Control
-                # Assert LOADNs to use DDRDEL control
-                i_RLOADN   = 0,
-                i_RMOVE    = 0,
-                i_RDIR     = 1,
+                # Calibrate the read delay, keeping the FIFO clock source fixed.
+                i_RLOADN   = ~(self._dly_sel.storage[i] & self._rdly_dq_rst.wr_stb),
+                i_RMOVE    = self._dly_sel.storage[i] & self._rdly_dq_inc.wr_stb,
+                i_RDIR     = self._rdly_dq_dir.storage,
                 i_WLOADN   = 0,
                 i_WMOVE    = 0,
                 i_WDIR     = 1,
@@ -305,7 +310,7 @@ class GW2DDRPHY(Module, AutoCSR):
 
                 # Reads (generate shifted DQS clock for reads)
                 i_READ     = Replicate(dqs_re, 4),
-                i_RCLKSEL  = rdly,
+                i_RCLKSEL  = 0,
                 i_DQSIN    = dqs_i,
                 o_DQSR90   = dqsr90,
                 o_RPOINT   = rdpntr,
@@ -332,7 +337,7 @@ class GW2DDRPHY(Module, AutoCSR):
                 Instance("OSER4_MEM",
                     p_TCLK_SOURCE = "DQSW",
                     p_TXCLK_POL   = 0b1,
-                    i_RESET = ResetSignal("sys"),
+                    i_RESET = self.init.reset,
                     i_PCLK  = ClockSignal("sys"),
                     i_FCLK  = ClockSignal("sys2x"),
                     i_TCLK  = dqsw,
@@ -365,7 +370,7 @@ class GW2DDRPHY(Module, AutoCSR):
             self.specials += Instance("OSER4_MEM",
                 p_TCLK_SOURCE = "DQSW270",
                 p_TXCLK_POL   = 0b0,
-                i_RESET = ResetSignal("sys"),
+                i_RESET = self.init.reset,
                 i_PCLK  = ClockSignal("sys"),
                 i_FCLK  = ClockSignal("sys2x"),
                 i_TCLK  = dqsw270,
@@ -394,12 +399,13 @@ class GW2DDRPHY(Module, AutoCSR):
                 self.specials += Instance("OSER4_MEM",
                     p_TCLK_SOURCE = "DQSW270",
                     p_TXCLK_POL   = 0b0,
-                    i_RESET = ResetSignal("sys"),
+                    i_RESET = self.init.reset,
                     i_PCLK  = ClockSignal("sys"),
                     i_FCLK  = ClockSignal("sys2x"),
                     i_TCLK  = dqsw270,
-                    i_TX0   = ~dq_oe,
-                    i_TX1   = ~dq_oe,
+                    # Enable DQ before the first DQS edge of the write burst.
+                    i_TX0   = ~(dq_oe | dqs_preamble),
+                    i_TX1   = ~(dq_oe | dqs_preamble),
                     **{f"i_D{n}": dq_o_data_muxed[n] for n in range(4)},
                     o_Q0    = dq_o,
                     o_Q1    = dq_o_oen,
@@ -410,7 +416,7 @@ class GW2DDRPHY(Module, AutoCSR):
                     cycles = 1)
                 self.submodules += dq_i_bitslip
                 self.specials += Instance("IDES4_MEM",
-                    i_RESET = ResetSignal("sys"),
+                    i_RESET = self.init.reset,
                     i_PCLK  = ClockSignal("sys"),
                     i_FCLK  = ClockSignal("sys2x"),
                     i_ICLK  = dqsr90,
