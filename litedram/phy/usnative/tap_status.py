@@ -33,8 +33,15 @@ class RegisteredTapStatus(Module):
             values += [Constant(0,9)]*(8-len(values))
             self.sync += group.eq(Array(values)[self.select[:3]])
             groups.append(group)
-        group_index = self.select[3:] if len(self.select) > 3 else Constant(0)
-        self.sync += [self.value.eq(Mux(self.select<entries,Array(groups)[group_index],0)),
+        # Match the upper selector/range check to the registered group data.
+        # This also removes the CSR selector from the final mux's timing path.
+        group_index = Signal(max=max(2, len(groups)))
+        in_range = Signal()
+        self.sync += [
+            group_index.eq(self.select[3:] if len(self.select) > 3 else 0),
+            in_range.eq(self.select < entries),
+        ]
+        self.sync += [self.value.eq(Mux(in_range,Array(groups)[group_index],0)),
             If(~self.ready | self.change,age.eq(0)).Elif(age<32,age.eq(age+1))]
         # Only fresh, ready samples may be consumed. The digital wait does
         # not establish the physical delay element's analog settling time.

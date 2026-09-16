@@ -59,4 +59,23 @@ class TapStatusTest(unittest.TestCase):
             yield dut.ready.eq(0);yield
             self.assertEqual((yield dut.valid),0)
         run_simulation(dut,driver(),clocks={'sys':10,'riu':20})
+    def test_group_changes_and_out_of_range_stay_invalid_until_settled(self):
+        dut = RegisteredTapStatus(105)
+        values = [(i*7+3) % 512 for i in range(105)]
+        def driver():
+            yield dut.source.eq(sum(value << (9*i) for i, value in enumerate(values)))
+            yield dut.ready.eq(1)
+            for selected in (7, 8, 63, 64, 104, 105, 127, 0):
+                yield dut.select.eq(selected)
+                yield dut.change.eq(1)
+                yield
+                self.assertEqual((yield dut.valid), 0)
+                yield dut.change.eq(0)
+                for _ in range(36):
+                    yield
+                    if (yield dut.valid):
+                        self.assertEqual((yield dut.value), values[selected] if selected < 105 else 0)
+                self.assertEqual((yield dut.valid), 1)
+        run_simulation(dut, driver(), clocks={"sys": 10, "riu": 20})
+
 if __name__=='__main__':unittest.main()
