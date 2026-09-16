@@ -437,7 +437,7 @@ def get_ddr4_phy_init_sequence(phy_settings, timing_settings):
     mr3 = format_mr3(timing_settings.fine_refresh_mode)
     mr4 = 0
     mr5 = (dm << 10)
-    mr6 = format_mr6(4) # FIXME: tCCD
+    mr6 = format_mr6(getattr(phy_settings, "tccd", 4))
 
     rdimm_init = []
     if phy_settings.is_rdimm:
