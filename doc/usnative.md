@@ -412,3 +412,40 @@ Vivado strategy integration belong to the target, and BIOS calibration belongs
 to LiteX. Original UltraScale/UltraScale+ eligibility and physical topology
 checks still apply;
 DDR3, x4 native integration, ECC and a true 1:8 controller remain unsupported.
+
+## Optional paired bank-group DMA
+
+`ControllerSettings(with_bank_group_interleaving=True)` enables an initial
+x16 DDR4 profile with four DFI phases, two bank groups, one rank, ten column
+bits and tCCD_L=8 CK. The controller preserves long timing for recovery and
+turnaround calculations, while CAS arbitration allows tCCD_S=4 CK between
+opposite groups and enforces tCCD_L=8 CK within each group. Other controller
+configurations retain their existing scheduling and mapping by default.
+
+The option changes physical address mapping for **every** crossbar master:
+the lowest 128-bit-word address bit selects BG, followed by seven column bits,
+two bank-address bits and row bits. CPU and DMA therefore see the same memory.
+Memory contents are not portable between bitstreams with different mappings.
+The option also registers row-hit lookahead, crossbar ownership and refresh
+countdown status to shorten fabric paths; it does not relax DDR timing.
+
+`litedram.frontend.paired.PairedPort([port0, port1], "write" | "read")` combines
+two matching 128-bit sys-domain native masters into one 256-bit `.port`.
+Adjacent halves address opposite bank groups. Read credits reserve space for
+in-flight responses and preserve ordering under asymmetric returns. Writes
+reserve each half's data before issuing its command. Connect the write adapter's
+`.drained` to `NativeDMABenchmark(..., drained=...)` so write-cycle measurement
+includes both child queues draining to their native ports. The existing settling
+interval still follows; native acceptance is not a DDR write-completion response.
+
+This diagnostic endpoint accepts **full-word writes only**. An invalid mask
+sets sticky `.error` but may still overwrite the whole word. Read overflow or
+unsolicited responses also set `.error`. Gate new benchmark admission on both
+adapters' errors and require system quiescence/reconfiguration after a fault;
+resetting an adapter alone cannot cancel already scheduled traffic.
+
+The board option remains separate from ordinary 256-bit width conversion.
+Digital tests exercise asymmetric backpressure, counter/PRBS corruption,
+credit exhaustion, drain/error behavior, same/different-group CAS spacing,
+refresh timing, and CPU/native mapping through the complete controller and
+LiteDRAM PHY model. These tests do not establish hardware bandwidth or margin.

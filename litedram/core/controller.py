@@ -42,6 +42,9 @@ class ControllerSettings(Settings):
         # Address mapping.
         address_mapping     = "ROW_BANK_COL", # Address mapping scheme (e.g., row-bank-column).
 
+        # DDR4 paired bank-group scheduling and address mapping (opt-in).
+        with_bank_group_interleaving = False,
+
         # Bank byte alignment.
         bank_byte_alignment = 0):             # Minimum byte alignment between bank changes. Ensures a
                                               # specific byte distance between consecutive banks to optimize
@@ -68,6 +71,17 @@ class LiteDRAMController(Module):
         self.settings.phy    = phy_settings
         self.settings.geom   = geom_settings
         self.settings.timing = timing_settings
+
+        if self.settings.with_bank_group_interleaving:
+            if not (phy_settings.memtype == "DDR4" and phy_settings.databits == 16
+                    and phy_settings.dfi_databits == 32
+                    and phy_settings.nphases == 4 and phy_settings.nranks == 1
+                    and geom_settings.bankbits == 3 and geom_settings.colbits == 10
+                    and timing_settings.tCCD == 2
+                    and self.settings.address_mapping == "ROW_BANK_COL"
+                    and self.settings.bank_byte_alignment == 0):
+                raise ValueError("Bank-group interleaving requires x16 DDR4, four phases, "
+                                 "one rank, two groups, 10 column bits and tCCD_L=8 CK")
 
         nranks = phy_settings.nranks
         nbanks = 2**geom_settings.bankbits
