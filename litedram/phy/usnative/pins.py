@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Extract native DDR pin inputs from resolved LiteX platform constraints.
 
 This stage does not query the Vivado device database. Byte/nibble sites,

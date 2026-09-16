@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Behavioral contract fixture, not an encrypted vendor model or hardware test.
 
 UG571: writes update the RIU register later; reads return register contents one

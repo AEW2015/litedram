@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Registered drain scheduling against queues modeling native FIFO flags."""
 import random
 from types import SimpleNamespace

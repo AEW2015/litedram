@@ -1,4 +1,10 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
+"""Ordered lane assembly, backpressure and flush behavior with bounded FIFOs."""
+
 import random
 import unittest
 from migen import Memory, Signal

@@ -1,4 +1,10 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
+"""RIU request/response handshake, timeout and reset-cancellation behavior."""
+
 import unittest
 from migen import *
 from migen.sim import run_simulation, passive

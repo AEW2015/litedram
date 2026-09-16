@@ -1,9 +1,20 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
+"""Acknowledged RIU register access across related sys and riu clock domains."""
+
 from migen import *
 from migen.genlib.cdc import MultiReg
 
 class RIUTransaction(Module):
     """One outstanding, acknowledged RIU transaction; no timing exceptions.
+
+    The caller supplies related sys and riu clocks with sys running at twice
+    the riu frequency. Payload and response buses are held stable around the
+    synchronized request/acknowledge toggles; they are not independently
+    synchronized data buses for arbitrary asynchronous clocks.
 
     Soft reset cancels responses but drains the outstanding handshake. Busy
     requests are rejected without changing the held payload. Local bounded
@@ -16,6 +27,7 @@ class RIUTransaction(Module):
             raise ValueError('Each control requires a nonnegative RIU byte index')
         if not isinstance(timeout, int) or timeout < 4:
             raise ValueError('RIU timeout must allow the four-cycle settling state')
+        # System-side request and sticky completion status.
         self.request=Signal(); self.write=Signal(); self.reset=Signal()
         self.address=Signal(6); self.select=Signal(max=max(2, controls)); self.wdata=Signal(16)
         self.busy=Signal(); self.valid=Signal(); self.error=Signal(); self.rdata=Signal(16)
@@ -23,6 +35,7 @@ class RIUTransaction(Module):
         self.native_wdata=Signal(16); self.native_write=Signal()
         nr=max(riu_indices)+1
         self.native_rdata=Signal(16*nr); self.native_valid=Signal(nr)
+        # Hold the entire request until the RIU domain acknowledges completion.
         payload=Signal(23+len(self.select)); local=Signal(len(payload))
         req=Signal(); req_r=Signal(); ack=Signal(); ack_s=Signal()
         soft_r=Signal(); response=Signal(16); ok=Signal(); cancelled=Signal()
@@ -45,6 +58,9 @@ class RIUTransaction(Module):
         self.sync += If(~active,self.valid.eq(0),self.error.eq(0))
         state=Signal(3); wait=Signal(max=timeout+1); selected=local[23:]
         addr=local[:6]; data=local[6:22]; write=local[22]
+        # RIU sequence: capture, select, wait for availability, launch, settle,
+        # wait for valid readback, capture, then acknowledge. Address and select
+        # remain stable until completion, including timeout and reset paths.
         self.sync.riu += [self.native_write.eq(0),
             If(state==0,
                 If(req_r != ack,local.eq(payload),state.eq(1))),
@@ -70,4 +86,6 @@ class RIUTransaction(Module):
                     Array(self.native_valid[i] for i in riu_indices)[selected],
                     response.eq(Array(self.native_rdata[16*i:16*i+16] for i in riu_indices)[selected]),
                     ok.eq(1),state.eq(5)).Elif(wait==timeout-1,ok.eq(0),state.eq(5)).Else(wait.eq(wait+1),state.eq(4))),
+            # Acknowledge even cancelled/failed requests so the source can
+            # issue another transaction. This cannot undo a native write.
             If(state==5,self.native_select.eq(0),ack.eq(req_r),state.eq(0))]

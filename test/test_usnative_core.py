@@ -1,4 +1,10 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
+"""Generated native core interfaces, complete wiring and invalid-layout rejection."""
+
 import unittest
 from dataclasses import replace
 from migen import Instance, Record

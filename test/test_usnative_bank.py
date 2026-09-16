@@ -1,4 +1,10 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
+"""Exact native control-bus endpoints, slot ownership and unused-input tie-offs."""
+
 import unittest
 from dataclasses import replace
 from litedram.phy.usnative.auxiliary import parse_auxiliary_map

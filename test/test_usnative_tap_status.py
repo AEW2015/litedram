@@ -1,4 +1,10 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
+"""Tap-status selection and freshness after the documented settling interval."""
+
 import unittest
 from migen import *
 from migen.sim import run_simulation

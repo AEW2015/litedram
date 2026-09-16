@@ -1,4 +1,10 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
+"""RXTX primitive profiles and explicit port generation for supported signal roles."""
+
 from dataclasses import replace
 import unittest
 

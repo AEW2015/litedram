@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Generate an eight-bit native RXTX serializer with variable TIME delays.
 
 This is a primitive building block, not a complete DDR PHY. The caller supplies

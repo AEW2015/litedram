@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Logical lane and calibration indices, independent of native coordinates.
 
 Inputs must first pass the physical and auxiliary map parsers. Indices are
@@ -14,6 +18,7 @@ from litedram.phy.usnative.control import control_profiles
 
 @dataclass(frozen=True)
 class NativeLane:
+    """One logical byte lane; DQ, strobe and mask entries index layout.slices."""
     index: int
     bank: int
     byte: int
@@ -25,6 +30,7 @@ class NativeLane:
 
 @dataclass(frozen=True)
 class NativeLayout:
+    """Stable compact indices shared by generated wiring and calibration logic."""
     slices: tuple
     controls: tuple
     banks: tuple

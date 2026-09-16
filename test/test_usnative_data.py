@@ -1,4 +1,10 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
+"""DFI phase/edge packing, receive reconstruction and mask polarity."""
+
 import random
 import unittest
 

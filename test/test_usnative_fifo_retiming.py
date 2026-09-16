@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Cycle equivalence against the original drain scheduler, including mode changes."""
 import random
 import unittest

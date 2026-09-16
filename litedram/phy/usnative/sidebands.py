@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Explicit ownership of optional DDR4 PAR/ALERT pads.
 
 Only parity-disabled, write-CRC-disabled initialization is implemented. The
@@ -20,6 +24,7 @@ class SidebandPlan:
 
 
 def sideband_plan(sites, *, mr2, mr5):
+    """Separate PAR/ALERT ownership after checking the supported mode-register settings."""
     for value in (mr2, mr5):
         if type(value) is not int or not 0 <= value < 65536:
             raise ValueError('Mode registers must be unsigned 16-bit integers')

@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Native DDR package topology queried from an open Vivado design.
 
 This validates pin grouping, not clock routing, placement or timing closure.

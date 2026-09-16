@@ -1,3 +1,9 @@
+//
+// This file is part of LiteDRAM.
+//
+// SPDX-License-Identifier: BSD-2-Clause
+
+// Behavioral RIU backend and edge-sampling testbench; not a vendor primitive model.
 `timescale 1ns/1ps
 module backend(input clk,input reset,input [25:0] p,input enable,input [7:0] delay,
 output [1:0] valid,output [31:0] rdata);

@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Partner-nibble clocks for the local-strobe native DDR4 profile.
 
 The caller supplies validated physical sites. This does not generate PLL,

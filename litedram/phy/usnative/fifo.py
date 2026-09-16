@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Fabric-side native FIFO draining, with explicit lane ownership.
 
 The EMPTY inputs must be native FIFO status in the supplied read-clock domain.

@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Native DDR4 control profiles for local or partner-nibble strobes.
 
 External north/south clock forwarding is not supported by this initial profile.

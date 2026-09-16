@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """DDR4 4:1 tristate and RIU primitive building blocks.
 
 Use device-queried sites. The caller supplies control buses, reset/VTC handling

@@ -1,4 +1,10 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
+"""Falling-edge RIU launch registers for the native input hold-time boundary."""
+
 from pathlib import Path
 from migen import *
 

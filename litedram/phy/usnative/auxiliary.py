@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Query the dedicated tristate and RIU sites of validated native controls."""
 from dataclasses import dataclass
 import re

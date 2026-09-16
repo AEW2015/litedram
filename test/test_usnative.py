@@ -1,4 +1,10 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
+"""DDR pin extraction, resolved resource identity and unsupported-input checks."""
+
 import unittest
 
 from litex.build.generic_platform import GenericPlatform, IOStandard, Pins, Subsignal

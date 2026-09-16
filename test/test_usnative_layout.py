@@ -1,4 +1,10 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
+"""Logical lane indices and calibration addressing from validated physical maps."""
+
 import unittest
 import re
 from dataclasses import replace

@@ -1,4 +1,10 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
+"""Local and partner-nibble clock wiring, including missing-partner rejection."""
+
 import unittest
 from dataclasses import replace
 from litedram.phy.usnative.clocks import nibble_clock_wiring

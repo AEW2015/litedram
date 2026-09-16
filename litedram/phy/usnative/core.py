@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Generate native bank interconnect without a reference netlist.
 
 This is a primitive core, not a calibrated DFI PHY. The caller owns PLLs,
@@ -18,6 +22,7 @@ from litedram.phy.usnative.rxtx import RXTX_PORTS, emit_rxtx
 
 @dataclass(frozen=True)
 class NativeCore:
+    """Generated Verilog, its top-level port schema and the matching lane layout."""
     verilog: str
     ports: dict
     layout: object
@@ -62,6 +67,8 @@ def emit_core(module_name, sites, auxiliary, *, family, refclk_mhz):
     statements, wrappers = [], []
     def word(name, index, width):
         return f'{name}[{width*index + width-1}:{width*index}]' if width > 1 else f'{name}[{index}]'
+    # Merge physical interconnect with caller-facing signals exactly once.
+    # Missing inputs are errors; unused outputs get explicit sink wires.
     def instantiate(module, name, site, schema, values):
         merged = {port: value for (location, port), value in connections.items() if location == site}
         overlap = set(merged) & set(values)

@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Optional LiteX-Boards pin extraction checks, not PHY compatibility tests."""
 import importlib
 import importlib.util

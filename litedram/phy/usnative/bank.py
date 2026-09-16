@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Native control-bus wiring derived from validated pin and auxiliary maps.
 
 This covers 40-bit RX/TX control buses, not data, clocks, FIFO or RIU wiring.

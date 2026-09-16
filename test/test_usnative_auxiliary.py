@@ -1,4 +1,10 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
+"""Tristate/RIU mapping validation using synthetic Vivado query results."""
+
 import unittest
 from dataclasses import replace
 from migen import Signal

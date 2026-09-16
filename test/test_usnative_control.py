@@ -1,4 +1,10 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
+"""Native control profiles, strobe ownership and emitted primitive parameters."""
+
 import unittest
 from dataclasses import replace
 

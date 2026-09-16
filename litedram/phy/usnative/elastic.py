@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Fabric-side lane buffering for ordered, full-word native read assembly."""
 from functools import reduce
 from operator import and_
@@ -42,6 +46,8 @@ class NativeReadAssembler(Module):
                 fifo.we.eq(self.lane_valid[lane] & self.lane_ready[lane]),
                 fifo.re.eq(self.valid & self.ready),
             ]
+        # All lane FIFOs advance together when the assembled word is accepted,
+        # preserving byte-lane correspondence under downstream backpressure.
         self.comb += [
             self.valid.eq(reduce(and_, (fifo.readable for fifo in fifos)) & ~self.flush),
             self.data.eq(Cat(*(fifo.dout for fifo in fifos))),

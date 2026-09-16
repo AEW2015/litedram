@@ -1,4 +1,10 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
+"""Calibration permission, readiness loss and explicit re-arming behavior."""
+
 import unittest
 from migen.sim import run_simulation
 from litedram.phy.usnative.readiness import NativeCalibrationGuard

@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Invalidate calibration permission when synchronized native readiness is lost."""
 from migen import If, Module, Signal
 
@@ -21,6 +25,8 @@ class NativeCalibrationGuard(Module):
         self.allowed = Signal()
         self.fault = Signal()
         self.calibrated = Signal()
+        # Require a new rising edge: a held commit cannot restore permission
+        # after readiness drops and later returns.
         previous_commit = Signal()
         self.sync += previous_commit.eq(self.commit)
         self.comb += self.allowed.eq(self.calibrated & self.native_ready & ~self.retrain)

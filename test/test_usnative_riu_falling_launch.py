@@ -1,4 +1,8 @@
+#
+# This file is part of LiteDRAM.
+#
 # SPDX-License-Identifier: BSD-2-Clause
+
 """Check the native sampling contract with actual generated transaction RTL."""
 import shutil
 import subprocess
