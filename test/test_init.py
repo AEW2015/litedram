@@ -47,6 +47,23 @@ class TestInit(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     get_ddr3_phy_init_sequence(phy, timing)
 
+    def test_ddr4_write_recovery(self):
+        from types import SimpleNamespace
+        from litedram.init import get_ddr4_phy_init_sequence
+
+        phy = SimpleNamespace(cl=17, cwl=12, nphases=4, is_rdimm=False)
+        timing = SimpleNamespace(tWR=6, tWTR=2, fine_refresh_mode="1x")
+
+        def modes():
+            sequence, _ = get_ddr4_phy_init_sequence(phy, timing)
+            return {bank: address for label, address, bank, _, _ in sequence
+                    if label.startswith("Load Mode Register")}
+
+        # tWR is 24 CK, encoded as 110 in MR0 A11:A9. tWTR is unrelated.
+        self.assertEqual((modes()[0] >> 9) & 7, 6)
+        timing.tWTR = 5
+        self.assertEqual((modes()[0] >> 9) & 7, 6)
+
     def test_sdr(self):
         from litex_boards.targets.scarabhardware_minispartan6 import BaseSoC
         soc       = BaseSoC()
