@@ -133,7 +133,8 @@ class BankMachine(Module):
         row_hit    = Signal()
         row_open   = Signal()
         row_close  = Signal()
-        if getattr(settings, "with_bank_group_interleaving", False):
+        if (getattr(settings, "with_registered_row_hit", False) or
+                getattr(settings, "with_bank_group_interleaving", False)):
             # Precompute row equality on buffer replacement, keeping the
             # comparator out of the global CAS arbitration path.
             row_hit.reset = Constant(1, 1)

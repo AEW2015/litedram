@@ -46,12 +46,15 @@ class ControllerSettings(Settings):
         with_bank_group_interleaving = False,
 
         # Bank byte alignment.
-        bank_byte_alignment = 0):             # Minimum byte alignment between bank changes. Ensures a
+        bank_byte_alignment = 0,              # Minimum byte alignment between bank changes. Ensures a
                                               # specific byte distance between consecutive banks to optimize
                                               # data placement for cache line mapping (e.g., aligning to L2
                                               # cache set size). For a 256KB L2 cache with 4 ways, the set
                                               # size is 256KB / 4 = 64KB, suggesting a bank_byte_alignment
                                               # of 0x10000.
+
+        # Register row comparisons independently of bank-group scheduling.
+        with_registered_row_hit = False):
         self.set_attributes(locals())
 
 
