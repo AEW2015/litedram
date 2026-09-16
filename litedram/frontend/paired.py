@@ -19,11 +19,16 @@ class PairedPort(Module):
     Child addresses are 2*address and 2*address+1. The crossbar must use bank-
     group interleaving so these select opposite groups for all system masters.
     Writes support full-word masks only: an invalid mask sets sticky ``error``
-    but does not cancel accepted traffic and can overwrite the complete word.
+    and discards that word before either child can issue it. After an error,
+    new commands are blocked; data for already accepted addresses is consumed
+    and discarded. Previously issued good child writes continue to drain.
     Reads reserve space before issuing; overflow or unsolicited data sets error.
 
     ``error`` clears only on reset. The caller must stop new traffic after an
     error and quiesce/reset the system, not reset this adapter in isolation.
+    The caller must still supply data for accepted addresses before ``drained``
+    can assert. A drained adapter with ``error`` set has aborted writes; it does
+    not indicate successful completion of all accepted commands.
     ``drained`` covers queued commands/data accepted by native ports (or read
     responses consumed upstream), not analog DDR completion or write recovery.
     """
@@ -42,8 +47,12 @@ class PairedPort(Module):
             # scheduled native writes cannot wait for data to become available.
             addresses = stream.SyncFIFO([("addr", upstream.address_width)], depth, buffered=True)
             self.submodules.addresses = addresses
-            self.comb += upstream.cmd.connect(addresses.sink,
-                keep={"valid", "ready", "addr", "last"})
+            self.comb += [
+                upstream.cmd.connect(addresses.sink, keep={"addr", "last"}),
+                addresses.sink.valid.eq(upstream.cmd.valid & ~self.error),
+                upstream.cmd.ready.eq(addresses.sink.ready & ~self.error)]
+            reject = Signal()
+            self.comb += reject.eq(self.error | (upstream.wdata.we != 0xffffffff))
             sent = Signal(2)
             transfers = []
             writers = []
@@ -63,16 +72,18 @@ class PairedPort(Module):
                 transfer = Signal()
                 transfers.append(transfer)
                 self.comb += [
-                    writer.sink.valid.eq(upstream.wdata.valid & addresses.source.valid & ~sent[group]),
+                    writer.sink.valid.eq(upstream.wdata.valid & addresses.source.valid &
+                        ~sent[group] & ~reject),
                     writer.sink.address.eq((addresses.source.addr << 1) | group),
                     writer.sink.data.eq(upstream.wdata.data[128*group:128*(group+1)]),
                     writer.sink.last.eq(addresses.source.last),
                     transfer.eq(writer.sink.valid & writer.sink.ready)]
-            self.sync += If(upstream.wdata.valid & (upstream.wdata.we != 0xffffffff),
+            self.sync += If(upstream.wdata.valid & upstream.wdata.ready &
+                    (upstream.wdata.we != 0xffffffff),
                 self.error.eq(1))
             self.comb += [
                 upstream.wdata.ready.eq(addresses.source.valid &
-                    (sent[0] | transfers[0]) & (sent[1] | transfers[1])),
+                    (reject | ((sent[0] | transfers[0]) & (sent[1] | transfers[1])))),
                 addresses.source.ready.eq(upstream.wdata.valid & upstream.wdata.ready),
                 self.drained.eq(~addresses.source.valid &
                     (writers[0].fifo.level == 0) & (writers[1].fifo.level == 0) &

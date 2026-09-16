@@ -439,10 +439,21 @@ includes both child queues draining to their native ports. The existing settling
 interval still follows; native acceptance is not a DDR write-completion response.
 
 This diagnostic endpoint accepts **full-word writes only**. An invalid mask
-sets sticky `.error` but may still overwrite the whole word. Read overflow or
-unsolicited responses also set `.error`. Gate new benchmark admission on both
+sets sticky `.error` and discards the word before either child can issue it.
+The write adapter then blocks new commands and discards data for any remaining
+accepted addresses. Previously issued good writes continue to drain. The caller
+must supply the remaining data beats for accepted addresses before `.drained`
+can assert; `.drained` with `.error` set indicates an aborted transfer, not a
+successful write of every accepted command. Read overflow or unsolicited
+responses also set `.error`. Gate new benchmark admission on both
 adapters' errors and require system quiescence/reconfiguration after a fault;
 resetting an adapter alone cannot cancel already scheduled traffic.
+
+The partial-mask rejection path is currently qualified by digital simulation.
+Its additional mask/error gating still requires routed timing checks and board
+testing; results from bitstreams built before this change do not qualify it.
+The concurrent-traffic regression models CPU-side native requests, not CPU
+instructions, caches, or an analog DDR eye.
 
 The board option remains separate from ordinary 256-bit width conversion.
 Digital tests exercise asymmetric backpressure, counter/PRBS corruption,
