@@ -88,7 +88,5 @@ ENV/
 # Rope project settings
 .ropeproject
 
-# Generated UltraScale native device-query data (never source fixtures).
-.usnative-cache/
-opalkelly_xem8320_physical3.tsv
-xem8320_auxiliary.tsv
+# Temporary directories created by the fresh native device-query runner.
+usnative-query-*/
