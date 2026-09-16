@@ -246,7 +246,8 @@ class Refresher(Module):
         if settings.timing.tREFI < 100: # FIXME: Reduce Margin.
             raise ValueError("Clk/tREFI is ratio too low , please increase Clk frequency or disable Refresh.")
         timer = RefreshTimer(settings.timing.tREFI,
-            registered=getattr(settings, "with_bank_group_interleaving", False))
+            registered=(getattr(settings, "with_registered_refresh_timers", False) or
+                getattr(settings, "with_bank_group_interleaving", False)))
         self.submodules.timer = timer
         self.comb += timer.wait.eq(~timer.done)
 
@@ -263,7 +264,8 @@ class Refresher(Module):
         if settings.timing.tZQCS is not None:
             # ZQCS Timer ---------------------------------------------------------------------------
             zqcs_timer = RefreshTimer(int(clk_freq/zqcs_freq),
-                registered=getattr(settings, "with_bank_group_interleaving", False))
+                registered=(getattr(settings, "with_registered_refresh_timers", False) or
+                getattr(settings, "with_bank_group_interleaving", False)))
             self.submodules.zqcs_timer = zqcs_timer
             self.comb += wants_zqcs.eq(zqcs_timer.done)
 

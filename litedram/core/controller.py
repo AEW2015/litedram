@@ -54,7 +54,10 @@ class ControllerSettings(Settings):
                                               # of 0x10000.
 
         # Register row comparisons independently of bank-group scheduling.
-        with_registered_row_hit = False):
+        with_registered_row_hit = False,
+
+        # Register refresh/ZQCS timer comparisons without changing their cycles.
+        with_registered_refresh_timers = False):
         self.set_attributes(locals())
 
 
