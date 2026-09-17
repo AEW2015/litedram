@@ -8,8 +8,9 @@
 The EMPTY inputs must be native FIFO status in the supplied read-clock domain.
 This module does not synchronize EMPTY or generate its clock.
 """
-from functools import reduce
+
 from operator import and_
+from functools import reduce
 
 from migen import If, Module, Mux, Signal
 

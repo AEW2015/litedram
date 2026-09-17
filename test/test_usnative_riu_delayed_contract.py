@@ -9,9 +9,11 @@ UG571: writes update the RIU register later; reads return register contents one
 RIU clock later. RIU_VALID indicates write acceptance/completion, not read-data
 freshness. Delayed collision length is deliberately arbitrary for stress.
 """
+
 import sys
-from pathlib import Path
 import unittest
+
+from pathlib import Path
 
 from migen import Module, Signal, If
 from migen.sim import run_simulation
@@ -42,11 +44,17 @@ class DelayedContractTests(unittest.TestCase):
         b = top.bridge
         result = {}
         def driver():
-            for _ in range(10): yield
-            yield b.select.eq(0); yield b.address.eq(0x30)
-            yield b.wdata.eq(0xbeef); yield b.write.eq(1)
-            yield b.request.eq(1); yield; yield b.request.eq(0)
-            for _ in range(200): yield
+            for _ in range(10):
+                yield
+            yield b.select.eq(0)
+            yield b.address.eq(0x30)
+            yield b.wdata.eq(0xbeef)
+            yield b.write.eq(1)
+            yield b.request.eq(1)
+            yield
+            yield b.request.eq(0)
+            for _ in range(200):
+                yield
             result.update(valid=(yield b.valid), error=(yield b.error), data=(yield b.rdata))
         run_simulation(top, driver(), clocks={'sys':10, 'riu':20})
         self.assertEqual(result['valid'], 1)
@@ -61,4 +69,5 @@ class DelayedContractTests(unittest.TestCase):
         self.exercise(12)
 
 
-if __name__ == '__main__': unittest.main()
+if __name__ == '__main__':
+    unittest.main()

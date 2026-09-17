@@ -10,8 +10,9 @@ The caller owns the Vivado process and must check its exit status as well as
 parse the completed output. No build is launched implicitly.
 """
 
-from dataclasses import dataclass
 import re
+
+from dataclasses import dataclass
 
 from litedram.phy.usnative.pins import device_family
 

@@ -4,11 +4,13 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 """Optional LiteX-Boards pin extraction checks, not PHY compatibility tests."""
+
+import json
+import unittest
 import importlib
 import importlib.util
-import json
+
 from pathlib import Path
-import unittest
 
 from litedram.phy.usnative.pins import extract_ddr_pins
 

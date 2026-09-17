@@ -4,14 +4,16 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 """Run Vivado device queries with optional, validated local-only caching."""
-import hashlib
-import json
+
 import os
 import re
-from pathlib import Path
+import json
 import shutil
-import subprocess
+import hashlib
 import tempfile
+import subprocess
+
+from pathlib import Path
 
 from .topology import vivado_query, parse_vivado_map
 from .auxiliary import vivado_auxiliary_query, parse_auxiliary_map
@@ -24,7 +26,7 @@ def tcl_path(path):
     return '{' + value + '}'
 
 
-_CACHE_SCHEMA = 1
+_CACHE_SCHEMA  = 1
 _QUERY_SOURCES = ('query.py', 'pins.py', 'topology.py', 'auxiliary.py')
 
 
@@ -107,8 +109,8 @@ def query_device(pin_map, output_dir, *, vivado='vivado', timeout=600,
     vivado_query(pin_map)
     identity = cache_root = key = None
     if cache_dir is not None:
-        identity = _cache_identity(pin_map, executable, timeout)
-        key = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
+        identity   = _cache_identity(pin_map, executable, timeout)
+        key        = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
         cache_root = Path(cache_dir).resolve()
         cache_root.mkdir(parents=True, exist_ok=True)
         # Never hide source files if a caller accidentally selects a checkout
@@ -120,7 +122,7 @@ def query_device(pin_map, output_dir, *, vivado='vivado', timeout=600,
                 continue
             raise ValueError(f'Cache directory contains non-cache content: {child}')
         # This local guard also protects caches placed inside a checkout.
-        ignore = cache_root / '.gitignore'
+        ignore   = cache_root / '.gitignore'
         existing = ignore.read_text() if ignore.exists() else ''
         if '*' not in existing.splitlines():
             with ignore.open('a') as stream:
@@ -133,7 +135,7 @@ def query_device(pin_map, output_dir, *, vivado='vivado', timeout=600,
     parent = Path(output_dir).resolve()
     parent.mkdir(parents=True, exist_ok=True)
     directory = Path(tempfile.mkdtemp(prefix='usnative-query-', dir=parent))
-    stub = directory / 'query_top.v'
+    stub      = directory / 'query_top.v'
     stub.write_text('module query_top(input a, output b); assign b = a; endmodule\n')
     version_file = directory / 'version.txt'
     prefix = (f'create_project -in_memory -part {pin_map.part}\n'
@@ -157,8 +159,8 @@ def query_device(pin_map, output_dir, *, vivado='vivado', timeout=600,
 
     physical = directory / 'physical.tsv'
     run('physical', vivado_query(pin_map) + '\nusnative_query ' + tcl_path(physical))
-    version = version_file.read_text().strip()
-    sites = parse_vivado_map(pin_map, physical.read_text(), vivado_version=version)
+    version   = version_file.read_text().strip()
+    sites     = parse_vivado_map(pin_map, physical.read_text(), vivado_version=version)
     auxiliary = directory / 'auxiliary.tsv'
     run('auxiliary', vivado_auxiliary_query(pin_map, sites) +
         '\nusnative_auxiliary_query ' + tcl_path(auxiliary))

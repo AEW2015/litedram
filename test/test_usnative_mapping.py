@@ -9,9 +9,10 @@ Twenty-four family/width/topology cases use invented coordinates, never saved
 Vivado query results. The analog primitive boundary is driven by the testbench.
 """
 
-from dataclasses import replace
 import json
 import unittest
+
+from dataclasses import replace
 
 from migen import Module, Signal
 from migen.sim import run_simulation

@@ -8,8 +8,9 @@
 Inputs must first pass the physical and auxiliary map parsers. Indices are
 compact software addresses, never suffixes of Vivado site names.
 """
-from dataclasses import dataclass
+
 from typing import Optional
+from dataclasses import dataclass
 
 from litedram.phy.usnative.bank import control_wiring
 from litedram.phy.usnative.clocks import nibble_clock_wiring

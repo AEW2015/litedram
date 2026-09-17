@@ -8,8 +8,10 @@
 This is a primitive core, not a calibrated DFI PHY. The caller owns PLLs,
 reset sequencing, registered launch, I/O buffers and timing qualification.
 """
-from dataclasses import dataclass
+
 import re
+
+from dataclasses import dataclass
 
 from litedram.phy.usnative.aux_primitives import (
     RIU_PORTS, TRISTATE_PORTS, emit_tristate)

@@ -9,6 +9,7 @@ Only parity-disabled, write-CRC-disabled initialization is implemented. The
 caller must validate the actual MR2/MR5 values emitted by its initialization
 sequence, and must not enable either feature later through software DFI.
 """
+
 from dataclasses import dataclass
 
 from migen import If, Instance, Module, Signal

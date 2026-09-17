@@ -10,8 +10,8 @@ the native control buses, clocks, FIFO sequencing, reset/VTC handling and I/O
 buffers. Device timing and complete topology must be checked during the build.
 """
 
-import math
 import re
+import math
 
 
 # Public RXTX_BITSLICE interface. Outputs remain explicit, including diagnostics.

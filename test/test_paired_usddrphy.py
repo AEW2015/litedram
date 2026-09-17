@@ -9,8 +9,9 @@ The behavioral PHY substitutes for physical serializers/delays; these tests
 check the DFI scheduling contract, not analog calibration or FPGA timing.
 """
 
-from copy import copy
 import unittest
+
+from copy import copy
 
 from migen import Module, Record, passive
 

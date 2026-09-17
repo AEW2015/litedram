@@ -8,8 +8,10 @@
 The caller supplies validated physical sites. This does not generate PLL,
 external forwarding, FIFO clocks, resets or timing constraints.
 """
-from dataclasses import dataclass
+
 import re
+
+from dataclasses import dataclass
 
 from litedram.phy.usnative.control import control_profiles
 

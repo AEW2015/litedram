@@ -66,10 +66,10 @@ class TestRetimedFIFORead(unittest.TestCase):
         for lanes, registered in ((n, r) for n in (1, 2, 8) for r in (False, True)):
             with self.subTest(lanes=lanes, registered=registered):
                 layout = SimpleNamespace(slices=range(lanes*10), lanes=[
-                    SimpleNamespace(index=i, dq=tuple(range(i*10,i*10+8)),
-                                    strobe=i*10+8,mask=i*10+9) for i in range(lanes)])
+                    SimpleNamespace(index=i, dq=tuple(range(i*10, i*10+8)),
+                                    strobe=i*10+8, mask=i*10+9) for i in range(lanes)])
                 top = Module()
-                top.submodules.a = a = ResetInserter()(Reference(layout,registered=registered))
+                top.submodules.a = a = ResetInserter()(Reference(layout, registered=registered))
                 top.submodules.b = b = ResetInserter()(NativeFIFORead(layout, registered=registered))
                 def sim():
                     rng = random.Random(8320+lanes)
@@ -81,7 +81,7 @@ class TestRetimedFIFORead(unittest.TestCase):
                         ready = 1 if cycle < 100 else rng.randrange(7)!=0
                         mode = 0 if cycle < 100 else rng.randrange(2)
                         software = 1 if cycle < 100 else rng.randrange(2)
-                        for dut in (a,b):
+                        for dut in (a, b):
                             yield dut.empty.eq(empty)
                             yield dut.ready.eq(ready)
                             yield dut.independent.eq(mode)
@@ -89,13 +89,13 @@ class TestRetimedFIFORead(unittest.TestCase):
                             yield dut.clear.eq(cycle % 137 == 0)
                             yield dut.reset.eq(cycle in (33, 518))
                         yield
-                        for x,y in ((a.read_enable,b.read_enable),
-                                    (a.lane_available,b.lane_available),
-                                    (a.lane_drain,b.lane_drain)):
-                            self.assertEqual((yield x),(yield y), (lanes,cycle))
-                        for x,y in zip(a.read_counts,b.read_counts):
-                            self.assertEqual((yield x),(yield y), (lanes,cycle))
-                run_simulation(top,sim())
+                        for x, y in ((a.read_enable, b.read_enable),
+                                    (a.lane_available, b.lane_available),
+                                    (a.lane_drain, b.lane_drain)):
+                            self.assertEqual((yield x), (yield y), (lanes, cycle))
+                        for x, y in zip(a.read_counts, b.read_counts):
+                            self.assertEqual((yield x), (yield y), (lanes, cycle))
+                run_simulation(top, sim())
 
 
 if __name__ == '__main__':

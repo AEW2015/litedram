@@ -4,8 +4,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 """Fabric-side lane buffering for ordered, full-word native read assembly."""
-from functools import reduce
+
 from operator import and_
+from functools import reduce
 from migen import Cat, Module, ResetInserter, Signal
 from migen.genlib.fifo import SyncFIFOBuffered
 

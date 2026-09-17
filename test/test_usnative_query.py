@@ -4,12 +4,14 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 """External query failures must not fall back to stale local connectivity."""
-from pathlib import Path
-import tempfile
-import hashlib
+
 import json
-from types import SimpleNamespace
+import hashlib
+import tempfile
 import unittest
+
+from types import SimpleNamespace
+from pathlib import Path
 from unittest.mock import patch
 
 from litedram.phy.usnative.query import query_device, tcl_path, _cache_identity

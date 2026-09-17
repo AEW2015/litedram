@@ -5,8 +5,9 @@
 
 """RXTX primitive profiles and explicit port generation for supported signal roles."""
 
-from dataclasses import replace
 import unittest
+
+from dataclasses import replace
 
 from litedram.phy.usnative.rxtx import emit_rxtx, rxtx_parameters
 from litedram.phy.usnative.topology import NativePinSite
