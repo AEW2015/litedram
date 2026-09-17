@@ -173,6 +173,9 @@ class TestUSNativeMapping(unittest.TestCase):
         self.assertEqual(mapping.major, 1)
         self.assertEqual(mapping.config_id, NativeMapping(core.layout, profile=dict(rate=2400)).config_id)
         self.assertNotEqual(mapping.config_id, NativeMapping(core.layout, profile=dict(rate=2667)).config_id)
+        self.assertNotEqual(
+            NativeMapping(core.layout, profile=dict(rate=2400, with_debug=False)).config_id,
+            NativeMapping(core.layout, profile=dict(rate=2400, with_debug=True)).config_id)
         self.assertEqual(mapping.c_defines()['DQ_TAPS_COUNT'], 16)
         renamed = replace(core.layout,
             controls=tuple(f'BITSLICE_CONTROL_X999Y{i}' for i in range(len(core.layout.controls))),

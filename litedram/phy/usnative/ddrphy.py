@@ -79,7 +79,7 @@ class USNativeDDRPHY(Module, AutoCSR):
         mapping = NativeMapping(layout, profile=dict(frequency=frequency, cl=cl, cwl=cwl,
             rdphase=rdphase, wrphase=wrphase, read_latency=read_latency,
             write_latency=write_latency, gate_delay=gate_delay, registered_tx=registered_tx,
-            family=pin_map.family))
+            family=pin_map.family, with_debug=bool(with_debug)))
         self.mapping = mapping
         sites = signal_sites(layout)
         ntaps, ncontrols = mapping.tap_count, mapping.control_count
