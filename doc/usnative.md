@@ -1,16 +1,33 @@
 # UltraScale native DDR PHY development
 
 The package includes native primitive generators and an experimental complete
-`USNativeDDRPHY` with the initial XEM8320 x16 DDR4 calibration ABI. The complete
-PHY requires Vivado and the matching LiteX BIOS feature branch. Additional board
-layouts covered by generator tests do not imply complete PHY/calibration support.
+`USNativeDDRPHY` using logical calibration ABI v1. The complete PHY requires
+Vivado and the matching LiteX BIOS. Its integrated datapath/calibration currently
+requires single-rank x16 DDR4, two x8 lanes with masks and the documented
+command/address geometry. Wider generator simulations are not evidence of a
+complete wider PHY or hardware qualification.
 
-`USNativeDDRPHY` queries the selected Vivado installation in a fresh build-local
-directory, validates both connectivity exports, and generates the portable
-native core. No saved query maps or reconstructed reference netlists are used.
-The initial adapter translates the core's compact logical indices to the sparse
-tap/control ABI used by the XEM8320 firmware. Unsupported parts, rates and
-non-Vivado toolchains fail before querying.
+`USNativeDDRPHY` queries the selected Vivado installation, validates the maps,
+and generates the native core. Queries are fresh by default; `query_cache_dir`
+enables validated local reuse and `query_force_refresh=True` bypasses it.
+Caches include tool, part, pins and query-source identities, and are local build
+artifacts. Never commit queried maps, logs, caches or generated physical wiring.
+
+`NativeMapping` assigns compact logical tap and control IDs from the validated
+core layout. The adapter uses those same IDs for delay control, FIFO status,
+read gating and RIU selection; BIOS does not interpret physical site numbers.
+The `usnative_mapping` PHY setting generates `SDRAM_PHY_USNATIVE_*` definitions
+in `sdram_phy.h`. Read-only `abi_version`, `abi_config_id` and
+`abi_capabilities` CSRs let BIOS reject mismatched firmware before training.
+An incompatible contract increments the major version; additive extensions
+increment the minor version and declare required capabilities. The configuration
+ID covers logical geometry and the operating profile; it is a stale-build check,
+not cryptographic authentication. Logical descriptors contain no package pins,
+banks, native site names or captured device database records.
+
+Unsupported integrated geometry, rates and non-Vivado toolchains fail before
+querying. Additional boards require their own build and hardware validation;
+family recognition alone is not qualification.
 
 Supported initial profiles are 2400 and 2666.667 MT/s. The 2933.333 and 3200 MT/s
 profiles require explicit `overclock=True`; their native delay-model parameter
@@ -52,9 +69,9 @@ grouping are represented, including the Alveo x4 layouts. This is input
 validation, not proof of native topology legality. Part existence, bank types,
 differential pairing, byte/nibble sites and clock routes require Vivado queries.
 
-The input fingerprint changes with the part, pins and I/O standards. A future
-device-query cache must additionally include the query/generator schema and
-Vivado version. The fingerprint alone does not validate a cached physical map.
+The input fingerprint changes with the part, pins and I/O standards. Local
+query caching additionally includes the query schema/source and Vivado version.
+The fingerprint alone does not validate a cached physical map.
 
 ## Vivado physical topology
 
@@ -63,7 +80,8 @@ Vivado version. The fingerprint alone does not validate a cached physical map.
 and call the procedure to export a tab-separated map. The caller owns tool
 execution and must reject a failed Vivado run. This low-level emitter does
 not start a process; `query_device()` runs both queries and checks their
-results. Neither interface silently loads cached results.
+results. Cache reuse requires explicit configuration and revalidates the stored
+responses; force-refresh is available for an independent discovery run.
 
 The query uses package-pin differential partners and byte-position properties.
 It follows the device connections from IOB transmit/receive pins to native
