@@ -10,9 +10,10 @@ memory model. Neither model uses the converter's address/chunk expression.
 These digital simulations do not establish electrical DDR calibration margin.
 """
 
-from collections import deque
 import random
 import unittest
+
+from collections import deque
 
 from migen import Module
 from migen.sim import passive

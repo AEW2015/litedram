@@ -8,8 +8,9 @@
 Use device-queried sites. The caller supplies control buses, reset/VTC handling
 and a mutually exclusive RIU selection. These helpers do not perform training.
 """
-import math
+
 import re
+import math
 from migen import Instance
 
 

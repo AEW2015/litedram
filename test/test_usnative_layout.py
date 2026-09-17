@@ -5,8 +5,9 @@
 
 """Logical lane indices and calibration addressing from validated physical maps."""
 
-import unittest
 import re
+import unittest
+
 from dataclasses import replace
 
 from migen.sim import run_simulation

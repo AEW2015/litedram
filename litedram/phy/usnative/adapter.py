@@ -29,9 +29,11 @@ def signal_sites(layout):
 def core_ports(layout):
     n, c, lanes = len(layout.slices), len(layout.controls), len(layout.lanes)
     ports = {}
+
     def add(direction, width, *names):
         for name in names:
             ports[name] = direction, width
+
     add('input', 1, 'i_div_clk', 'i_en_vtc', 'i_riu_clk', 'i_rst',
         'i_clb2phy_tristate_odelay_rst', 'i_riu_wr_en')
     add('input', len(layout.banks), 'i_pll_clk')
@@ -63,18 +65,31 @@ def connect_core(module, core, sites, boundary):
     """Route compact buses; physical coordinates remain private to the core."""
     layout = core.layout
     native = {name: Signal(width, name='core_' + name) for name, (_, width) in core.ports.items()}
-    pins = {name[2:]: value for name, value in boundary.items()}
-    inputs = dict(pll_clk='i_pll_clk', fifo_clk='i_div_clk', riu_clk='i_riu_clk',
-        slice_reset='i_clb2phy_tristate_odelay_rst', control_reset='i_rst',
-        delay_reset='i_clb2phy_tristate_odelay_rst', slice_vtc='i_slice_en_vtc',
-        control_vtc='i_en_vtc', riu_addr='i_riu_addr', riu_wdata='i_riu_wr_data',
-        riu_write='i_riu_wr_en', riu_select='i_riu_nibble_sel', phy_rden='i_phy_rden',
-        fifo_rd_en='i_fifo_rd_en')
+    pins   = {name[2:]: value for name, value in boundary.items()}
+    inputs = dict(
+        pll_clk       = 'i_pll_clk',
+        fifo_clk      = 'i_div_clk',
+        riu_clk       = 'i_riu_clk',
+        slice_reset   = 'i_clb2phy_tristate_odelay_rst',
+        control_reset = 'i_rst',
+        delay_reset   = 'i_clb2phy_tristate_odelay_rst',
+        slice_vtc     = 'i_slice_en_vtc',
+        control_vtc   = 'i_en_vtc',
+        riu_addr      = 'i_riu_addr',
+        riu_wdata     = 'i_riu_wr_data',
+        riu_write     = 'i_riu_wr_en',
+        riu_select    = 'i_riu_nibble_sel',
+        phy_rden      = 'i_phy_rden',
+        fifo_rd_en    = 'i_fifo_rd_en',
+    )
     for target, source in inputs.items():
         module.comb += native[target].eq(pins[source])
-    module.comb += [native['data_tristate'].eq(Replicate(pins['i_data_tristate'], len(layout.lanes))),
-        pins['o_dly_rdy'].eq(native['dly_ready']), pins['o_vtc_rdy'].eq(native['vtc_ready']),
-        pins['o_fifo_empty'].eq(native['fifo_empty'])]
+    module.comb += [
+        native['data_tristate'].eq(Replicate(pins['i_data_tristate'], len(layout.lanes))),
+        pins['o_dly_rdy'].eq(native['dly_ready']),
+        pins['o_vtc_rdy'].eq(native['vtc_ready']),
+        pins['o_fifo_empty'].eq(native['fifo_empty']),
+    ]
     data_controls = {c for lane in layout.lanes for c in lane.controls}
     for c in range(len(layout.controls)):
         module.comb += native['tbyte'][4*c:4*c+4].eq(
@@ -84,22 +99,26 @@ def connect_core(module, core, sites, boundary):
         receive = signal in ('dq', 'dm', 'dqs_p')
         data = (0x55 if signal == 'clk_p' else pins['i_dqs_tx_data'][8*index:8*index+8]
                 if signal == 'dqs_p' else pins[f'i_{name}_tx_data'][8*pad_index:8*pad_index+8])
-        module.comb += [native['tx_data'][8*i:8*i+8].eq(data),
+        module.comb += [
+            native['tx_data'][8*i:8*i+8].eq(data),
             pins[f'o_{name}_serial_out'][pad_index].eq(native['serial_out'][i]),
-            native['serial_in'][i].eq(pins[f'i_{name}_serial_in'][pad_index] if receive else 0)]
+            native['serial_in'][i].eq(pins[f'i_{name}_serial_in'][pad_index] if receive else 0),
+        ]
         if receive:
             module.comb += pins[f'o_{name}_tristate'][pad_index].eq(native['tristate'][i])
         if signal in ('dq', 'dm'):
             module.comb += pins[f'o_{name}_rx_data'][8*pad_index:8*pad_index+8].eq(native['rx_data'][8*i:8*i+8])
             site = sites[signal, index]
-            ci = layout.controls.index(site.control_site)
+            ci   = layout.controls.index(site.control_site)
             slot = site.position if site.nibble == 'L' else site.position - 6
-            di = index if signal == 'dq' else layout.databits + index
+            di   = index if signal == 'dq' else layout.databits + index
             module.comb += pins['o_dyn_dci'][di].eq(native['dyn_dci'][7*ci+slot])
     for side in ('rx', 'tx'):
-        module.comb += [native[side+'_rst'].eq(pins[f'i_{side}_delay_rst']),
+        module.comb += [
+            native[side+'_rst'].eq(pins[f'i_{side}_delay_rst']),
             native[side+'_ce'].eq(pins[f'i_{side}_delay_ce']),
-            pins[f'o_{side}_delay_count'].eq(native[side+'_count'])]
+            pins[f'o_{side}_delay_count'].eq(native[side+'_count']),
+        ]
     module.specials += Instance('usnative_core', **{
         ('i_' if direction == 'input' else 'o_') + name: native[name]
         for name, (direction, _) in core.ports.items()})

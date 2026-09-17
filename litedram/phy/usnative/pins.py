@@ -9,10 +9,11 @@ This stage does not query the Vivado device database. Byte/nibble sites,
 differential partners, bank legality and clock routes require a later stage.
 """
 
-from dataclasses import asdict, dataclass
-import hashlib
-import json
 import re
+import json
+import hashlib
+
+from dataclasses import asdict, dataclass
 
 from litex.build.generic_platform import IOStandard
 

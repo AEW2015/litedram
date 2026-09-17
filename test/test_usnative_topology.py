@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 """Synthetic topology cases; real-device query results are integration checks."""
+
 import unittest
 
 from litedram.phy.usnative.pins import DDRPin, DDRPinMap

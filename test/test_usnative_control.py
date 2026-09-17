@@ -6,6 +6,7 @@
 """Native control profiles, strobe ownership and emitted primitive parameters."""
 
 import unittest
+
 from dataclasses import replace
 
 from litedram.phy.usnative.control import (

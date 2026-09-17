@@ -4,10 +4,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 """Check the native sampling contract with actual generated transaction RTL."""
+
 import shutil
-import subprocess
 import tempfile
 import unittest
+import subprocess
+
 from pathlib import Path
 
 from migen.fhdl import verilog

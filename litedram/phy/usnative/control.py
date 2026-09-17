@@ -8,8 +8,10 @@
 External north/south clock forwarding is not supported by this initial profile.
 Clocks, RIU, reset and training sequencing are provided by the caller.
 """
-from dataclasses import dataclass
+
 import re
+
+from dataclasses import dataclass
 
 
 @dataclass(frozen=True)

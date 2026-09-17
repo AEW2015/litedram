@@ -6,6 +6,7 @@
 """Tristate/RIU mapping validation using synthetic Vivado query results."""
 
 import unittest
+
 from dataclasses import replace
 from migen import Signal
 from litedram.phy.usnative.auxiliary import parse_auxiliary_map, vivado_auxiliary_query

@@ -6,6 +6,7 @@
 """Exact native control-bus endpoints, slot ownership and unused-input tie-offs."""
 
 import unittest
+
 from dataclasses import replace
 from litedram.phy.usnative.auxiliary import parse_auxiliary_map
 from litedram.phy.usnative.bank import control_wiring

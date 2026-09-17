@@ -8,8 +8,10 @@
 This covers 40-bit RX/TX control buses, not data, clocks, FIFO or RIU wiring.
 Unused controller input slots are tied low; unused output slots stay unconnected.
 """
-from dataclasses import dataclass
+
 import re
+
+from dataclasses import dataclass
 
 from litedram.phy.usnative.control import control_profiles
 
