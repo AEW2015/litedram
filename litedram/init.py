@@ -927,6 +927,12 @@ def get_sdram_phy_c_header(phy_settings, timing_settings, geom_settings):
         if getattr(phy_settings, setting, None) is not None:
             r.define(f"SDRAM_PHY_{setting.upper()}", getattr(phy_settings, setting))
 
+    # Native calibration uses logical IDs generated alongside the gateware.
+    mapping = getattr(phy_settings, "usnative_mapping", None)
+    if mapping is not None:
+        for name, value in mapping.c_defines().items():
+            r.define("SDRAM_PHY_USNATIVE_" + name, value)
+
     # Define PHY Read.Write phases
     rdphase = phy_settings.rdphase
     if isinstance(rdphase, Signal): rdphase = rdphase.reset.value
