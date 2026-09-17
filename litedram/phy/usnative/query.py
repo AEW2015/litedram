@@ -37,7 +37,7 @@ def _cache_identity(pin_map, executable, timeout):
     # Some Windows Vivado launchers return 1 for a successful -version. Only
     # accept that observed launcher behavior with the complete version/build
     # banner, never with an error message or arbitrary nonempty output.
-    complete = (re.search(r'(?m)^\s*(?:\*+\s*)?Vivado v[0-9]{4}\.[0-9]+', version)
+    complete = (re.search(r'(?im)^\s*(?:\*+\s*)?Vivado v[0-9]{4}\.[0-9]+', version)
         and re.search(r'(?m)^\s*(?:\*+\s*)?SW Build [0-9]+', version)
         and not re.search(r'(?im)^\s*(?:error|fatal)\b', version))
     if result.returncode not in (0, 1) or not complete:

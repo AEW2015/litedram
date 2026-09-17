@@ -181,7 +181,7 @@ class TestUSNativeQueryCache(unittest.TestCase):
     def test_windows_version_launcher_exit_one_requires_complete_banner(self):
         from litedram.phy.usnative.query import _cache_identity
         with patch('litedram.phy.usnative.query.subprocess.run', return_value=SimpleNamespace(
-                returncode=1, stdout=b'Vivado v2025.2 (64-bit)\nSW Build 6299465')):
+                returncode=1, stdout=b'vivado v2025.2 (64-bit)\nSW Build 6299465')):
             self.assertIn('2025.2', _cache_identity(self.pins, str(self.tool), 600)['tool_version'])
         for output in (b'', b'Vivado v2025.2', b'failed to launch',
                        b'Vivado v2025.2\nSW Build 6299465\nERROR: device unavailable'):
