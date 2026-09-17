@@ -6,15 +6,16 @@
 """Experimental native DDR4 PHY with the initial XEM8320 calibration profile."""
 from functools import reduce
 from operator import or_
+from pathlib import Path
 
 from migen import *
 from migen.genlib.cdc import MultiReg, PulseSynchronizer
 from litedram.phy.usnative.riu_transaction import RIUTransaction
 from litedram.phy.usnative.riu_falling_launch import RIUFallingLaunch
 from litedram.phy.usnative.tap_status import RegisteredTapStatus
-from .xem_riu import XEMRIUWriteEnable
 from .core import emit_core
-from .xem8320 import core_ports, signal_sites, riu_bindings, connect_core
+from .adapter import core_ports, signal_sites, connect_core
+from .mapping import NativeMapping
 from .pins import extract_ddr_pins
 from .query import query_device
 from litex.soc.interconnect.csr import AutoCSR, CSR, CSRStorage, CSRStatus
@@ -38,12 +39,18 @@ class NativeRXBitslip(Module):
 class USNativeDDRPHY(Module, AutoCSR):
     def __init__(self, pads, platform, pll_clk, pll_locked, pll_enable,
                  *, sys_clk_freq, output_dir, vivado='vivado', with_debug=False, overclock=False,
-                 csr_cdc=lambda signal: signal, riu_domain='riu', registered_tx=True):
+                 csr_cdc=lambda signal: signal, riu_domain='riu', registered_tx=True,
+                 query_cache_dir=None, query_force_refresh=False):
         from litex.build.xilinx.vivado import XilinxVivadoToolchain
         if not isinstance(platform.toolchain, XilinxVivadoToolchain):
             raise ValueError('USNativeDDRPHY requires the Vivado toolchain')
-        if platform.device != 'xcau25p-ffvb676-2-e':
-            raise ValueError('Only the initial XEM8320 firmware profile is supported')
+        widths = dict(a=14, we_n=1, cas_n=1, ras_n=1, ba=2, bg=1, act_n=1,
+            dq=16, dm=2, dqs_p=2, dqs_n=2, clk_p=1, clk_n=1, cs_n=1,
+            cke=1, odt=1, reset_n=1)
+        if any(not hasattr(pads, name) or len(getattr(pads, name)) != width
+               for name, width in widths.items()):
+            raise ValueError('Integrated native PHY requires single-rank x16 DDR4, '
+                'two x8 lanes with DM, a14 plus we/cas/ras, ba2 and bg1')
         if not registered_tx or riu_domain != 'riu':
             raise ValueError('Native profile requires registered TX and related sys:riu 2:1 clocks')
         frequency = int(round(sys_clk_freq))
@@ -64,23 +71,36 @@ class USNativeDDRPHY(Module, AutoCSR):
         refclk_mhz = min(8*sys_clk_freq/1e6, 2666.666667)
         self.overclock = frequency > 333333333
         pin_map = extract_ddr_pins(platform, pads)
-        physical, auxiliary, directory = query_device(pin_map, output_dir, vivado=vivado)
-        sites = signal_sites(physical)
-        riu_bindings(auxiliary)  # Validate the initial firmware's byte ordering.
-        expected_dq = [4, 2, 3, 11, 5, 10, 8, 9, 23, 22, 16, 15, 18, 21, 17, 24]
-        if [sites[f'o_dq_serial_out[{i}]'] for i in range(16)] != expected_dq:
-            raise ValueError('DQ mapping differs from the BIOS native profile')
-        generated = emit_core('usnative_core', physical, auxiliary, family='ULTRASCALE_PLUS',
+        physical, auxiliary, directory = query_device(pin_map, output_dir, vivado=vivado,
+            cache_dir=query_cache_dir, force_refresh=query_force_refresh)
+        generated = emit_core('usnative_core', physical, auxiliary, family=pin_map.family,
                               refclk_mhz=refclk_mhz)
-        if sites['o_ck_t_serial_out[0]'] != 39:
-            raise ValueError('Clock tap mapping differs from the BIOS native profile')
-        core = directory / 'usnative_core.v'
+        layout = generated.layout
+        mapping = NativeMapping(layout, profile=dict(frequency=frequency, cl=cl, cwl=cwl,
+            rdphase=rdphase, wrphase=wrphase, read_latency=read_latency,
+            write_latency=write_latency, gate_delay=gate_delay, registered_tx=registered_tx,
+            family=pin_map.family))
+        self.mapping = mapping
+        sites = signal_sites(layout)
+        ntaps, ncontrols = mapping.tap_count, mapping.control_count
+        ready_mask = (1 << ncontrols) - 1
+        # One supplied PLL clock is supported by this integrated datapath.
+        # Bank-spanning primitive generation remains available independently.
+        if len(layout.banks) != 1:
+            raise ValueError('Integrated native PHY currently requires one PLL bank')
+        lane_by_tap = {tap: lane.index for lane in layout.lanes
+            for tap in lane.dq + (lane.strobe,) + (() if lane.mask is None else (lane.mask,))}
+        core = Path(output_dir).resolve() / 'usnative_core.v'
+        core.parent.mkdir(parents=True, exist_ok=True)
         core.write_text(generated.verilog)
         self.query_directory = directory
         assert riu_domain == 'riu', 'Transactional adapter requires related sys:riu 2:1 clocks'
         # The target supplies an RIU clock at half the selected sys frequency.
         # CSR address/data stay stable around the synchronized write pulse.
         # Related-clock paths remain timed; no asynchronous false paths.
+        self._abi_version = CSRStatus(32, reset=(mapping.major << 16) | mapping.minor)
+        self._abi_config_id = CSRStatus(32, reset=mapping.config_id)
+        self._abi_capabilities = CSRStatus(32, reset=mapping.capabilities)
         self._rst = CSRStorage(reset=1)
         self._en_vtc = CSRStorage(reset=1)
         self._bisc_only = CSRStorage(reset=0)  # Full standalone calibration on boot.
@@ -97,9 +117,9 @@ class USNativeDDRPHY(Module, AutoCSR):
         self._fifo_reads0 = CSRStatus(32)
         self._fifo_reads1 = CSRStatus(32)
         self._ready = CSRStatus()
-        self._dly_rdy = CSRStatus(8)
-        self._vtc_rdy = CSRStatus(8)
-        self._fifo_empty = CSRStatus(26)
+        self._dly_rdy = CSRStatus(ncontrols)
+        self._vtc_rdy = CSRStatus(ncontrols)
+        self._fifo_empty = CSRStatus(ntaps)
         self._wlevel_en = CSRStorage()
         self._wlevel_strobe = CSR()
         self._dly_sel = CSRStorage(2)
@@ -116,7 +136,7 @@ class USNativeDDRPHY(Module, AutoCSR):
         self._gate_delay = CSRStorage(5, reset=gate_delay)
         self._read_latency = CSRStatus(5)
         self._riu_address = CSRStorage(6)
-        self._riu_nibble = CSRStorage(3)
+        self._riu_nibble = CSRStorage(max(1, (ncontrols-1).bit_length()))
         self._riu_wdata = CSRStorage(16)
         self._riu_write = CSR()
         self._riu_read = CSR()
@@ -131,7 +151,7 @@ class USNativeDDRPHY(Module, AutoCSR):
         self._gate_delay1 = CSRStorage(5, reset=gate_delay)
         self._gate_width0 = CSRStorage(4, reset=2)
         self._gate_width1 = CSRStorage(4, reset=2)
-        self._tap_select = CSRStorage(6)
+        self._tap_select = CSRStorage(max(1, (ntaps-1).bit_length()))
         self._tap_allowed = CSRStatus()
         self._tap_status_valid = CSRStatus()
         self._tap_rx_rst = CSR()
@@ -145,7 +165,7 @@ class USNativeDDRPHY(Module, AutoCSR):
             self._trace_state = CSRStatus(2)  # pending, running; done separately
             self._trace_done = CSRStatus()
             self._trace_index = CSRStorage(6)
-            for word in range(6):
+            for word in range(8):
                 setattr(self, '_trace_word'+str(word), CSRStatus(32, name='trace_word'+str(word)))
         self._fifo_lane_mode = CSRStorage()  # software-only independent lane draining
         # Burst-boundary diagnostics. Change only while software owns DFI and
@@ -167,18 +187,19 @@ class USNativeDDRPHY(Module, AutoCSR):
             read_latency=read_latency, write_latency=write_latency,
             write_leveling=True, write_latency_calibration=True, read_leveling=True,
             delays=512, bitslips=8, with_dm=True)
+        self.settings.usnative_mapping = mapping
         self.settings.tccd = 8
         self.addressbits = 17
         self.dfi = Interface(17, 3, 1, 32, 4)
         dfi = Interface(17, 3, 1, 32, 4)
         self.submodules += DDR4DFIMux(self.dfi, dfi)
 
-        ports = {name: dict(direction=d, width=w) for name, (d, w) in core_ports().items()}
+        ports = {name: dict(direction=d, width=w) for name, (d, w) in core_ports(layout).items()}
         signals = {name: Signal(p['width'], name='native_' + name) for name, p in ports.items()}
         self.native_signals = signals  # simulation/bring-up probes, not extra CSRs
-        rx_rst, rx_ce, tx_rst, tx_ce = [Signal(52) for _ in range(4)]
-        rx_rst_request, rx_ce_request = Signal(52), Signal(52)
-        tx_rst_request, tx_ce_request = Signal(52), Signal(52)
+        rx_rst, rx_ce, tx_rst, tx_ce = [Signal(ntaps) for _ in range(4)]
+        rx_rst_request, rx_ce_request = Signal(ntaps), Signal(ntaps)
+        tx_rst_request, tx_ce_request = Signal(ntaps), Signal(ntaps)
         # RST_DLY is asynchronous at the native primitive. Register the
         # complete selection/decode logic, rather than exposing CSR address
         # transitions to that pin. Selection must remain stable throughout
@@ -193,15 +214,15 @@ class USNativeDDRPHY(Module, AutoCSR):
             if riu_domain == 'sys':
                 self.sync += output.eq(request)
             else:
-                payload = Signal(52)
+                payload = Signal(ntaps)
                 transfer = PulseSynchronizer('sys', riu_domain)
                 self.submodules += transfer
                 self.comb += transfer.i.eq(request != 0)
                 self.sync += If(request != 0, payload.eq(request))
                 getattr(self.sync, riu_domain).__iadd__(output.eq(Mux(transfer.o, payload, 0)))
-        rx_count, tx_count = Signal(468), Signal(468)
+        rx_count, tx_count = Signal(9*ntaps), Signal(9*ntaps)
         self.delay_controls = dict(rx_rst=rx_rst, rx_ce=rx_ce, tx_rst=tx_rst, tx_ce=tx_ce)
-        fifo_empty, dqs_data = Signal(26), Signal(16)
+        fifo_empty, dqs_data = Signal(ntaps), Signal(16)
         self.fifo_empty_input = fifo_empty
         data_tristate = Signal(reset=1)
         slice_vtc = Signal(reset=1)
@@ -253,7 +274,7 @@ class USNativeDDRPHY(Module, AutoCSR):
             If(count == 127, pll_enable.eq(1)))
         ready = Signal()
         initialized = Signal()
-        dly_ready, vtc_ready = Signal(8), Signal(8)
+        dly_ready, vtc_ready = Signal(ncontrols), Signal(ncontrols)
         self.specials += MultiReg(signals['o_dly_rdy'], dly_ready), MultiReg(signals['o_vtc_rdy'], vtc_ready)
         riu_reset, riu_vtc = Signal(reset=1), Signal()
         vtc_request = Signal()
@@ -262,9 +283,8 @@ class USNativeDDRPHY(Module, AutoCSR):
             self.sync += riu_vtc.eq(vtc_request)
         else:
             self.sync.riu += [riu_reset.eq(ctrl_reset), riu_vtc.eq(vtc_request)]
-        self.submodules.riu_transaction = transaction = RIUTransaction(8, [i//2 for i in range(8)])
+        self.submodules.riu_transaction = transaction = RIUTransaction(ncontrols, mapping.riu_indices)
         self.submodules.riu_launch = launch = RIUFallingLaunch(transaction, platform)
-        self.submodules.riu_write_enable = enables = XEMRIUWriteEnable()
         self.comb += [
             transaction.request.eq(pulse['riu_write'] | pulse['riu_read']),
             transaction.write.eq(pulse['riu_write']), transaction.reset.eq(ctrl_reset | ~ready),
@@ -272,25 +292,24 @@ class USNativeDDRPHY(Module, AutoCSR):
             transaction.select.eq(self._riu_nibble.storage),
             transaction.wdata.eq(self._riu_wdata.storage),
             transaction.native_rdata.eq(riu_data), transaction.native_valid.eq(riu_valid),
-            enables.select.eq(launch.select), enables.write.eq(launch.write),
             self._riu_busy.status.eq(transaction.busy), self._riu_error.status.eq(transaction.error)]
         self.sync += If(self._rst.storage | ~locked, initialized.eq(0)).Elif(
-            pll_enable & (dly_ready == 255) & (vtc_ready == 255), initialized.eq(1))
+            pll_enable & (dly_ready == ready_mask) & (vtc_ready == ready_mask), initialized.eq(1))
         # Register readiness before high-fanout training/PHY control.
-        self.sync += ready.eq(initialized & locked & (dly_ready == 255) & ~self._rst.storage)
+        self.sync += ready.eq(initialized & locked & (dly_ready == ready_mask) & ~self._rst.storage)
         self.comb += [
             self._ready.status.eq(ready), self._dly_rdy.status.eq(dly_ready),
             self._vtc_rdy.status.eq(vtc_ready), self._fifo_empty.status.eq(fifo_empty),
             signals['i_div_clk'].eq(ClockSignal()), signals['i_riu_clk'].eq(ClockSignal(riu_domain)),
             signals['i_pll_clk'].eq(pll_clk), signals['i_rst'].eq(riu_reset),
             signals['i_clb2phy_tristate_odelay_rst'].eq(riu_reset),
-            vtc_request.eq(self._en_vtc.storage & pll_enable & (dly_ready == 255)),
+            vtc_request.eq(self._en_vtc.storage & pll_enable & (dly_ready == ready_mask)),
             slice_vtc.eq(~initialized | self._en_vtc.storage),
             signals['i_en_vtc'].eq(riu_vtc),
             signals['i_riu_addr'].eq(launch.address),
             signals['i_riu_wr_data'].eq(launch.wdata),
             signals['i_riu_nibble_sel'].eq(launch.select),
-            signals['i_riu_wr_en'].eq(enables.enable),
+            signals['i_riu_wr_en'].eq(launch.write),
             self._riu_rdata.status.eq(transaction.rdata),
             self._riu_valid.status.eq(transaction.valid),
             # UG571: controller TBYTE_IN is active-high output enable;
@@ -311,17 +330,17 @@ class USNativeDDRPHY(Module, AutoCSR):
             self._first_dly.status.eq(first_dly), self._first_vtc.status.eq(first_vtc),
             self._faults.status.eq(faults)]
         self.sync += [
-            previous_lock.eq(locked), previous_dly.eq(dly_ready == 255),
-            previous_vtc.eq(vtc_ready == 255),
+            previous_lock.eq(locked), previous_dly.eq(dly_ready == ready_mask),
+            previous_vtc.eq(vtc_ready == ready_mask),
             If(self._rst.storage, elapsed.eq(0)).Elif(elapsed != 0xffffffff, elapsed.eq(elapsed + 1)),
             If(self._debug_clear.wr_stb,
                 first_dly.eq(0), first_vtc.eq(0), faults.eq(0), self._snapshot_status.status.eq(0)
             ).Else(
-                If((first_dly == 0) & (dly_ready == 255), first_dly.eq(elapsed)),
-                If((first_vtc == 0) & (vtc_ready == 255), first_vtc.eq(elapsed)),
+                If((first_dly == 0) & (dly_ready == ready_mask), first_dly.eq(elapsed)),
+                If((first_vtc == 0) & (vtc_ready == ready_mask), first_vtc.eq(elapsed)),
                 If(previous_lock & ~locked, faults[0].eq(1)),
-                If(previous_dly & (dly_ready != 255) & ~self._rst.storage, faults[1].eq(1)),
-                If(previous_vtc & (vtc_ready != 255) & self._en_vtc.storage & ~self._rst.storage, faults[2].eq(1)),
+                If(previous_dly & (dly_ready != ready_mask) & ~self._rst.storage, faults[1].eq(1)),
+                If(previous_vtc & (vtc_ready != ready_mask) & self._en_vtc.storage & ~self._rst.storage, faults[2].eq(1)),
                 If(self._snapshot.wr_stb | (previous_lock & ~locked), self._snapshot_status.status.eq(status)))]
         # CK is 01010101, so its rising edges are slots 0,2,4,6. Change CA
         # on the preceding falling edge: p0 at slots 1/2, p1 at 3/4, etc.
@@ -374,7 +393,7 @@ class USNativeDDRPHY(Module, AutoCSR):
         self.dqs_drive = dqs_drive
         self.sync += dqs_drive.eq(ready & (wr.taps[write_latency-2] | wr.taps[write_latency-1] |
             wr.taps[write_latency] | self._wlevel_en.storage))
-        self.comb += signals['i_data_tbyte'].eq(Replicate(dqs_drive, 8))
+        self.comb += signals['i_data_tbyte'].eq(Replicate(dqs_drive, 4*ncontrols))
         # A read request opens the native gate for a burst plus margins. The
         # gate position must be trained; it is not assumed to equal IOSERDES.
         for byte in range(2):
@@ -388,8 +407,11 @@ class USNativeDDRPHY(Module, AutoCSR):
             self.sync += If(self._rst.storage, remaining.eq(0)).Elif(gate,
                 remaining.eq(Mux(width > 1, Mux(width > 8, 7, width-1), 0))
             ).Elif(remaining != 0, remaining.eq(remaining-1))
-            self.comb += signals['i_phy_rden'][8*byte:8*byte+8].eq(
-                Replicate((gate | (remaining != 0) | self._wlevel_en.storage) & ready, 8))
+            for control in layout.lanes[byte].controls:
+                self.comb += signals['i_phy_rden'][4*control:4*control+4].eq(
+                    Replicate((gate | (remaining != 0) | self._wlevel_en.storage) & ready, 4))
+        for control in set(range(ncontrols)) - set(mapping.data_controls):
+            self.comb += signals['i_phy_rden'][4*control:4*control+4].eq(0)
         # Native FIFOs must not be read past empty when DQS stops between
         # bursts. A registered inverted EMPTY can overrun by one word and
         # repeatedly expose old contents. Drain only when every DQ FIFO has
@@ -406,8 +428,11 @@ class USNativeDDRPHY(Module, AutoCSR):
             self.comb += drain.eq(ready & Mux(self.software_control & self._fifo_lane_mode.storage,
                                              lane_available[byte], common_available))
             self.sync += If(self._debug_clear.wr_stb, reads.eq(0)).Elif(drain, reads.eq(reads+1))
-            for bit in range(13):
-                self.comb += signals['i_fifo_rd_en'][13*byte+bit].eq(drain & ready)
+            lane = layout.lanes[byte]
+            for tap in lane.dq + (lane.strobe,) + (() if lane.mask is None else (lane.mask,)):
+                self.comb += signals['i_fifo_rd_en'][tap].eq(drain & ready)
+        for tap in set(range(ntaps)) - set(lane_by_tap):
+            self.comb += signals['i_fifo_rd_en'][tap].eq(0)
 
         for byte in range(2):
             slip = BitSlip(8, i=selected_pattern, rst=self._rst.storage |
@@ -446,14 +471,14 @@ class USNativeDDRPHY(Module, AutoCSR):
         tap_allowed = self.software_control & ready & ~self._en_vtc.storage & tap_valid
         self.comb += self._tap_allowed.status.eq(tap_allowed)
         # Every delay update and selector change invalidates the settled view.
-        previous_select = Signal(6)
+        previous_select = Signal(len(self._tap_select.storage))
         self.sync += previous_select.eq(self._tap_select.storage)
         status_change = ((previous_select != self._tap_select.storage) |
             reduce(or_, rx_rst_request) | reduce(or_, rx_ce_request) |
             reduce(or_, tx_rst_request) | reduce(or_, tx_ce_request))
         status_valid = []
         for kind, source in (('rx', rx_count), ('tx', tx_count)):
-            tree = RegisteredTapStatus(52)
+            tree = RegisteredTapStatus(ntaps)
             setattr(self.submodules, 'tap_status_' + kind, tree)
             self.comb += [tree.source.eq(source), tree.select.eq(self._tap_select.storage),
                 tree.change.eq(status_change), tree.ready.eq(ready & ~ctrl_reset & tap_valid),
@@ -461,8 +486,8 @@ class USNativeDDRPHY(Module, AutoCSR):
             status_valid.append(tree.valid)
         self.comb += self._tap_status_valid.status.eq(status_valid[0] & status_valid[1])
         for name, y in sites.items():
-            byte = y//13
-            selected = self._dly_sel.storage[byte] if byte < 2 else 0
+            byte = lane_by_tap.get(y)
+            selected = self._dly_sel.storage[byte] if byte is not None else 0
             is_dqs = 'dqs_t' in name
             is_data = '_dq_' in name or '_dm_n_' in name
             manual = tap_allowed & (self._tap_select.storage == y)
@@ -473,7 +498,7 @@ class USNativeDDRPHY(Module, AutoCSR):
                     if is_data or is_dqs else pulse['cdly_rst']) | (manual & self._tap_tx_rst.wr_stb)),
                 tx_ce_request[y].eq((selected & (pulse['wdly_dqs_inc'] if is_dqs else pulse['wdly_dq_inc'])
                     if is_data or is_dqs else pulse['cdly_inc']) | (manual & self._tap_tx_inc.wr_stb))]
-        for y in set(range(52)) - set(sites.values()):
+        for y in set(range(ntaps)) - set(sites.values()):
             self.comb += [rx_rst_request[y].eq(0), rx_ce_request[y].eq(0), tx_rst_request[y].eq(0), tx_ce_request[y].eq(0)]
         dqs_counts = [tx_count[9*sites[f'o_dqs_t_serial_out[{b}]']:9*sites[f'o_dqs_t_serial_out[{b}]']+9]
                       for b in range(2)]
@@ -488,7 +513,7 @@ class USNativeDDRPHY(Module, AutoCSR):
         # Capture fabric-side native data/status only: no additional loads on
         # dedicated serial DATAIN or T_OUT routes. First sample follows trigger.
         if with_debug:
-            trace = Memory(192, 64)
+            trace = Memory(256, 64)
             write_port = trace.get_port(write_capable=True)
             read_port = trace.get_port()
             self.specials += trace, write_port, read_port
@@ -502,7 +527,7 @@ class USNativeDDRPHY(Module, AutoCSR):
                     ready, rd.input, pulse['wlevel_strobe'], self._wlevel_en.storage,
                     data_tristate, dqs_drive, signals['i_phy_rden'], selected_pattern, dqs_data[:8])),
                 read_port.adr.eq(self._trace_index.storage)]
-            for word in range(6):
+            for word in range(8):
                 self.comb += getattr(self, '_trace_word'+str(word)).status.eq(read_port.dat_r[32*word:32*word+32])
             self.sync += If(self._trace_arm.wr_stb,
                 pending.eq(1), running.eq(0), pointer.eq(0), self._trace_done.status.eq(0)
