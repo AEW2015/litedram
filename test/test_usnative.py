@@ -65,6 +65,20 @@ class TestUSNativePins(unittest.TestCase):
         self.assertNotEqual(narrow.fingerprint, wide.fingerprint)
         self.assertNotEqual(narrow.fingerprint, self.extract(part="xcku5p-ffvb676-2-e").fingerprint)
 
+    def test_ddr3_pin_inventory(self):
+        resource, _ = platform_resource(data_width=64, dqs_width=8)
+        fields = [field for field in resource[2:] if field.name not in ("bg", "act_n")]
+        fields += [Subsignal(name, Pins(f"B{index}"), IOStandard("SSTL15"))
+                   for index, name in enumerate(("we_n", "cas_n", "ras_n"), start=1)]
+        platform = GenericPlatform("xcku040-ffva1156-2-e", [("ddram", 0, *fields)])
+        pads = platform.request("ddram")
+        pins = extract_ddr_pins(platform, pads, memtype="DDR3")
+        self.assertEqual(sum(pin.signal == "dq" for pin in pins.pins), 64)
+        with self.assertRaisesRegex(ValueError, "Missing DDR4 signals"):
+            extract_ddr_pins(platform, pads)
+        with self.assertRaisesRegex(ValueError, "Unsupported native DDR pin type"):
+            extract_ddr_pins(platform, pads, memtype="LPDDR4")
+
     def test_bad_resources(self):
         for kwargs, message in [({"duplicate": True}, "Duplicate"),
                                 ({"data_width": 15}, "multiple of eight"),

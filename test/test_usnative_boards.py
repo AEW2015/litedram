@@ -22,12 +22,10 @@ class TestUSNativeBoards(unittest.TestCase):
 
 def board_test(row):
     def check(self):
-        if row["memory"] != "DDR4":
-            self.skipTest("DDR3 is deferred")
         board = importlib.import_module("litex_boards.platforms." + row["board"])
         platform = board.Platform()
         pads = platform.request("ddram", 0)
-        pins = extract_ddr_pins(platform, pads)
+        pins = extract_ddr_pins(platform, pads, memtype=row["memory"])
         self.assertGreater(len(pins.pins), len(pads.dq))
         self.assertEqual(sum(p.signal == "dq" for p in pins.pins), len(pads.dq))
     return check

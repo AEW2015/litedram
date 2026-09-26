@@ -55,13 +55,15 @@ class DDRPinMap:
         return hashlib.sha256(data.encode()).hexdigest()
 
 
-def extract_ddr_pins(platform, pads):
-    """Extract one requested DDR4 resource without importing board definitions.
+def extract_ddr_pins(platform, pads, *, memtype="DDR4"):
+    """Extract one requested DDR3/DDR4 resource without importing board definitions.
 
     Uses signal identity, so multiple channels and unrelated requested resources
     cannot be confused. Connector aliases have already been resolved by LiteX.
     Positive/negative pin counts are checked here, physical pairing is not.
     """
+    if memtype not in ("DDR3", "DDR4"):
+        raise ValueError(f"Unsupported native DDR pin type: {memtype}")
     family = device_family(platform.device)
     signals = {}
     for field in pads.layout:
@@ -70,11 +72,13 @@ def extract_ddr_pins(platform, pads):
         if not hasattr(signal, "nbits"):
             raise ValueError(f"Nested DDR pad field is unsupported: {name}")
         signals[name] = signal
-    required = {"a", "ba", "bg", "act_n", "dq", "dqs_p", "dqs_n",
-                "clk_p", "clk_n", "cke", "odt", "reset_n"}
+    required = {"a", "ba", "dq", "dqs_p", "dqs_n", "clk_p", "clk_n",
+                "cke", "odt", "reset_n"}
+    required |= ({"bg", "act_n"} if memtype == "DDR4" else
+                 {"we_n", "cas_n", "ras_n"})
     missing = required - signals.keys()
     if missing:
-        raise ValueError(f"Missing DDR4 signals: {', '.join(sorted(missing))}")
+        raise ValueError(f"Missing {memtype} signals: {', '.join(sorted(missing))}")
     widths = {name: len(signal) for name, signal in signals.items()}
     if widths["dq"] % 8 or widths["dq"] == 0:
         raise ValueError("DDR data width must be a positive multiple of eight")
