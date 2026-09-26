@@ -117,10 +117,9 @@ class USNativeDDRPHY(Module, AutoCSR):
         sites        = signal_sites(layout)
         ntaps, ncontrols = mapping.tap_count, mapping.control_count
         ready_mask = (1 << ncontrols) - 1
-        # One supplied PLL clock is supported by this integrated datapath.
-        # Bank-spanning primitive generation remains available independently.
-        if len(layout.banks) != 1:
-            raise ValueError('Integrated native PHY currently requires one PLL bank')
+        nbanks = len(layout.banks)
+        if any(len(signal) != nbanks for signal in (pll_clk, pll_locked, pll_enable)):
+            raise ValueError('Native PHY needs one local PLL clock, lock and enable per queried bank')
         lane_by_tap = {tap: lane.index for lane in layout.lanes
             for tap in lane.dq + (lane.strobe,) + (() if lane.mask is None else (lane.mask,))}
         trace_words = max(8, (8*databits + ntaps + 6 + 4*ncontrols + 16 + 31)//32)
@@ -151,7 +150,7 @@ class USNativeDDRPHY(Module, AutoCSR):
         self._training_stage   = CSRStorage(8)
         self._training_error   = CSRStorage(8)
         for byte in range(nbytes):
-            setattr(self, '_fifo_reads'+str(byte), CSRStatus(32))
+            setattr(self, '_fifo_reads'+str(byte), CSRStatus(32, name='fifo_reads'+str(byte)))
         self._ready            = CSRStatus()
         self._dly_rdy          = CSRStatus(ncontrols)
         self._vtc_rdy          = CSRStatus(ncontrols)
@@ -184,9 +183,11 @@ class USNativeDDRPHY(Module, AutoCSR):
         self._manual_active    = CSRStatus()
         self._gate_override    = CSRStorage(nbytes)
         for byte in range(nbytes):
-            setattr(self, '_gate_delay'+str(byte), CSRStorage(5, reset=gate_delay))
+            setattr(self, '_gate_delay'+str(byte), CSRStorage(5,
+                reset=gate_delay, name='gate_delay'+str(byte)))
         for byte in range(nbytes):
-            setattr(self, '_gate_width'+str(byte), CSRStorage(4, reset=2))
+            setattr(self, '_gate_width'+str(byte), CSRStorage(4,
+                reset=2, name='gate_width'+str(byte)))
         self._tap_select       = CSRStorage(max(1, (ntaps-1).bit_length()))
         self._tap_allowed      = CSRStatus()
         self._tap_status_valid = CSRStatus()
@@ -307,13 +308,13 @@ class USNativeDDRPHY(Module, AutoCSR):
         count = Signal(8)
         phy_reset, ctrl_reset = Signal(reset=1), Signal(reset=1)
         locked = Signal()
-        self.specials += MultiReg(pll_locked, locked)
+        self.specials += MultiReg(reduce(and_, (pll_locked[bank] for bank in range(nbanks))), locked)
         self.sync += If(self._rst.storage | ~locked,
             count.eq(0), phy_reset.eq(1), ctrl_reset.eq(1), pll_enable.eq(0)
         ).Else(
             If(count != 255, count.eq(count + 1)),
             If(count == 63, phy_reset.eq(0), ctrl_reset.eq(0)),
-            If(count == 127, pll_enable.eq(1)))
+            If(count == 127, pll_enable.eq((1 << nbanks) - 1)))
         ready       = Signal()
         initialized = Signal()
         dly_ready, vtc_ready = Signal(ncontrols), Signal(ncontrols)

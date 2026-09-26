@@ -20,3 +20,18 @@ The existing lower-level core generator is capable of describing multiple lanes
 and banks. That does not imply the integrated DFI PHY or BIOS calibration is
 width-independent. In particular, dropping the x16 check alone would silently
 produce invalid training and must not be presented as x32/x64 support.
+
+## Progress after the audit
+
+The integrated RTL now sizes its DFI data bus, DQS patterns, lane selectors,
+FIFO drains and optional trace from requested pads, and accepts a clock/lock/
+enable vector with one entry per queried bank. The clock provider still has to
+instantiate a local PLL for every bank. The BIOS training profile remains x16
+DDR4; no wider image should be advertised as calibrated. DDR3 support at this
+stage is limited to board pin extraction.
+
+AMD's [UltraScale SelectIO guide](https://docs.amd.com/api/khub/documents/kFbaUC5HGcXyGNauhgU6Gw/content)
+states that native BITSLICE_CONTROL PLL_CLK uses dedicated clock routing from
+a PLL adjacent to the I/O bank. Its multiple-bank bring-up guidance requires
+coordinated reset and readiness. A shared fabric clock wired to every bank's
+PLL_CLK would be an invalid shortcut; board integration needs per-bank PLLs.
