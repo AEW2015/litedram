@@ -14,7 +14,7 @@ from litedram.frontend.dma import LiteDRAMDMAWriter
 
 
 class PairedPort(Module):
-    """Join two 128-bit native masters into ordered 256-bit read/write words.
+    """Join two equal native masters into ordered double-width read/write words.
 
     Child addresses are 2*address and 2*address+1. The crossbar must use bank-
     group interleaving so these select opposite groups for all system masters.
@@ -35,10 +35,11 @@ class PairedPort(Module):
     def __init__(self, ports, mode, depth=64):
         if len(ports) != 2 or mode not in ("write", "read") or depth < 2:
             raise ValueError("PairedPort requires two read or write ports and depth >= 2")
-        if not all(p.data_width == 128 and p.mode == mode and p.clock_domain == "sys"
+        width = ports[0].data_width
+        if width not in (128, 256, 512) or not all(p.data_width == width and p.mode == mode and p.clock_domain == "sys"
                    and p.address_width == ports[0].address_width for p in ports):
-            raise ValueError("PairedPort requires matching 128-bit sys-domain native ports")
-        self.port = upstream = LiteDRAMNativePort(mode, ports[0].address_width-1, 256)
+            raise ValueError("PairedPort requires matching 128/256/512-bit sys-domain native ports")
+        self.port = upstream = LiteDRAMNativePort(mode, ports[0].address_width-1, 2*width)
         self.error = Signal()
         self.drained = Signal()
 
@@ -52,13 +53,14 @@ class PairedPort(Module):
                 addresses.sink.valid.eq(upstream.cmd.valid & ~self.error),
                 upstream.cmd.ready.eq(addresses.sink.ready & ~self.error)]
             reject = Signal()
-            self.comb += reject.eq(self.error | (upstream.wdata.we != 0xffffffff))
+            full_mask = (1 << (2*width//8)) - 1
+            self.comb += reject.eq(self.error | (upstream.wdata.we != full_mask))
             sent = Signal(2)
             transfers = []
             writers = []
             command_queues = []
             for group, port in enumerate(ports):
-                queued = LiteDRAMNativePort("write", port.address_width, 128)
+                queued = LiteDRAMNativePort("write", port.address_width, width)
                 commands = stream.SyncFIFO(port.cmd.description, 4, buffered=True)
                 setattr(self.submodules, "write_commands" + str(group), commands)
                 command_queues.append(commands)
@@ -75,11 +77,11 @@ class PairedPort(Module):
                     writer.sink.valid.eq(upstream.wdata.valid & addresses.source.valid &
                         ~sent[group] & ~reject),
                     writer.sink.address.eq((addresses.source.addr << 1) | group),
-                    writer.sink.data.eq(upstream.wdata.data[128*group:128*(group+1)]),
+                    writer.sink.data.eq(upstream.wdata.data[width*group:width*(group+1)]),
                     writer.sink.last.eq(addresses.source.last),
                     transfer.eq(writer.sink.valid & writer.sink.ready)]
             self.sync += If(upstream.wdata.valid & upstream.wdata.ready &
-                    (upstream.wdata.we != 0xffffffff),
+                    (upstream.wdata.we != full_mask),
                 self.error.eq(1))
             self.comb += [
                 upstream.wdata.ready.eq(addresses.source.valid &
@@ -112,7 +114,7 @@ class PairedPort(Module):
                 port.cmd.last.eq(upstream.cmd.last),
                 accepted[group].eq(port.cmd.valid & port.cmd.ready)]
             self.sync += credit[group].eq(credit[group] + accepted[group] - joined)
-            queue = stream.SyncFIFO([("data", 128)], depth, buffered=True)
+            queue = stream.SyncFIFO([("data", width)], depth, buffered=True)
             setattr(self.submodules, "read_queue" + str(group), queue)
             queues.append(queue)
             # Native read returns cannot be backpressured. Credits include

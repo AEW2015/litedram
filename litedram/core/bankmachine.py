@@ -170,15 +170,34 @@ class BankMachine(Module):
         # tWTP (write-to-precharge) controller -----------------------------------------------------
         write_latency = math.ceil(settings.phy.cwl / settings.phy.nphases)
         precharge_time = write_latency + settings.timing.tWR + settings.timing.tCCD # AL=0
-        self.submodules.twtpcon = twtpcon = tXXDController(precharge_time)
+        dual_slot = getattr(settings, "with_dual_slot", False)
+        if dual_slot:
+            # The second CAS can occur four CK later than the bank handshake.
+            # Maintenance is emitted in the first slot; round recovery upward.
+            precharge_time += 1
+        self.submodules.twtpcon = twtpcon = tXXDController(precharge_time,
+            registered_valid=getattr(settings, "with_registered_timing_valid", False))
         self.comb += twtpcon.valid.eq(cmd.valid & cmd.ready & cmd.is_write)
 
+        read_precharge_ready = 1
+        if dual_slot:
+            # Conservatively drain the full read pipeline before PRE/REF.
+            # This also covers tRTP without relying on implicit FSM bubbles.
+            self.submodules.trtpcon = trtpcon = tXXDController(settings.phy.read_latency + 1)
+            self.comb += trtpcon.valid.eq(cmd.valid & cmd.ready & cmd.is_read)
+            read_precharge_ready = trtpcon.ready
+
         # tRC (activate-activate) controller -------------------------------------------------------
-        self.submodules.trccon = trccon = tXXDController(settings.timing.tRC)
+        self.submodules.trccon = trccon = tXXDController(settings.timing.tRC,
+            registered_valid=getattr(settings, "with_registered_timing_valid", False))
         self.comb += trccon.valid.eq(cmd.valid & cmd.ready & row_open)
+        # The multiplexer can use this as an eligibility input, decoupling
+        # timing-counter feedback from command-request arbitration.
+        self.activate_ready = trccon.ready
 
         # tRAS (activate-precharge) controller -----------------------------------------------------
-        self.submodules.trascon = trascon = tXXDController(settings.timing.tRAS)
+        self.submodules.trascon = trascon = tXXDController(settings.timing.tRAS,
+            registered_valid=getattr(settings, "with_registered_timing_valid", False))
         self.comb += trascon.valid.eq(cmd.valid & cmd.ready & row_open)
 
         # Auto Precharge generation ----------------------------------------------------------------
@@ -224,7 +243,7 @@ class BankMachine(Module):
         )
         fsm.act("PRECHARGE",
             # Note: we are presenting the column address, A10 is always low
-            If(twtpcon.ready & trascon.ready,
+            If(twtpcon.ready & trascon.ready & read_precharge_ready,
                 cmd.valid.eq(1),
                 If(cmd.ready,
                     NextState("TRP")
@@ -236,13 +255,22 @@ class BankMachine(Module):
             row_close.eq(1)
         )
         fsm.act("AUTOPRECHARGE",
-            If(twtpcon.ready & trascon.ready,
+            If(twtpcon.ready & trascon.ready & read_precharge_ready,
                 NextState("TRP")
             ),
             row_close.eq(1)
         )
         fsm.act("ACTIVATE",
-            If(trccon.ready,
+            If(getattr(settings, "with_activate_eligibility", False),
+                row_col_n_addr_sel.eq(1),
+                cmd.valid.eq(1),
+                cmd.is_cmd.eq(1),
+                cmd.ras.eq(1),
+                If(trccon.ready & cmd.ready,
+                    row_open.eq(1),
+                    NextState("TRCD")
+                )
+            ).Elif(trccon.ready,
                 row_col_n_addr_sel.eq(1),
                 row_open.eq(1),
                 cmd.valid.eq(1),
@@ -254,7 +282,7 @@ class BankMachine(Module):
             )
         )
         fsm.act("REFRESH",
-            If(twtpcon.ready,
+            If(twtpcon.ready & read_precharge_ready & (trascon.ready if dual_slot else 1),
                 refresh_gnt.eq(1),
             ),
             row_close.eq(1),

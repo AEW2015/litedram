@@ -26,7 +26,7 @@ def signal_sites(layout):
     return result
 
 
-def core_ports(layout):
+def core_ports(layout, *, dqs_wrclk_monitor=False, dm_wrclk_count=0):
     n, c, lanes = len(layout.slices), len(layout.controls), len(layout.lanes)
     ports = {}
 
@@ -58,10 +58,14 @@ def core_ports(layout):
             add('output', 8*width, f'o_{name}_rx_data')
         if name not in ('dqs_t', 'ck_t'):
             add('input', 8*width, f'i_{name}_tx_data')
+    if dqs_wrclk_monitor:
+        add('output', len(layout.lanes), 'o_dqs_wrclk')
+    if dm_wrclk_count:
+        add('output', dm_wrclk_count, 'o_dm_wrclk')
     return ports
 
 
-def connect_core(module, core, sites, boundary):
+def connect_core(module, core, sites, boundary, *, module_name='usnative_core'):
     """Route compact buses; physical coordinates remain private to the core."""
     layout = core.layout
     native = {name: Signal(width, name='core_' + name) for name, (_, width) in core.ports.items()}
@@ -90,6 +94,10 @@ def connect_core(module, core, sites, boundary):
         pins['o_vtc_rdy'].eq(native['vtc_ready']),
         pins['o_fifo_empty'].eq(native['fifo_empty']),
     ]
+    if 'dqs_wrclk' in native:
+        module.comb += pins['o_dqs_wrclk'].eq(native['dqs_wrclk'])
+    if 'dm_wrclk' in native:
+        module.comb += pins['o_dm_wrclk'].eq(native['dm_wrclk'])
     data_controls = {c for lane in layout.lanes for c in lane.controls}
     for c in range(len(layout.controls)):
         module.comb += native['tbyte'][4*c:4*c+4].eq(
@@ -119,7 +127,7 @@ def connect_core(module, core, sites, boundary):
             native[side+'_ce'].eq(pins[f'i_{side}_delay_ce']),
             pins[f'o_{side}_delay_count'].eq(native[side+'_count']),
         ]
-    module.specials += Instance('usnative_core', **{
+    module.specials += Instance(module_name, **{
         ('i_' if direction == 'input' else 'o_') + name: native[name]
         for name, (direction, _) in core.ports.items()})
     return native['riu_rdata'], native['riu_valid']

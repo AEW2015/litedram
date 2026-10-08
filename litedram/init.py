@@ -431,6 +431,14 @@ def get_ddr4_phy_init_sequence(phy_settings, timing_settings):
     assert not (dm and tdqs)
 
     wr  = max(timing_settings.tWR*phy_settings.nphases, 10) # >= ceiling(tWR/tCK)
+    # A slower controller can round its tWR wait above the largest JEDEC MR0
+    # encoding. It may select a shorter supported MR0 value while retaining
+    # the longer controller wait.
+    mr0_wr = getattr(phy_settings, "mr0_wr", None)
+    if mr0_wr is not None:
+        if mr0_wr > wr:
+            raise ValueError("DDR4 MR0 write recovery exceeds controller tWR")
+        wr = mr0_wr
     mr0 = format_mr0(bl, cl, wr, 1)
     mr1 = format_mr1(1, z_to_ron[ron], z_to_rtt_nom[rtt_nom], tdqs)
     mr2 = format_mr2(cwl, z_to_rtt_wr[rtt_wr])

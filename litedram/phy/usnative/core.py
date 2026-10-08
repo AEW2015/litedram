@@ -30,7 +30,9 @@ class NativeCore:
     layout: object
 
 
-def emit_core(module_name, sites, auxiliary, *, family, refclk_mhz):
+def emit_core(module_name, sites, auxiliary, *, family, refclk_mhz,
+              data_tbyte=False, pre_emphasis=False, dynamic_odelay=False,
+              dqs_wrclk_monitor=False, dm_wrclk_lanes=()):
     """Generate compact-indexed data, control, FIFO, reset and RIU wiring.
 
     ``sites`` must have explicit sideband ownership established before this
@@ -40,7 +42,20 @@ def emit_core(module_name, sites, auxiliary, *, family, refclk_mhz):
     """
     if not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', module_name):
         raise ValueError('Invalid native core module name')
+    if not isinstance(data_tbyte, bool):
+        raise ValueError('DQ/DM TBYTE mode must be boolean')
+    if not isinstance(pre_emphasis, bool) or not isinstance(dynamic_odelay, bool):
+        raise ValueError('Native electrical options must be boolean')
+    if not isinstance(dqs_wrclk_monitor, bool):
+        raise ValueError('DQS FIFO write-clock monitor option must be boolean')
+    if (not isinstance(dm_wrclk_lanes, tuple) or
+            any(type(lane) is not int or lane < 0 for lane in dm_wrclk_lanes) or
+            len(set(dm_wrclk_lanes)) != len(dm_wrclk_lanes)):
+        raise ValueError('DM clock monitor lanes must be unique nonnegative integers')
     layout = native_layout(sites, auxiliary, family=family)
+    if any(('dm', lane) not in layout.slices or
+            sites['dm', lane].position % 6 != 0 for lane in dm_wrclk_lanes):
+        raise ValueError('DM clock monitor requires a nibble BITSLICE_0 site')
     profiles = control_profiles(sites)
     n, c, b = len(layout.slices), len(layout.controls), len(layout.riu_bytes)
     ports = {}
@@ -61,6 +76,10 @@ def emit_core(module_name, sites, auxiliary, *, family, refclk_mhz):
             ('dly_ready', c), ('vtc_ready', c), ('dyn_dci', 7*c),
             ('riu_rdata', 16*b), ('riu_valid', b)):
         port(name, 'output', width)
+    if dqs_wrclk_monitor:
+        port('dqs_wrclk', 'output', len(layout.lanes))
+    if dm_wrclk_lanes:
+        port('dm_wrclk', 'output', len(dm_wrclk_lanes))
     buses = control_wiring(sites, auxiliary, family=family)
     clocks = nibble_clock_wiring(sites, family=family)
     connections = buses.connections()
@@ -97,14 +116,23 @@ def emit_core(module_name, sites, auxiliary, *, family, refclk_mhz):
         role = ('data' if key[0] in ('dq', 'dm') else 'strobe' if key[0] == 'dqs_p'
                 else 'clock' if key[0] == 'clk_p' else 'command')
         module = f'{module_name}_slice_{i}'
-        wrappers.append(emit_rxtx(module, site, role=role, family=family, refclk_mhz=refclk_mhz))
+        wrappers.append(emit_rxtx(module, site, role=role, family=family,
+                                  refclk_mhz=refclk_mhz,
+                                  use_tbyte=data_tbyte and role == 'data',
+                                  pre_emphasis=pre_emphasis))
         ci = control_index[site.control_site]
         values = dict(D=word('tx_data', i, 8), Q=word('rx_data', i, 8),
             O=word('serial_out', i, 1), DATAIN=word('serial_in', i, 1),
             T_OUT=word('tristate', i, 1), FIFO_EMPTY=word('fifo_empty', i, 1),
             FIFO_RD_CLK='fifo_clk', FIFO_RD_EN=word('fifo_rd_en', i, 1),
-            T=word('data_tristate', lane_index[i], 1) if role == 'data' else "1'b0",
+            T=("1'b0" if data_tbyte else word('data_tristate', lane_index[i], 1))
+                if role == 'data' else "1'b0",
             TBYTE_IN=f'tri_{ci}')
+        if dqs_wrclk_monitor and role == 'strobe':
+            lane = next(lane for lane in layout.lanes if lane.strobe == i)
+            values['FIFO_WRCLK_OUT'] = word('dqs_wrclk', lane.index, 1)
+        if role == 'data' and key[0] == 'dm' and key[1] in dm_wrclk_lanes:
+            values['FIFO_WRCLK_OUT'] = word('dm_wrclk', dm_wrclk_lanes.index(key[1]), 1)
         for side in ('RX', 'TX'):
             lower = side.lower()
             values.update({side + '_CLK': 'riu_clk', side + '_CE': word(lower + '_ce', i, 1),
@@ -116,7 +144,8 @@ def emit_core(module_name, sites, auxiliary, *, family, refclk_mhz):
     for i, control in enumerate(layout.controls):
         site = next(s for s in sites.values() if s.control_site == control)
         module = f'{module_name}_control_{i}'
-        wrappers.append(emit_control(module, profiles[control], family=family))
+        wrappers.append(emit_control(module, profiles[control], family=family,
+                                     dynamic_odelay=dynamic_odelay))
         declarations.extend((f'wire tri_{i};', f'wire [15:0] riu_data_{i};', f'wire riu_valid_{i};'))
         instantiate(module, f'control_{i}', control, CONTROL_PORTS, dict(
             CLK_FROM_EXT="1'b1", EN_VTC='control_vtc', PLL_CLK=word('pll_clk', layout.banks.index(site.bank), 1),

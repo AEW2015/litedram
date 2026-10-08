@@ -45,6 +45,19 @@ class TestUSNativeControl(unittest.TestCase):
         self.assertEqual(parameters["RX_CLK_PHASE_P"], '"SHIFT_0"')
         self.assertEqual(parameters["EN_OTHER_PCLK"], '"FALSE"')
 
+    def test_dynamic_output_delay_only_enables_data_controls(self):
+        data = ControlProfile('BITSLICE_CONTROL_X0Y0', True, False)
+        command = ControlProfile('BITSLICE_CONTROL_X0Y8', False, False)
+        for profile in (data, command):
+            ordinary = control_parameters(profile, family="ULTRASCALE_PLUS")
+            enabled = control_parameters(profile, family="ULTRASCALE_PLUS",
+                                         dynamic_odelay=True)
+            self.assertEqual(ordinary["EN_DYN_ODLY_MODE"], '"FALSE"')
+            self.assertEqual(enabled["EN_DYN_ODLY_MODE"],
+                             '"TRUE"' if profile.data else '"FALSE"')
+        with self.assertRaises(ValueError):
+            control_parameters(data, family="ULTRASCALE_PLUS", dynamic_odelay=1)
+
     def test_unsupported_sharing(self):
         mapped = sites()
         mapped["a", 0] = mapped["dq", 0]

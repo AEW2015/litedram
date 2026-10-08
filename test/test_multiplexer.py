@@ -37,6 +37,7 @@ def dfi_cmd_to_char(cas_n, ras_n, we_n):
 class BankMachineStub:
     def __init__(self, babits, abits):
         self.cmd = stream.Endpoint(cmd_request_rw_layout(a=abits, ba=babits))
+        self.activate_ready = Signal(reset=1)
         self.refresh_req = Signal()
         self.refresh_gnt = Signal()
 
@@ -139,6 +140,88 @@ class MultiplexerDUT(Module):
 
 
 class TestMultiplexer(unittest.TestCase):
+
+    def test_dynamic_narrow_phases_keep_cas_with_data_enable(self):
+        # A rate-converted PHY can keep a two-bit CSR while exposing eight
+        # DFI phases. READ/WRITE CAS uses STEER_REQ alongside its data enable;
+        # the preceding STEER_CMD slot carries ACT/PRE rather than READ CAS.
+        for nphases in (4, 8):
+            for phase in (0, 1, 3):
+                for write in (False, True):
+                    with self.subTest(nphases=nphases, phase=phase, write=write):
+                        rdphase, wrphase = Signal(2), Signal(2)
+                        dut = MultiplexerDUT(phy_settings=dict(nphases=nphases,
+                            rdphase=rdphase, wrphase=wrphase))
+
+                        def generator():
+                            yield rdphase.eq(phase)
+                            yield wrphase.eq(phase)
+                            driver = dut.bm_drivers[2]
+                            yield from (driver.write() if write else driver.read())
+                            for _ in range(80):
+                                if (yield dut.bank_machines[2].cmd.ready):
+                                    break
+                                yield
+                            else:
+                                self.fail('The requested CAS command was not accepted')
+                            yield
+                            commands, enables = [], []
+                            for index, p in enumerate(dut.dfi.phases):
+                                cmd = dfi_cmd_to_char((yield p.cas_n),
+                                    (yield p.ras_n), (yield p.we_n))
+                                if cmd == ('w' if write else 'r'):
+                                    commands.append(index)
+                                if (yield p.wrdata_en if write else p.rddata_en):
+                                    enables.append(index)
+                            self.assertEqual(commands, [phase])
+                            self.assertEqual(enables, [phase])
+
+                        run_simulation(dut, generator())
+
+    def test_activate_eligibility_keeps_timing_out_of_arbiter_requests(self):
+        # A bank whose tRC timer is still active must remain visible as a
+        # request without blocking another bank that can issue ACT.
+        dut = MultiplexerDUT(controller_settings=dict(with_activate_eligibility=True))
+        bm0, bm1 = dut.bank_machines[:2]
+
+        def generator():
+            for bm, bank in ((bm0, 0), (bm1, 1)):
+                yield bm.cmd.valid.eq(1)
+                yield bm.cmd.is_cmd.eq(1)
+                yield bm.cmd.ras.eq(1)
+                yield bm.cmd.ba.eq(bank)
+            yield bm0.activate_ready.eq(0)
+            yield bm1.activate_ready.eq(1)
+
+            # Initial grant is bank 0, which is ineligible. The chooser
+            # advances without acknowledging it and issues bank 1 next.
+            yield
+            self.assertEqual((yield bm0.cmd.ready), 0)
+            self.assertEqual((yield bm1.cmd.ready), 0)
+            yield
+            self.assertEqual((yield bm0.cmd.ready), 0)
+            self.assertEqual((yield bm1.cmd.ready), 1)
+            yield
+            phase = dut.dfi.phases[1]
+            self.assertEqual((yield phase.bank), 1)
+            self.assertEqual(dfi_cmd_to_char((yield phase.cas_n),
+                (yield phase.ras_n), (yield phase.we_n)), "a")
+
+            # Removing bank 1's request and releasing bank 0's tRC timer
+            # allows the originally stalled ACT to proceed.
+            yield bm1.cmd.valid.eq(0)
+            yield bm0.activate_ready.eq(1)
+            for _ in range(4):
+                if (yield bm0.cmd.ready):
+                    break
+                yield
+            self.assertEqual((yield bm0.cmd.ready), 1)
+            yield
+            self.assertEqual((yield phase.bank), 0)
+            self.assertEqual(dfi_cmd_to_char((yield phase.cas_n),
+                (yield phase.ras_n), (yield phase.we_n)), "a")
+
+        run_simulation(dut, generator())
     def test_init(self):
         # Verify that instantiation of Multiplexer in MultiplexerDUT is correct. This will fail if
         # Multiplexer starts using any new setting from controller.settings.
@@ -350,7 +433,9 @@ class TestMultiplexer(unittest.TestCase):
 
             self.assertEqual(cas_time, 3)
 
-        dut = MultiplexerDUT(timing_settings=dict(tCCD=3))
+        dut = MultiplexerDUT(
+            controller_settings=dict(with_registered_timing_valid=True),
+            timing_settings=dict(tCCD=3))
         generators = [
             main_generator(dut),
             timeout_generator(50),
@@ -479,7 +564,33 @@ class TestMultiplexer(unittest.TestCase):
             # Refresh command
             yield from assert_dfi_cmd(cas=1, ras=1, we=0)
 
-        dut = MultiplexerDUT()
+        dut = MultiplexerDUT(controller_settings=dict(with_registered_timing_valid=True))
+        run_simulation(dut, main_generator(dut))
+
+    def test_registered_refresh_request_waits_for_banks(self):
+        def main_generator(dut):
+            yield dut.refresher.cmd.valid.eq(1)
+            yield
+            yield
+            for bm in dut.bank_machines:
+                self.assertEqual((yield bm.refresh_req), 1)
+            self.assertNotEqual((yield from dut.fsm_state()), "REFRESH")
+
+            for bm in dut.bank_machines:
+                yield bm.refresh_gnt.eq(1)
+            yield
+            yield
+            self.assertEqual((yield from dut.fsm_state()), "REFRESH")
+
+            yield dut.refresher.cmd.valid.eq(0)
+            yield
+            for bm in dut.bank_machines:
+                self.assertEqual((yield bm.refresh_req), 1)
+            yield
+            for bm in dut.bank_machines:
+                self.assertEqual((yield bm.refresh_req), 0)
+
+        dut = MultiplexerDUT(controller_settings=dict(with_registered_refresh_request=True))
         run_simulation(dut, main_generator(dut))
 
     def test_requests_from_multiple_bankmachines(self):

@@ -16,6 +16,19 @@ from litedram.core.bankmachine import BankMachine
 from test.common import timeout_generator
 
 
+def run_bankmachine_simulation(dut, generators):
+    # The pinned Migen simulator expects a read-data signal on every Memory
+    # port. Buffered FIFOs create write-only ports, so provide unused read
+    # wires on the simulation fragment without changing the RTL.
+    fragment = dut.get_fragment()
+    for special in fragment.specials:
+        if isinstance(special, Memory):
+            for port in special.ports:
+                if port.dat_r is None:
+                    port.dat_r = Signal(special.width)
+    run_simulation(fragment, generators)
+
+
 class BankMachineDUT(Module):
     # Fill only settings needed by BankMachine
     default_controller_settings = dict(
@@ -158,7 +171,7 @@ class TestBankMachine(unittest.TestCase):
         ]
         if generators is not None:
             all_generators += [g(dut) for g in generators]
-        run_simulation(dut, all_generators)
+        run_bankmachine_simulation(dut, all_generators)
         return commands
 
     def test_opens_correct_row(self):
@@ -492,4 +505,4 @@ class TestRegisteredRowHitBankMachine(TestBankMachine):
                         self.assertGreater(commands, 50)
                         self.assertGreater(stalls, 10)
                         self.assertGreater(refreshes, 0)
-                    run_simulation(top, generator())
+                    run_bankmachine_simulation(top, generator())

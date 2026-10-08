@@ -61,6 +61,36 @@ def synthetic_fixture(width, variant):
 
 
 class TestUSNativeMapping(unittest.TestCase):
+    def test_dqs_wrclk_monitor_routes_core_byte_order_to_adapter(self):
+        sites, auxiliary = synthetic_fixture(32, 1)
+        core = emit_core('usnative_core', sites, auxiliary,
+            family='ULTRASCALE_PLUS', refclk_mhz=2400,
+            dqs_wrclk_monitor=True)
+        dut = Module()
+        ports = core_ports(core.layout, dqs_wrclk_monitor=True)
+        signals = {name: Signal(width) for name, (_, width) in ports.items()}
+        n = len(core.layout.slices)
+        extras = dict(i_rx_delay_rst=n, i_rx_delay_ce=n, i_tx_delay_rst=n,
+            i_tx_delay_ce=n, o_rx_delay_count=9*n, o_tx_delay_count=9*n,
+            o_fifo_empty=n, i_dqs_tx_data=8*len(core.layout.lanes),
+            i_data_tristate=1, i_slice_en_vtc=1)
+        signals.update({name: Signal(width) for name, width in extras.items()})
+        boundary = {('i_' if name.startswith('i_') else 'o_') + name: signal
+                    for name, signal in signals.items()}
+        connect_core(dut, core, sites, boundary)
+        fragment = dut.get_fragment()
+        instance = next(iter(fragment.specials))
+        native = {item.name: item.expr for item in instance.items if hasattr(item, 'expr')}
+        fragment.specials = set()
+
+        def check():
+            expected = sum((lane.index & 1) << lane.index for lane in core.layout.lanes)
+            yield native['dqs_wrclk'].eq(expected)
+            yield
+            self.assertEqual((yield signals['o_dqs_wrclk']), expected)
+
+        run_simulation(fragment, check())
+
     def run_case(self, width, family, variant, profile=None):
         sites, auxiliary = synthetic_fixture(width, variant)
         core = emit_core('usnative_core', sites, auxiliary, family=family, refclk_mhz=2400)
@@ -177,6 +207,18 @@ class TestUSNativeMapping(unittest.TestCase):
         self.assertNotEqual(
             NativeMapping(core.layout, profile=dict(rate=2400, with_debug=False)).config_id,
             NativeMapping(core.layout, profile=dict(rate=2400, with_debug=True)).config_id)
+        for option in ('registered_fifo_drain', 'pre_emphasis', 'dynamic_odelay',
+                       'fixed_fifo_pop'):
+            self.assertNotEqual(mapping.config_id,
+                NativeMapping(core.layout, profile=dict(rate=2400, **{option: True})).config_id)
+        self.assertNotEqual(
+            NativeMapping(core.layout, profile=dict(rate=2667, read_latency=12)).config_id,
+            NativeMapping(core.layout, profile=dict(rate=2667, read_latency=13,
+                read_latency_override=13)).config_id)
+        self.assertNotEqual(
+            NativeMapping(core.layout, profile=dict(rate=2667, read_latency=13)).config_id,
+            NativeMapping(core.layout, profile=dict(rate=2667, read_latency=13,
+                read_latency_override=13)).config_id)
         self.assertEqual(mapping.c_defines()['DQ_TAPS_COUNT'], 16)
         renamed = replace(core.layout,
             controls=tuple(f'BITSLICE_CONTROL_X999Y{i}' for i in range(len(core.layout.controls))),

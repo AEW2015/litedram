@@ -32,6 +32,12 @@ class TestUSNativeRXTX(unittest.TestCase):
         self.assertEqual(strobe["RX_DATA_TYPE"], '"DATA_AND_CLOCK"')
         self.assertNotEqual(data["TX_OUTPUT_PHASE_90"], strobe["TX_OUTPUT_PHASE_90"])
 
+    def test_opt_in_data_tbyte_control(self):
+        parameters = self.parameters("data", use_tbyte=True)
+        self.assertEqual(parameters["TBYTE_CTL"], '"TBYTE_IN"')
+        with self.assertRaises(ValueError):
+            self.parameters("data", use_tbyte=1)
+
     def test_command_anchor(self):
         for position, expected in [(6, '"DATA_AND_CLOCK"'), (8, '"DATA"')]:
             parameters = rxtx_parameters(site(position), role="command",

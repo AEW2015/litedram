@@ -45,6 +45,9 @@ class ControllerSettings(Settings):
         # DDR4 paired bank-group scheduling and address mapping (opt-in).
         with_bank_group_interleaving = False,
 
+        # Two fixed DDR4 bank-group CAS slots per eight-phase DFI cycle.
+        with_dual_slot = False,
+
         # Bank byte alignment.
         bank_byte_alignment = 0,              # Minimum byte alignment between bank changes. Ensures a
                                               # specific byte distance between consecutive banks to optimize
@@ -57,7 +60,17 @@ class ControllerSettings(Settings):
         with_registered_row_hit = False,
 
         # Register refresh/ZQCS timer comparisons without changing their cycles.
-        with_registered_refresh_timers = False):
+        with_registered_refresh_timers = False,
+
+        # Register the persistent refresh request before broadcasting it to banks.
+        with_registered_refresh_request = False,
+
+        # Register accepted commands at timing-counter inputs.
+        with_registered_timing_valid = False,
+
+        # Keep ACT requests visible to the command arbiter while tRC is
+        # counting down; use the bank's timing-ready signal as eligibility.
+        with_activate_eligibility = False):
         self.set_attributes(locals())
 
 
@@ -78,15 +91,28 @@ class LiteDRAMController(Module):
         self.settings.geom   = geom_settings
         self.settings.timing = timing_settings
 
-        if self.settings.with_bank_group_interleaving:
-            if not (phy_settings.memtype == "DDR4" and phy_settings.databits == 16
-                    and phy_settings.dfi_databits == 32
+        if self.settings.with_dual_slot:
+            dual_slot_width = (phy_settings.databits, phy_settings.dfi_databits,
+                               geom_settings.bankbits)
+            if not (phy_settings.memtype == "DDR4" and
+                    dual_slot_width in ((32, 64, 3), (64, 128, 4))
+                    and phy_settings.nphases == 8
+                    and phy_settings.nranks == 1
+                    and geom_settings.colbits == 10 and timing_settings.tCCD == 1
+                    and self.settings.with_bank_group_interleaving
+                    and self.settings.address_mapping == "ROW_BANK_COL"
+                    and self.settings.bank_byte_alignment == 0):
+                raise ValueError("Two-slot scheduling requires x32/64 DDR4, eight DFI phases, "
+                                 "one rank, two/four bank groups and interleaved BL8 addressing")
+        elif self.settings.with_bank_group_interleaving:
+            if not (phy_settings.memtype == "DDR4" and phy_settings.databits in (16, 32)
+                    and phy_settings.dfi_databits == 2*phy_settings.databits
                     and phy_settings.nphases == 4 and phy_settings.nranks == 1
                     and geom_settings.bankbits == 3 and geom_settings.colbits == 10
                     and timing_settings.tCCD == 2
                     and self.settings.address_mapping == "ROW_BANK_COL"
                     and self.settings.bank_byte_alignment == 0):
-                raise ValueError("Bank-group interleaving requires x16 DDR4, four phases, "
+                raise ValueError("Bank-group interleaving requires x16/x32 DDR4, four phases, "
                                  "one rank, two groups, 10 column bits and tCCD_L=8 CK")
 
         nranks = phy_settings.nranks
@@ -124,7 +150,11 @@ class LiteDRAMController(Module):
             self.comb += getattr(interface, "bank"+str(n)).connect(bank_machine.req)
 
         # Multiplexer ------------------------------------------------------------------------------
-        self.submodules.multiplexer = Multiplexer(
+        multiplexer_cls = Multiplexer
+        if self.settings.with_dual_slot:
+            from litedram.core.dual_slot_multiplexer import DualSlotMultiplexer
+            multiplexer_cls = DualSlotMultiplexer
+        self.submodules.multiplexer = multiplexer_cls(
             settings      = self.settings,
             bank_machines = bank_machines,
             refresher     = self.refresher,

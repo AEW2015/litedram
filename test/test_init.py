@@ -64,6 +64,14 @@ class TestInit(unittest.TestCase):
         timing.tWTR = 5
         self.assertEqual((modes()[0] >> 9) & 7, 6)
 
+        # A half-rate controller can wait 32 CK while MR0 encodes 28 CK.
+        phy.nphases, phy.mr0_wr, timing.tWR = 8, 28, 4
+        mr0 = modes()[0]
+        self.assertEqual((((mr0 >> 13) & 1) << 3) | ((mr0 >> 9) & 7), 9)
+        phy.mr0_wr = 34
+        with self.assertRaises(ValueError):
+            modes()
+
     def test_ddr4_tccd(self):
         from types import SimpleNamespace
         from litedram.init import get_ddr4_phy_init_sequence

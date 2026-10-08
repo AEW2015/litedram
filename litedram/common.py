@@ -55,6 +55,8 @@ def get_default_cl_cwl(memtype, tck):
         f_to_cl_cwl[2133e6] = (15, 11)
         f_to_cl_cwl[2400e6] = (16, 12)
         f_to_cl_cwl[2666e6] = (18, 14)
+        f_to_cl_cwl[2933e6] = (21, 16)
+        f_to_cl_cwl[3200e6] = (24, 16)
     else:
         raise ValueError
     for f, (cl, cwl) in f_to_cl_cwl.items():
@@ -314,6 +316,11 @@ class LiteDRAMInterface(Record):
         self.address_align = address_align
         self.address_width = settings.geom.rowbits + settings.geom.colbits + rankbits - address_align
         self.data_width    = settings.phy.dfi_databits*settings.phy.nphases
+        dual_slot = getattr(settings, "with_dual_slot", False)
+        if dual_slot:
+            # A native address still denotes one BL8, even though the DFI
+            # transports two independent BL8 bursts per controller cycle.
+            self.data_width //= 2
         self.nbanks   = settings.phy.nranks*(2**settings.geom.bankbits)
         self.nranks   = settings.phy.nranks
         self.settings = settings
@@ -321,6 +328,16 @@ class LiteDRAMInterface(Record):
         layout = [("bank"+str(i), cmd_layout(self.address_width)) for i in range(self.nbanks)]
         layout += data_layout(self.data_width)
         Record.__init__(self, layout)
+        if dual_slot:
+            self.slot1_wdata = Signal(self.data_width)
+            self.slot1_wdata_we = Signal(self.data_width//8)
+            self.slot1_rdata = Signal(self.data_width)
+            self.slot_bank = [Signal(max=self.nbanks) for _ in range(2)]
+            self.slot_read = Signal(2)
+            self.slot_write = Signal(2)
+            self.bank_read_ready = Signal(self.nbanks)
+            self.bank_write_ready = Signal(self.nbanks)
+            self.dual_slot_error = Signal()
 
 # Ports --------------------------------------------------------------------------------------------
 
@@ -391,14 +408,35 @@ class LiteDRAMNativeReadPort(LiteDRAMNativePort):
 # Timing Controllers -------------------------------------------------------------------------------
 
 class tXXDController(Module):
-    def __init__(self, txxd):
+    def __init__(self, txxd, registered_valid=False):
         self.valid = valid = Signal()
         self.ready = ready = Signal(reset=txxd is None)
         ready.attr.add("no_retiming")
 
         # # #
 
-        if txxd is not None:
+        if txxd is not None and registered_valid and txxd >= 2:
+            # Register the accepted command before updating the cooldown
+            # counter. Mask ready during that intervening cycle and shorten
+            # the loaded count by one to preserve the original schedule.
+            pending = Signal()
+            ready_reg = Signal()
+            ready_reg.attr.add("no_retiming")
+            count = Signal(max=max(txxd, 2))
+            # ``pending`` is asserted immediately after an accepted command.
+            # Use it to block a new command while the timer state is updated
+            # on the following edge. This keeps the accepted-event input off
+            # the timer ready-register feedback cone.
+            self.comb += ready.eq(ready_reg & ~pending)
+            self.sync += pending.eq(valid)
+            self.sync += If(pending,
+                count.eq(txxd - 2),
+                ready_reg.eq(txxd == 2)
+            ).Elif(~ready_reg,
+                count.eq(count - 1),
+                If(count == 1, ready_reg.eq(1))
+            )
+        elif txxd is not None:
             count = Signal(max=max(txxd, 2))
             self.sync += \
                 If(valid,

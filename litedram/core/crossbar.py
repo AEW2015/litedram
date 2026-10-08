@@ -136,10 +136,18 @@ class LiteDRAMCrossbar(Module):
         cba_shift = cba_shifts[controller.settings.address_mapping]
         interleaved = getattr(controller.settings, "with_bank_group_interleaving", False)
         if interleaved:
-            # Native 128-bit word: [row][BA:2][column:7][BG:1]. Apply the
-            # permutation to every master, including CPU and converted ports.
-            m_ba = [Cat(m.cmd.addr[8:10], m.cmd.addr[0]) for m in self.masters]
-            m_rca = [Cat(m.cmd.addr[1:8], m.cmd.addr[10:]) for m in self.masters]
+            # Native BL8 word: [row][BG1?][BA:2][column:7][BG0]. For a
+            # two-group device BG0 is the only group bit; for four groups,
+            # address bit 10 supplies BG1 and is removed from the row. Apply
+            # the same bijective permutation to every master.
+            if controller.settings.geom.bankbits == 4:
+                m_ba = [Cat(m.cmd.addr[8:10], m.cmd.addr[0], m.cmd.addr[10])
+                        for m in self.masters]
+                m_rca = [Cat(m.cmd.addr[1:8], m.cmd.addr[11:])
+                         for m in self.masters]
+            else:
+                m_ba = [Cat(m.cmd.addr[8:10], m.cmd.addr[0]) for m in self.masters]
+                m_rca = [Cat(m.cmd.addr[1:8], m.cmd.addr[10:]) for m in self.masters]
         else:
             m_ba      = [m.get_bank_address(self.bank_bits, cba_shift)for m in self.masters]
             m_rca     = [m.get_row_column_address(self.bank_bits, self.rca_bits, cba_shift) for m in self.masters]
@@ -196,6 +204,35 @@ class LiteDRAMCrossbar(Module):
                 for nm, master_rdata_valid in enumerate(master_rdata_valids)]
 
         # Delay write/read signals based on their latency
+        if getattr(controller.settings, "with_dual_slot", False):
+            from litedram.core.dual_slot_data import DualSlotData
+            self.submodules.dual_slot_data = data = DualSlotData(self.masters,
+                read_latency=self.read_latency, write_latency=self.write_latency,
+                depth=max(32, self.read_latency + 4))
+            for master, ready in zip(self.masters, master_readys):
+                self.comb += master.cmd.ready.eq(ready)
+            for bank, arbiter in enumerate(arbiters):
+                self.comb += [
+                    controller.bank_read_ready[bank].eq(~data.error & Array(data.master_read_ready)[arbiter.grant]),
+                    controller.bank_write_ready[bank].eq(~data.error & Array(data.master_write_ready)[arbiter.grant]),
+                ]
+            for slot in range(2):
+                self.comb += [
+                    data.slot_valid[slot].eq(controller.slot_read[slot] | controller.slot_write[slot]),
+                    data.slot_write[slot].eq(controller.slot_write[slot]),
+                    data.slot_owner[slot].eq(Array([a.grant for a in arbiters])[controller.slot_bank[slot]]),
+                ]
+            self.comb += [
+                controller.dual_slot_error.eq(data.error),
+                controller.wdata.eq(data.slot_wdata[0]),
+                controller.wdata_we.eq(data.slot_wdata_we[0]),
+                controller.slot1_wdata.eq(data.slot_wdata[1]),
+                controller.slot1_wdata_we.eq(data.slot_wdata_we[1]),
+                data.slot_rdata[0].eq(controller.rdata),
+                data.slot_rdata[1].eq(controller.slot1_rdata),
+            ]
+            return
+
         for nm, master_wdata_ready in enumerate(master_wdata_readys):
             for i in range(self.write_latency):
                 new_master_wdata_ready = Signal()

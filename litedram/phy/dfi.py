@@ -5,6 +5,8 @@
 # Copyright (c) 2021 Antmicro <www.antmicro.com>
 # SPDX-License-Identifier: BSD-2-Clause
 
+import inspect
+
 from migen import *
 from migen.genlib.record import *
 from migen.genlib.cdc import PulseSynchronizer
@@ -104,6 +106,33 @@ class DDR4DFIMux(Module):
             ]
 
 
+class DDR3DFIMux(Module):
+    """Map DDR3 DFI phases to the direct DDR3 command/address convention.
+
+    DDR3 carries RAS_n, CAS_n and WE_n on dedicated pins and has no ACT_n
+    pin. Its command/address fields therefore pass through unchanged; the
+    generic DFI ACT_n field is held inactive. This block only performs that
+    protocol-level mapping. It does not implement a PHY, serialization,
+    training or calibration.
+    """
+    def __init__(self, dfi_i, dfi_o):
+        if len(dfi_i.phases) != len(dfi_o.phases):
+            raise ValueError("DDR3 DFI interfaces must have the same phase count")
+        for p_i, p_o in zip(dfi_i.phases, dfi_o.phases):
+            if (len(p_i.address) != len(p_o.address) or
+                    len(p_i.bank) != len(p_o.bank) or
+                    len(p_i.cs_n) != len(p_o.cs_n)):
+                raise ValueError("DDR3 DFI interfaces must have matching command widths")
+            if (len(p_i.wrdata) != len(p_o.wrdata) or
+                    len(p_i.wrdata_mask) != len(p_o.wrdata_mask) or
+                    len(p_i.rddata) != len(p_o.rddata)):
+                raise ValueError("DDR3 DFI interfaces must have matching data widths")
+            self.comb += [
+                p_i.connect(p_o),
+                p_o.act_n.eq(1),
+            ]
+
+
 class DFIRateConverter(Module):
     """Converts between DFI interfaces running at different clock frequencies
 
@@ -114,18 +143,43 @@ class DFIRateConverter(Module):
 
     Data must be serialized/deserialized in such a way that a whole burst on `phy_dfi` is
     sent in a single `clk` cycle. For this reason, the new DFI interface will have `ratio`
-    less databits. For example, with phy_dfi(nphases=2, databits=32) and ratio=4 the new
-    DFI will have nphases=8, databits=8. This results in 8*8=64 bits in `clkdiv` translating
+    less databits by default. For example, with phy_dfi(nphases=2, databits=32) and ratio=4 the
+    new DFI will have nphases=8, databits=8. This results in 8*8=64 bits in `clkdiv` translating
     into 2*32=64 bits in `clk`. This means that only a single cycle of `clk` per `clkdiv`
-    cycle carries the data (by default cycle 0). This can be modified by passing values
-    different than 0 for `write_delay`/`read_delay` and may be needed to properly align
-    write/read latency of the original PHY and the wrapper.
+    cycle carries the data (by default cycle 0). `preserve_throughput=True` keeps the PHY data
+    width on every new phase instead; it is useful when the lower-frequency DFI must carry all
+    `ratio` high-frequency PHY cycles in one controller cycle. In that mode, `write_delay` and
+    `read_delay` delay the serialized data stream by fast-clock edges while keeping all data
+    phases. The default mode retains its original slice-selection behavior.
+
+    `serdes_reset` optionally holds all fast slot counters at a common phase.
+    With phase-aligned clocks, a reset from `clkdiv` can establish a repeatable
+    slot boundary after the fast clock domain has left reset. Apply it to both
+    directions: resetting only serializers can move reads into an unselected
+    deserializer slot. None preserves the original counter reset behavior.
+
+    `align_read_slots` is an experimental extra register on the final
+    deserialized chunk. It was used with offset-phase simulation clocks;
+    leave it disabled for aligned rising edges, where the normal deserializer
+    already returns both slots together. Enabling it there makes slot 1 stale.
+    It requires full-rate 2:1 conversion, shared reset and `read_delay=0`.
     """
     def __init__(self, phy_dfi, *, clkdiv, clk, ratio, serdes_reset_cnt=-1, write_delay=0, read_delay=0,
-        serializer=None, deserializer=None):
-        assert len(phy_dfi.p0.wrdata) % ratio == 0
+                 preserve_throughput=False, repeat_write_data=False, early_write_data=False,
+                 serdes_reset=None, align_read_slots=False, serializer=None, deserializer=None):
+        if align_read_slots and (not preserve_throughput or ratio != 2 or read_delay != 0
+                or serdes_reset is None):
+            raise ValueError("Aligned read slots require full-rate 2:1 conversion, even read latency and shared reset")
+        if not preserve_throughput:
+            assert len(phy_dfi.p0.wrdata) % ratio == 0
         assert 0 <= write_delay < ratio, f"Data can be delayed up to {ratio} clk cycles"
         assert 0 <= read_delay < ratio, f"Data can be delayed up to {ratio} clk cycles"
+        if preserve_throughput:
+            assert ratio > 1, "Throughput-preserving conversion requires ratio > 1"
+        if repeat_write_data:
+            assert not preserve_throughput, "Repeated write data applies to reduced-width conversion"
+        if early_write_data:
+            assert not preserve_throughput, "Early write data applies to reduced-width conversion"
 
         # Serializer/Deserializer classes (same interface as the default ones, e.g. a PHY specific
         # clock domain crossing).
@@ -138,9 +192,17 @@ class DFIRateConverter(Module):
             addressbits = len(phy_dfi.p0.address),
             bankbits = len(phy_dfi.p0.bank),
             nranks = len(phy_dfi.p0.cs_n),
-            databits = len(phy_dfi.p0.wrdata) // ratio,
+            databits = len(phy_dfi.p0.wrdata) if preserve_throughput else len(phy_dfi.p0.wrdata) // ratio,
         )
         self.dfi = Interface(nphases=ratio * len(phy_dfi.phases), **phase_params)
+
+        def delay_fast(signal, cycles):
+            """Delay a complete signal stream by `cycles` fast-clock edges."""
+            for _ in range(cycles):
+                delayed = Signal.like(signal)
+                getattr(self.sync, clk).__iadd__(delayed.eq(signal))
+                signal = delayed
+            return signal
 
         wr_delayed = ["wrdata", "wrdata_mask"]
         rd_delayed = ["rddata", "rddata_valid"]
@@ -167,6 +229,7 @@ class DFIRateConverter(Module):
                     o_dw      = width,
                     i         = Cat(sigs_m),
                     o         = sig_s,
+                    reset     = serdes_reset,
                     reset_cnt = serdes_reset_cnt,
                     name      = name,
                 )
@@ -182,11 +245,22 @@ class DFIRateConverter(Module):
 
                 sigs_m = []
                 for j in range(ratio):
-                    phase_m = self.dfi.phases[pi*ratio + j]
+                    phase_index = pi + len(phy_dfi.phases)*j if preserve_throughput else pi*ratio + j
+                    phase_m = self.dfi.phases[phase_index]
                     sigs_m.append(getattr(phase_m, name))
 
                 width = len(Cat(sigs_m))
-                self.comb += sig_m[write_delay*width:(write_delay+1)*width].eq(Cat(sigs_m))
+                if preserve_throughput:
+                    self.comb += sig_m.eq(Cat(sigs_m))
+                elif repeat_write_data:
+                    # A reduced-width BL8 occupies one fast transaction. Hold its
+                    # payload and byte mask over every fast slot so a one-slot
+                    # startup phase difference cannot leave the DQS burst with
+                    # the converter's zero-filled inactive slot. Commands and
+                    # wrdata_en are still emitted only in their selected slot.
+                    self.comb += sig_m.eq(Replicate(Cat(sigs_m), ratio))
+                else:
+                    self.comb += sig_m[write_delay*width:(write_delay+1)*width].eq(Cat(sigs_m))
 
                 o = Signal.like(sig_s)
                 ser = serializer(
@@ -196,11 +270,15 @@ class DFIRateConverter(Module):
                     o_dw      = len(sig_s),
                     i         = sig_m,
                     o         = o,
+                    reset     = serdes_reset,
                     reset_cnt = serdes_reset_cnt,
+                    register  = not early_write_data,
                     name      = name,
                 )
                 self.submodules += ser
 
+                if preserve_throughput:
+                    o = delay_fast(o, write_delay)
                 self.comb += sig_s.eq(o)
 
         # rddata
@@ -213,8 +291,12 @@ class DFIRateConverter(Module):
                 sig_m = Signal(ratio * len(sig_s))
                 sigs_m = []
                 for j in range(ratio):
-                    phase_m = self.dfi.phases[pi*ratio + j]
+                    phase_index = pi + len(phy_dfi.phases)*j if preserve_throughput else pi*ratio + j
+                    phase_m = self.dfi.phases[phase_index]
                     sigs_m.append(getattr(phase_m, name))
+
+                if preserve_throughput:
+                    sig_s = delay_fast(sig_s, read_delay)
 
                 des = deserializer(
                     clkdiv    = clkdiv,
@@ -223,12 +305,23 @@ class DFIRateConverter(Module):
                     o_dw      = len(sig_m),
                     i         = sig_s,
                     o         = sig_m,
+                    reset     = serdes_reset,
                     reset_cnt = serdes_reset_cnt,
                     name      = name,
                 )
                 self.submodules += des
 
-                if name == "rddata_valid":
+                if preserve_throughput:
+                    if align_read_slots:
+                        # Experimental offset-phase compensation. Aligned
+                        # rising-edge clocks must use the unmodified return
+                        # path below; this extra register makes slot 1 stale.
+                        self.comb += sigs_m[0].eq(sig_m[:len(sig_s)])
+                        read_sync = getattr(self.sync, clkdiv)
+                        read_sync += sigs_m[1].eq(sig_m[len(sig_s):])
+                    else:
+                        self.comb += Cat(sigs_m).eq(sig_m)
+                elif name == "rddata_valid":
                     self.comb += Cat(sigs_m).eq(Replicate(sig_m[read_delay], ratio))
                 else:
                     out_width = len(Cat(sigs_m))
@@ -272,7 +365,10 @@ class DFIRateConverter(Module):
         def __init__(self, *args, **kwargs):
             # Add the PHY in new clock domain,
             self.internal_cd = internal_cd
-            phy = phy_cls(*args, csr_cdc=self.csr_cdc, **kwargs)
+            phy_kwargs = dict(kwargs, csr_cdc=self.csr_cdc)
+            if 'csr_status_cdc' in inspect.signature(phy_cls.__init__).parameters:
+                phy_kwargs['csr_status_cdc'] = self.csr_status_cdc
+            phy = phy_cls(*args, **phy_kwargs)
 
             # Remap clock domains in the PHY
             # Workaround: do this in two steps to avoid errors due to the fact that renaming is done
@@ -302,6 +398,13 @@ class DFIRateConverter(Module):
 
             # Generate new PhySettings
             converter_latency = self.dfi_converter.ser_latency + self.dfi_converter.des_latency
+            read_latency = phy.settings.read_latency
+            if converter_kwargs.get("preserve_throughput", False):
+                # Full-width conversion delays the complete fast return
+                # stream before packing slots. Account for that delay when
+                # predicting the slow fixed-latency owner tag. Reduced-width
+                # conversion selects a window instead and retains its timing.
+                read_latency += phy.settings.read_latency % ratio
             self.settings = PhySettings(
                 phytype                   = phy.settings.phytype,
                 memtype                   = phy.settings.memtype,
@@ -313,7 +416,7 @@ class DFIRateConverter(Module):
                 wrphase                   = phy.settings.wrphase,
                 cl                        = phy.settings.cl,
                 cwl                       = phy.settings.cwl,
-                read_latency              = phy.settings.read_latency//ratio + converter_latency,
+                read_latency              = read_latency//ratio + converter_latency,
                 write_latency             = phy.settings.write_latency//ratio,
                 cmd_latency               = phy.settings.cmd_latency,
                 cmd_delay                 = phy.settings.cmd_delay,
@@ -340,6 +443,19 @@ class DFIRateConverter(Module):
             ]
             return o
 
+        def csr_status_cdc(self, i, invalidation=None, source_invalidation=None):
+            # The PHY owns the fast-domain status source. Return it through a
+            # registered bridge so CSR readback stays in the outer sys domain.
+            from litedram.phy.usnative.tap_status import CSRStatusBridge
+            bridge = CSRStatusBridge(len(i), self.internal_cd, "sys")
+            self.submodules += bridge
+            self.comb += bridge.source.eq(i)
+            if invalidation is not None:
+                self.comb += bridge.invalidate.eq(invalidation)
+            if source_invalidation is not None:
+                self.comb += bridge.source_invalidate.eq(source_invalidation)
+            return bridge.status
+
         def get_csrs(self):
             return self.phy.get_csrs()
 
@@ -347,6 +463,7 @@ class DFIRateConverter(Module):
         namespace = dict(
             __init__ = __init__,
             csr_cdc  = csr_cdc,
+            csr_status_cdc = csr_status_cdc,
             get_csrs = get_csrs,
         )
         return type(name, bases, namespace)

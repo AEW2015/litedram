@@ -48,7 +48,7 @@ class _CommandChooser(Module):
     cmd : Endpoint(cmd_request_rw_layout)
         Currently selected request stream (when ~cmd.valid, cas/ras/we are 0)
     """
-    def __init__(self, requests, eligible=None):
+    def __init__(self, requests, eligible=None, filter_same_group=False):
         self.want_reads     = Signal()
         self.want_writes    = Signal()
         self.want_cmds      = Signal()
@@ -79,7 +79,7 @@ class _CommandChooser(Module):
         self.comb += [
             cmd.valid.eq(choices[arbiter.grant] & (1 if eligible is None else Array(eligible)[arbiter.grant]))
         ]
-        if eligible is not None:
+        if filter_same_group:
             # The arbiter's grant is registered. Filter for NEXT cycle: the
             # group issued now will be cooling down; the other group is ready.
             self.comb += arbiter.request.eq(Cat(
@@ -251,16 +251,32 @@ class Multiplexer(Module, AutoCSR):
         # Command choosing -------------------------------------------------------------------------
         interleaved = getattr(settings, "with_bank_group_interleaving", False)
         requests = [bm.cmd for bm in bank_machines]
+        request_bms = bank_machines
         group_ready = None
         if interleaved:
             # Alternate groups in round-robin order. The selected group's
             # registered cooldown masks same-group CAS for the next cycle.
-            requests = [bank_machines[i].cmd for i in (0, 4, 1, 5, 2, 6, 3, 7)]
+            request_bms = [bank_machines[i] for i in (0, 4, 1, 5, 2, 6, 3, 7)]
+            requests = [bm.cmd for bm in request_bms]
             group_ready = [Signal(reset=1) for _ in range(2)]
-        self.submodules.choose_cmd = choose_cmd = _CommandChooser(requests)
+        activate_eligible = None
+        if getattr(settings, "with_activate_eligibility", False):
+            activate_eligible = [
+                ~(request.ras & ~request.cas & ~request.we) | bm.activate_ready
+                for request, bm in zip(requests, request_bms)
+            ]
+        request_eligible = None
+        if group_ready is not None or activate_eligible is not None:
+            request_eligible = [
+                (1 if group_ready is None else group_ready[i & 1]) &
+                (1 if activate_eligible is None else activate_eligible[i])
+                for i in range(len(requests))
+            ]
+        self.submodules.choose_cmd = choose_cmd = _CommandChooser(
+            requests, eligible=activate_eligible)
         self.submodules.choose_req = choose_req = _CommandChooser(requests,
-            eligible=None if group_ready is None else
-                [group_ready[i & 1] for i in range(len(requests))])
+            eligible=request_eligible,
+            filter_same_group=interleaved)
         if settings.phy.nphases == 1:
             # When only 1 phase, use choose_req for all requests
             choose_cmd = choose_req
@@ -276,7 +292,8 @@ class Multiplexer(Module, AutoCSR):
         self.submodules += steerer
 
         # tRRD timing (Row to Row delay) -----------------------------------------------------------
-        self.submodules.trrdcon = trrdcon = tXXDController(settings.timing.tRRD)
+        self.submodules.trrdcon = trrdcon = tXXDController(settings.timing.tRRD,
+            registered_valid=getattr(settings, "with_registered_timing_valid", False))
         self.comb += trrdcon.valid.eq(choose_cmd.accept() & choose_cmd.activate())
 
         # tFAW timing (Four Activate Window) -------------------------------------------------------
@@ -290,10 +307,12 @@ class Multiplexer(Module, AutoCSR):
         # Preserve tCCD_L for recovery/turnaround timing; only CAS arbitration
         # uses the shorter tCCD_S=4 CK between different bank groups.
         self.submodules.tccdcon = tccdcon = tXXDController(
-            1 if interleaved else settings.timing.tCCD)
+            1 if interleaved else settings.timing.tCCD,
+            registered_valid=getattr(settings, "with_registered_timing_valid", False))
         if interleaved:
             for group in range(2):
-                timer = tXXDController(settings.timing.tCCD)
+                timer = tXXDController(settings.timing.tCCD,
+                    registered_valid=getattr(settings, "with_registered_timing_valid", False))
                 setattr(self.submodules, "tccd_group" + str(group), timer)
                 self.comb += [group_ready[group].eq(timer.ready),
                     timer.valid.eq(choose_req.accept() &
@@ -309,7 +328,8 @@ class Multiplexer(Module, AutoCSR):
         self.submodules.twtrcon = twtrcon = tXXDController(
             settings.timing.tWTR + write_latency +
             # tCCD must be added since tWTR begins after the transfer is complete
-            settings.timing.tCCD if settings.timing.tCCD is not None else 0)
+            settings.timing.tCCD if settings.timing.tCCD is not None else 0,
+            registered_valid=getattr(settings, "with_registered_timing_valid", False))
         self.comb += twtrcon.valid.eq(choose_req.accept() & choose_req.write())
 
         # Read/write turnaround --------------------------------------------------------------------
@@ -344,10 +364,15 @@ class Multiplexer(Module, AutoCSR):
         write_time_en, max_write_time = anti_starvation(settings.write_time)
 
         # Refresh ----------------------------------------------------------------------------------
-        self.comb += [bm.refresh_req.eq(refresher.cmd.valid) for bm in bank_machines]
+        if getattr(settings, "with_registered_refresh_request", False):
+            refresh_req = Signal()
+            self.sync += refresh_req.eq(refresher.cmd.valid)
+        else:
+            refresh_req = refresher.cmd.valid
+        self.comb += [bm.refresh_req.eq(refresh_req) for bm in bank_machines]
         go_to_refresh = Signal()
         bm_refresh_gnts = [bm.refresh_gnt for bm in bank_machines]
-        self.comb += go_to_refresh.eq(reduce(and_, bm_refresh_gnts))
+        self.comb += go_to_refresh.eq(refresh_req & reduce(and_, bm_refresh_gnts))
 
         # Datapath ---------------------------------------------------------------------------------
         all_rddata = [p.rddata for p in dfi.phases]

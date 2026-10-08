@@ -1,17 +1,36 @@
 # UltraScale native DDR PHY development
 
+The staged timing and hardware qualification work is tracked in
+[USNativeDDRPHY timing closure plan](usnative_timing_plan.md).
+
 The package includes native primitive generators and an experimental complete
 `USNativeDDRPHY` using logical calibration ABI v1. The complete PHY requires
 Vivado and the matching LiteX BIOS. Its integrated datapath/calibration currently
-requires single-rank x16 DDR4, two x8 lanes with masks and the documented
-command/address geometry. Wider generator simulations are not evidence of a
-complete wider PHY or hardware qualification.
+accepts single-rank x16, x32 and x64 DDR4 with one mask and differential strobe
+per x8 lane and the documented command/address geometry. The matching BIOS
+must explicitly support the selected DFI geometry: the provisional x64 BIOS
+path uses eight 64-bit DFI phases through reduced-width 1:8 conversion. It
+does not support 128-bit DFI phases or throughput-preserving x64 conversion.
+Wider generator simulations, firmware compilation and implemented candidates
+are not evidence of hardware qualification.
 
 `USNativeDDRPHY` queries the selected Vivado installation, validates the maps,
 and generates the native core. Queries are fresh by default; `query_cache_dir`
 enables validated local reuse and `query_force_refresh=True` bypasses it.
 Caches include tool, part, pins and query-source identities, and are local build
 artifacts. Never commit queried maps, logs, caches or generated physical wiring.
+
+For DDR4 on UltraScale+ only, `USNativeDDRPHY(..., fabric_receiver_vref=True)`
+opts into one fixed `HPIO_VREF(FABRIC_RANGE1)` code-29 source per validated
+physical 13-IO x8 group. DQ and DM use `IOBUFE3` with that group reference;
+the DQS pair is used to validate the group and does not consume VREF. The BCU
+implementation leaves bank `INTERNAL_VREF` at its nominal 0.84 V. The default is
+`False`, which keeps the existing `IOBUF_DCIEN` path and mapping identity.
+This experimental receiver-reference option is not automatic calibration or
+a default for every UltraScale+ board. It has been hardware-qualified only in
+the documented warm, host-trained BCU1525 2400 MT/s channel-0 profile through
+the exposed 1 GiB range; cold startup, stock BIOS training, other channels and
+other boards remain outside that qualification.
 
 `NativeMapping` assigns compact logical tap and control IDs from the validated
 core layout. The adapter uses those same IDs for delay control, FIFO status,
@@ -29,7 +48,9 @@ Unsupported integrated geometry, rates and non-Vivado toolchains fail before
 querying. Additional boards require their own build and hardware validation;
 family recognition alone is not qualification.
 
-Supported initial profiles are 2400 and 2666.667 MT/s. The 2933.333 and 3200 MT/s
+The source profiles include 1600, 1866.667, 2133.333, 2400 and 2666.667 MT/s;
+board targets must restrict them to their exact device and memory topology.
+The 2933.333 and 3200 MT/s
 profiles require explicit `overclock=True`; their native delay-model parameter
 remains capped at 2666.666667 MHz while clock constraints retain the actual
 frequency. These are experimental overclocks, not device-rated configurations
@@ -430,6 +451,10 @@ Vivado strategy integration belong to the target, and BIOS calibration belongs
 to LiteX. Original UltraScale/UltraScale+ eligibility and physical topology
 checks still apply;
 DDR3, x4 native integration, ECC and a true 1:8 controller remain unsupported.
+The standalone `DDR3DFIMux` is only a DFI command/address mapping utility;
+its unit test does not exercise the USNative PHY, DDR3 initialization,
+serialization, training or calibration. A DDR3 request is rejected by the
+integrated USNative PHY before device querying or native-core generation.
 
 ## Optional paired bank-group DMA
 

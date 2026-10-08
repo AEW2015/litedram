@@ -35,7 +35,8 @@ RXTX_PORTS = {
 }
 
 
-def rxtx_parameters(site, *, role, family, refclk_mhz, pre_emphasis=False):
+def rxtx_parameters(site, *, role, family, refclk_mhz, pre_emphasis=False,
+                    use_tbyte=False):
     """Return Verilog parameter literals for the initial DDR4 4:1 profile.
 
     ``data`` includes DQ and DM. DQS uses ``strobe``; address/command use
@@ -53,6 +54,8 @@ def rxtx_parameters(site, *, role, family, refclk_mhz, pre_emphasis=False):
         raise ValueError("Native reference frequency must be finite and positive")
     if not isinstance(pre_emphasis, bool):
         raise ValueError("Pre-emphasis must be boolean")
+    if not isinstance(use_tbyte, bool):
+        raise ValueError("TBYTE control selection must be boolean")
     if not re.fullmatch(r"BITSLICE_RX_TX_X\d+Y\d+", site.native_site):
         raise ValueError("Invalid native serializer site")
     if role in ("strobe", "clock") and not site.master:
@@ -73,7 +76,8 @@ def rxtx_parameters(site, *, role, family, refclk_mhz, pre_emphasis=False):
         RX_DATA_WIDTH="8", RX_DELAY_FORMAT='"TIME"', RX_DELAY_TYPE='"VARIABLE"',
         RX_DELAY_VALUE="0", RX_REFCLK_FREQUENCY=frequency, RX_UPDATE_MODE='"ASYNC"',
         SIM_DEVICE=f'"{family}"', SIM_VERSION="2.0",
-        TBYTE_CTL='"T"' if role == "data" else '"TBYTE_IN"',
+        TBYTE_CTL=('"TBYTE_IN"' if use_tbyte else '"T"')
+            if role == "data" else '"TBYTE_IN"',
         TX_DATA_WIDTH="8", TX_DELAY_FORMAT='"TIME"', TX_DELAY_TYPE='"VARIABLE"',
         TX_DELAY_VALUE="0", TX_OUTPUT_PHASE_90='"FALSE"' if role == "data" else '"TRUE"',
         TX_REFCLK_FREQUENCY=frequency, TX_UPDATE_MODE='"ASYNC"',

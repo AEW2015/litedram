@@ -9,7 +9,7 @@ import random
 
 from migen import *
 
-from litedram.common import tXXDController, tFAWController
+from litedram.common import tXXDController, tFAWController, get_default_cl_cwl
 
 
 def c2bool(c):
@@ -17,6 +17,10 @@ def c2bool(c):
 
 
 class TestTiming(unittest.TestCase):
+    def test_ddr4_default_cl_cwl_supports_2933_and_3200(self):
+        self.assertEqual(get_default_cl_cwl("DDR4", 1/1466.5e6), (21, 16))
+        self.assertEqual(get_default_cl_cwl("DDR4", 1/1600e6), (24, 16))
+
     def txxd_controller_test(self, txxd, valids, readys):
         def generator(dut):
             dut.errors = 0

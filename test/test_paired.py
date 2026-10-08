@@ -13,6 +13,79 @@ from test.common import DRAMMemory
 
 
 class WideTest(unittest.TestCase):
+    def test_x32_paired_dma_counter_and_prbs(self):
+        for random in (0, 1):
+            with self.subTest(random=random):
+                top = Module()
+                wp = [LiteDRAMNativePort('write', 9, 256) for _ in range(2)]
+                rp = [LiteDRAMNativePort('read', 9, 256) for _ in range(2)]
+                top.submodules.w = w = PairedPort(wp, 'write', depth=8)
+                top.submodules.r = r = PairedPort(rp, 'read', depth=8)
+                top.submodules.dma = dma = NativeDMABenchmark(w.port, r.port,
+                    capacity=8192, fifo_depth=8, drained=w.drained, databits=32)
+                memory = [DRAMMemory(256, 512) for _ in range(2)]
+
+                def main():
+                    yield dma.allowed.eq(1)
+                    yield dma._base.storage.eq(0)
+                    yield dma._length.storage.eq(4096)
+                    yield dma._random.storage.eq(random)
+                    yield dma._start.re.eq(1)
+                    yield
+                    yield dma._start.re.eq(0)
+                    for _ in range(20000):
+                        if (yield dma._done.status):
+                            break
+                        yield
+                    self.assertEqual((yield dma._done.status), 1)
+                    self.assertEqual((yield dma._fault.status), 0)
+                    self.assertEqual((yield dma._errors.status), 0)
+                    self.assertEqual((yield dma._write_beats.status), 64)
+                    self.assertEqual((yield dma._read_beats.status), 64)
+                    self.assertEqual((yield w.drained), 1)
+                    self.assertEqual((yield r.error), 0)
+                simulate(top, [main(), memory[0].write_handler(wp[0]),
+                    memory[1].write_handler(wp[1]), memory[0].read_handler(rp[0]),
+                    memory[1].read_handler(rp[1])])
+
+    def test_x64_1024_bit_paired_dma_with_child_backpressure(self):
+        top = Module()
+        wp = [LiteDRAMNativePort('write', 12, 512) for _ in range(2)]
+        rp = [LiteDRAMNativePort('read', 12, 512) for _ in range(2)]
+        top.submodules.w = w = PairedPort(wp, 'write', depth=8)
+        top.submodules.r = r = PairedPort(rp, 'read', depth=8)
+        top.submodules.dma = dma = NativeDMABenchmark(
+            w.port, r.port, capacity=16384, fifo_depth=8,
+            drained=w.drained, databits=64)
+        memory = [DRAMMemory(512, 1024) for _ in range(2)]
+
+        def main():
+            yield dma.allowed.eq(1)
+            yield dma._base.storage.eq(0)
+            yield dma._length.storage.eq(8192)
+            yield dma._random.storage.eq(1)
+            yield dma._start.re.eq(1)
+            yield
+            yield dma._start.re.eq(0)
+            for _ in range(30000):
+                if (yield dma._done.status):
+                    break
+                yield
+            self.assertEqual((yield dma._done.status), 1)
+            self.assertEqual((yield dma._fault.status), 0)
+            self.assertEqual((yield dma._errors.status), 0)
+            self.assertEqual((yield dma._write_beats.status), 64)
+            self.assertEqual((yield dma._read_beats.status), 64)
+            self.assertEqual((yield w.drained), 1)
+            self.assertEqual((yield w.error), 0)
+            self.assertEqual((yield r.error), 0)
+
+        simulate(top, [main(),
+            memory[0].write_handler(wp[0], wdata_ready_random=55),
+            memory[1].write_handler(wp[1], wdata_ready_random=20),
+            memory[0].read_handler(rp[0], rdata_valid_random=15),
+            memory[1].read_handler(rp[1], rdata_valid_random=65)])
+
     def test_paired_counter_and_prbs(self):
         for random in (0, 1):
             with self.subTest(random=random):
@@ -111,6 +184,40 @@ class WideTest(unittest.TestCase):
 
 
 class PairedContractTest(unittest.TestCase):
+    def test_256_bit_children_preserve_bank_group_and_payload(self):
+        ports = [LiteDRAMNativePort("write", 10, 256) for _ in range(2)]
+        dut = PairedPort(ports, "write", depth=4)
+        low = (1 << 255) | 0x12345678
+        high = (1 << 254) | 0x87654321
+        captured = [[], []]
+
+        def main():
+            yield dut.port.cmd.addr.eq(3)
+            yield dut.port.cmd.valid.eq(1)
+            yield
+            yield dut.port.cmd.valid.eq(0)
+            yield dut.port.wdata.data.eq(low | (high << 256))
+            yield dut.port.wdata.we.eq((1 << 64) - 1)
+            yield dut.port.wdata.valid.eq(1)
+            for port in ports:
+                yield port.cmd.ready.eq(1)
+                yield port.wdata.ready.eq(1)
+            for _ in range(20):
+                for group, port in enumerate(ports):
+                    if (yield port.cmd.valid) and (yield port.cmd.ready):
+                        captured[group].append(("addr", (yield port.cmd.addr)))
+                    if (yield port.wdata.valid) and (yield port.wdata.ready):
+                        captured[group].append(("data", (yield port.wdata.data)))
+                if (yield dut.port.wdata.ready):
+                    yield dut.port.wdata.valid.eq(0)
+                yield
+            self.assertEqual(captured[0], [("addr", 6), ("data", low)])
+            self.assertEqual(captured[1], [("addr", 7), ("data", high)])
+            self.assertEqual((yield dut.error), 0)
+            self.assertEqual((yield dut.drained), 1)
+
+        simulate(dut, main())
+
     def test_benchmark_write_cycles_include_child_queue_drain(self):
         ports = [LiteDRAMNativePort("write", 10, 128) for _ in range(2)]
         top = Module()

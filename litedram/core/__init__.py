@@ -6,7 +6,7 @@
 
 from migen import *
 
-from litex.soc.interconnect.csr import AutoCSR
+from litex.soc.interconnect.csr import AutoCSR, CSRStatus
 
 from litedram.dfii import DFIInjector
 from litedram.core.controller import ControllerSettings, LiteDRAMController
@@ -34,3 +34,8 @@ class LiteDRAMCore(Module, AutoCSR):
         self.comb += controller.dfi.connect(self.dfii.slave)
 
         self.submodules.crossbar = LiteDRAMCrossbar(controller.interface)
+        if controller.settings.with_dual_slot:
+            # A slot ownership/return overflow fault cannot be recovered by
+            # discarding one response. Admission stops until system reset.
+            self._dual_slot_error = CSRStatus(name="dual_slot_error")
+            self.comb += self._dual_slot_error.status.eq(controller.interface.dual_slot_error)

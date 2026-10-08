@@ -64,7 +64,7 @@ def control_profiles(sites):
     return result
 
 
-def control_parameters(profile, *, family):
+def control_parameters(profile, *, family, dynamic_odelay=False):
     if family not in ("ULTRASCALE", "ULTRASCALE_PLUS"):
         raise ValueError("Unsupported native control family")
     if not re.fullmatch(r"BITSLICE_CONTROL_X\d+Y\d+", profile.site):
@@ -73,12 +73,15 @@ def control_parameters(profile, *, family):
         raise ValueError("Control flags must be boolean")
     if profile.other_nibble and not profile.data:
         raise ValueError("Command profile cannot borrow a data strobe")
+    if not isinstance(dynamic_odelay, bool):
+        raise ValueError("Dynamic output delay selection must be boolean")
     gate = '"ENABLE"' if profile.data else '"DISABLE"'
     phase = '"SHIFT_90"' if profile.data else '"SHIFT_0"'
     other = '"TRUE"' if profile.other_nibble else '"FALSE"'
     return dict(CTRL_CLK='"EXTERNAL"', DIV_MODE='"DIV4"',
         EN_CLK_TO_EXT_NORTH='"DISABLE"', EN_CLK_TO_EXT_SOUTH='"DISABLE"',
-        EN_DYN_ODLY_MODE='"FALSE"', EN_OTHER_NCLK=other, EN_OTHER_PCLK=other,
+        EN_DYN_ODLY_MODE='"TRUE"' if dynamic_odelay and profile.data else '"FALSE"',
+        EN_OTHER_NCLK=other, EN_OTHER_PCLK=other,
         IDLY_VT_TRACK='"TRUE"', INV_RXCLK='"FALSE"', ODLY_VT_TRACK='"TRUE"',
         QDLY_VT_TRACK='"TRUE"', READ_IDLE_COUNT="6'h1F", REFCLK_SRC='"PLLCLK"',
         ROUNDING_FACTOR="16", RXGATE_EXTEND='"FALSE"', RX_CLK_PHASE_N=phase,
@@ -106,11 +109,11 @@ CONTROL_PORTS = {
 }
 
 
-def emit_control(module_name, profile, *, family):
+def emit_control(module_name, profile, *, family, dynamic_odelay=False):
     """Emit an explicit-port located control wrapper for the initial profile."""
     if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", module_name):
         raise ValueError("Invalid Verilog module name")
-    parameters = control_parameters(profile, family=family)
+    parameters = control_parameters(profile, family=family, dynamic_odelay=dynamic_odelay)
     declarations = [f"    {direction} wire " + (f"[{width-1}:0] " if width != 1 else "") + name
                     for name, (direction, width) in CONTROL_PORTS.items()]
     return "\n".join(["`default_nettype none", f"module {module_name} (",
