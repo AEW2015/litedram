@@ -79,8 +79,8 @@ class NativeRXLanePopScoreboard(Module):
     does not associate FIFO words with tags for overlapping reads.
     """
     def __init__(self, ntaps, lane_taps):
-        if ntaps <= 0 or not lane_taps or any(len(taps) != 8 for taps in lane_taps):
-            raise ValueError("Expected eight DQ FIFO taps for every byte lane")
+        if ntaps <= 0 or not lane_taps or any(len(taps) not in (4, 8) for taps in lane_taps):
+            raise ValueError("Expected four or eight DQ FIFO taps for every strobe group")
         taps = [tap for lane in lane_taps for tap in lane]
         if any(tap < 0 or tap >= ntaps for tap in taps) or len(set(taps)) != len(taps):
             raise ValueError("DQ FIFO tap IDs must be unique and within the tap range")
@@ -91,15 +91,15 @@ class NativeRXLanePopScoreboard(Module):
         self.fault = Signal()
         self.missing_lanes = Signal(len(lane_taps))
         self.completed_reads = Signal(32)
-        self._seen = [Signal(8, name="rx_lane{}_seen".format(lane))
-                      for lane in range(len(lane_taps))]
+        self._seen = [Signal(len(taps), name="rx_lane{}_seen".format(lane))
+                      for lane, taps in enumerate(lane_taps)]
 
         lane_accept = []
         for lane, lane_fifo_taps in enumerate(lane_taps):
             lane_accept.append(Cat(*[self.accepted[tap] for tap in lane_fifo_taps]))
 
         missing = Cat(*[
-            (seen | current) != 0xff
+            (seen | current) != (1 << len(seen))-1
             for seen, current in zip(self._seen, lane_accept)
         ])
         for seen, current in zip(self._seen, lane_accept):

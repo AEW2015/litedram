@@ -1,0 +1,18 @@
+U250 experimental Native DDR4 branch
+===================================
+
+This branch preserves the working AEW2015 controller/Native PHY baseline used
+for the isolated U250 build, then adds x4 strobe groups, optional DM, RDIMM
+settings/latency and DFI-converter propagation. Default x8 behavior remains.
+DDR4 initialization defaults to DM enabled for legacy settings objects and
+uses explicit with_dm=false for the x4 U250 design; RDIMM RCWs remain enabled.
+
+The CPU-free, full 16-GiB DMA project and build/test instructions live in:
+https://github.com/AEW2015/litex-boards/tree/u250/native-ddr4-2400/examples/u250_native_2400
+
+Use the same u250/native-ddr4-2400 branch of AEW2015/litex and litex-boards,
+and unmodified m-labs/migen at e19524c963a8342952840983047557707fbe0b6a.
+
+This PHY is experimental. Offline simulation/timing/bitstream success does
+not establish RDIMM hardware calibration or bandwidth. See the project's
+retained signoff evidence and warning review for unresolved qualifications.

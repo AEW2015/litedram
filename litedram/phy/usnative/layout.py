@@ -52,7 +52,7 @@ def native_layout(sites, auxiliary, *, family):
 
     Reset and differential negative pads are not serializers. Optional parity
     and alert signals must not disappear during generation: until a complete
-    policy exists they are explicit errors. x4 support remains a separate step.
+    policy exists they are explicit errors. x4 groups have no DM and own their nibble independently.
     """
     if any(name in ('par', 'parity', 'alert_n') for name, _ in sites):
         raise ValueError('Parity/alert handling is not implemented in the native profile')
@@ -61,10 +61,11 @@ def native_layout(sites, auxiliary, *, family):
     nibble_clock_wiring(sites, family=family)
     strobes = sorted(i for name, i in sites if name == 'dqs_p')
     dq = sorted(i for name, i in sites if name == 'dq')
-    if len(dq) != 8 * len(strobes):
-        raise ValueError('Native layout currently requires x8 strobe groups')
+    if len(dq) not in (4 * len(strobes), 8 * len(strobes)):
+        raise ValueError('Native layout requires x4 or x8 strobe groups')
+    group_width = len(dq) // len(strobes)
     masks = sorted(i for name, i in sites if name == 'dm')
-    if masks and masks != strobes:
+    if masks and (group_width != 8 or masks != strobes):
         raise ValueError('A mask is required for every lane when DM is present')
     active = {key: site for key, site in sites.items()
               if key[0] not in ('dqs_n', 'clk_n', 'reset_n')}
@@ -78,7 +79,7 @@ def native_layout(sites, auxiliary, *, family):
     lanes = []
     for lane in strobes:
         strobe = sites['dqs_p', lane]
-        keys = [('dq', bit) for bit in range(8 * lane, 8 * lane + 8)]
+        keys = [('dq', bit) for bit in range(group_width * lane, group_width * lane + group_width)]
         lane_keys = keys + [('dqs_p', lane)] + ([('dm', lane)] if masks else [])
         lane_controls = tuple(sorted({control_indices[sites[key].control_site]
                                       for key in lane_keys}))

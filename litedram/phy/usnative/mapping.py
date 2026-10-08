@@ -27,12 +27,13 @@ class NativeMapping:
         self.lane_count    = len(layout.lanes)
         if not 1 <= self.tap_count <= 65535 or not 1 <= self.control_count <= 32:
             raise ValueError('Native mapping exceeds ABI resource limits')
-        if not 1 <= self.lane_count <= 8:
-            raise ValueError('Native mapping supports one to eight x8 lanes')
+        if not 1 <= self.lane_count <= 16:
+            raise ValueError('Native mapping supports up to sixteen strobe groups')
         if tuple(lane.index for lane in layout.lanes) != tuple(range(self.lane_count)):
             raise ValueError('Native lane IDs must be contiguous')
-        if any(len(lane.dq) != 8 or not lane.controls for lane in layout.lanes):
-            raise ValueError('Every x8 lane needs eight DQ and control ownership')
+        group_width = len(layout.lanes[0].dq)
+        if group_width not in (4, 8) or any(len(lane.dq) != group_width or not lane.controls for lane in layout.lanes):
+            raise ValueError('Every strobe group needs uniform DQ and control ownership')
         self.dq_taps  = tuple(tap for lane in layout.lanes for tap in lane.dq)
         self.dqs_taps = tuple(lane.strobe for lane in layout.lanes)
         self.dm_taps  = tuple(lane.mask for lane in layout.lanes if lane.mask is not None)
@@ -41,8 +42,8 @@ class NativeMapping:
             raise ValueError('Native mapping requires a clock tap')
         self.data_controls = tuple(sorted({c for lane in layout.lanes for c in lane.controls}))
         self.lane_controls = tuple(tuple(lane.controls) for lane in layout.lanes)
-        if len(self.dq_taps) != 8*self.lane_count or len(self.dm_taps) not in (0, self.lane_count):
-            raise ValueError('Invalid x8 lane geometry')
+        if len(self.dq_taps) != group_width*self.lane_count or len(self.dm_taps) not in (0, self.lane_count):
+            raise ValueError('Invalid strobe group geometry')
         taps = self.dq_taps + self.dqs_taps + self.dm_taps + self.ck_taps
         if len(taps) != len(set(taps)) or any(not 0 <= tap < self.tap_count for tap in taps):
             raise ValueError('Duplicate or out-of-range logical tap')

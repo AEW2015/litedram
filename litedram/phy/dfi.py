@@ -411,6 +411,8 @@ class DFIRateConverter(Module):
                 databits                  = phy.settings.databits,
                 dfi_databits              = len(self.dfi.p0.wrdata),
                 nranks                    = phy.settings.nranks,
+                strobes                   = phy.settings.strobes,
+                with_dm                   = phy.settings.with_dm,
                 nphases                   = len(self.dfi.phases),
                 rdphase                   = phy.settings.rdphase,
                 wrphase                   = phy.settings.wrphase,
@@ -427,6 +429,8 @@ class DFIRateConverter(Module):
                 delays                    = phy.settings.delays,
                 bitslips                  = phy.settings.bitslips,
             )
+
+            self.settings.is_rdimm = phy.settings.is_rdimm
 
             # Copy any non-default PhySettings (e.g. electrical settings)
             for attr, value in vars(self.phy.settings).items():

@@ -427,7 +427,7 @@ def get_ddr4_phy_init_sequence(phy_settings, timing_settings):
     rtt_wr  = getattr(phy_settings, "rtt_wr",  "120ohm")
     ron     = getattr(phy_settings, "ron",     "34ohm")
     tdqs    = getattr(phy_settings, "tdqs",    0)
-    dm      = 1
+    dm      = int(getattr(phy_settings, "with_dm", True))
     assert not (dm and tdqs)
 
     wr  = max(timing_settings.tWR*phy_settings.nphases, 10) # >= ceiling(tWR/tCK)
