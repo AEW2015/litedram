@@ -1,0 +1,15 @@
+{
+  "parent": "build/dual_ddr_opentpu_v10/litedram_external_controller.v",
+  "parent_sha256": "544f4e2c858cc0fc48305d45efb2166cebee13a32b4f612462e2f407244c3948",
+  "RTL_sha256": "4392b2b524845df6a0f79dbebd2f021e510c8caa0750ad54c6b41f7b3a781f5f",
+  "local_start_reset_index": 13,
+  "first_bad_reset_index": 23,
+  "read_return_valid_reset_index": 20,
+  "WE_same_edge_copies": 64,
+  "first_bad_start_same_edge_copies": 4,
+  "CSR_read_mux_terms": 62,
+  "CSR_read_partition_count": 9,
+  "CSR_read_max_terms_per_partition": 8,
+  "CSR_read_response_additional_cycles": 1,
+  "DFI_and_native_pipeline_cycles_changed": 0
+}
