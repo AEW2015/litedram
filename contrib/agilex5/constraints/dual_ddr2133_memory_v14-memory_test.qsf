@@ -1,0 +1,1076 @@
+set_global_assignment -name FAMILY "Agilex 5"
+set_global_assignment -name DEVICE A5ED065BB32AE6SR0
+set_global_assignment -name NUM_PARALLEL_PROCESSORS 4
+set_global_assignment -name DEVICE_INITIALIZATION_CLOCK OSC_CLK_1_125MHZ
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED"
+set_location_assignment PIN_BK31 -to clk
+set_location_assignment PIN_BU28 -to reset_n
+set_location_assignment PIN_CF12 -to led
+set_location_assignment PIN_BR49 -to ref_clk
+set_location_assignment PIN_BR52 -to rzq
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to clk
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to reset_n
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to led
+set_location_assignment PIN_BK38 -to dq[0]
+set_location_assignment PIN_CK54 -to dq[10]
+set_location_assignment PIN_CL73 -to dq[11]
+set_location_assignment PIN_CL54 -to dq[12]
+set_location_assignment PIN_CK73 -to dq[13]
+set_location_assignment PIN_CK56 -to dq[14]
+set_location_assignment PIN_CL70 -to dq[15]
+set_location_assignment PIN_BF50 -to dq[16]
+set_location_assignment PIN_BF64 -to dq[17]
+set_location_assignment PIN_BE50 -to dq[18]
+set_location_assignment PIN_BF68 -to dq[19]
+set_location_assignment PIN_BH49 -to dq[1]
+set_location_assignment PIN_BE46 -to dq[20]
+set_location_assignment PIN_BE64 -to dq[21]
+set_location_assignment PIN_BF46 -to dq[22]
+set_location_assignment PIN_BE68 -to dq[23]
+set_location_assignment PIN_CK8 -to dq[24]
+set_location_assignment PIN_CK20 -to dq[25]
+set_location_assignment PIN_CK11 -to dq[26]
+set_location_assignment PIN_CL20 -to dq[27]
+set_location_assignment PIN_CL6 -to dq[28]
+set_location_assignment PIN_CK26 -to dq[29]
+set_location_assignment PIN_BH41 -to dq[2]
+set_location_assignment PIN_CL8 -to dq[30]
+set_location_assignment PIN_CL23 -to dq[31]
+set_location_assignment PIN_BH52 -to dq[3]
+set_location_assignment PIN_BH38 -to dq[4]
+set_location_assignment PIN_BP52 -to dq[5]
+set_location_assignment PIN_BM38 -to dq[6]
+set_location_assignment PIN_BM52 -to dq[7]
+set_location_assignment PIN_CL51 -to dq[8]
+set_location_assignment PIN_CK66 -to dq[9]
+set_location_assignment PIN_BM49 -to dqs_n[0]
+set_location_assignment PIN_CL66 -to dqs_n[1]
+set_location_assignment PIN_BE57 -to dqs_n[2]
+set_location_assignment PIN_CL17 -to dqs_n[3]
+set_location_assignment PIN_BK49 -to dqs_p[0]
+set_location_assignment PIN_CK63 -to dqs_p[1]
+set_location_assignment PIN_BE61 -to dqs_p[2]
+set_location_assignment PIN_CK17 -to dqs_p[3]
+set_global_assignment -name PWRMGT_VOLTAGE_OUTPUT_FORMAT "LINEAR FORMAT"
+set_global_assignment -name PWRMGT_LINEAR_FORMAT_N "-12"
+set_global_assignment -name LAST_QUARTUS_VERSION "26.1.1 Pro Edition"
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS_NO_OUTPUT_GND "AS INPUT TRI-STATED"
+set_global_assignment -name QIP_FILE ../../integration/dual-ddr-v1/phy-native2133-v1/generated/bank0/phy_probe_phy/phy_probe_phy.qip
+set_global_assignment -name QIP_FILE ../hardware-core400-pipelined-v1/control_system/control_system.qip
+set_global_assignment -name OPTIMIZE_HOLD_TIMING "ALL PATHS"
+set_global_assignment -name SEED 31
+set_global_assignment -name QIP_FILE ../hardware-core400-pipelined-v1/ip/control_system/control_system_bridge_2/control_system_bridge_2.qip
+set_global_assignment -name QIP_FILE ../hardware-core400-pipelined-v1/ip/control_system/control_system_cal_2/control_system_cal_2.qip
+set_global_assignment -name QIP_FILE ../hardware-core400-pipelined-v1/ip/control_system/control_system_clock_2/control_system_clock_2.qip
+set_global_assignment -name QIP_FILE ../hardware-core400-pipelined-v1/ip/control_system/control_system_core_clock_2/control_system_core_clock_2.qip
+set_global_assignment -name QIP_FILE ../hardware-core400-pipelined-v1/ip/control_system/control_system_cpu_2/control_system_cpu_2.qip
+set_global_assignment -name QIP_FILE ../hardware-core400-pipelined-v1/ip/control_system/control_system_jtag_uart_2/control_system_jtag_uart_2.qip
+set_global_assignment -name QIP_FILE ../hardware-core400-pipelined-v1/ip/control_system/control_system_leds_2/control_system_leds_2.qip
+set_global_assignment -name QIP_FILE ../hardware-core400-pipelined-v1/ip/control_system/control_system_ram_2/control_system_ram_2.qip
+set_global_assignment -name QIP_FILE ../hardware-core400-pipelined-v1/ip/control_system/control_system_reset_2/control_system_reset_2.qip
+set_global_assignment -name QIP_FILE ../hardware-core400-pipelined-v1/ip/control_system/control_system_reset_release_2/control_system_reset_release_2.qip
+set_global_assignment -name QIP_FILE ../hardware-core400-pipelined-v1/ip/control_system/control_system_status_2/control_system_status_2.qip
+set_location_assignment PIN_CF52 -to a[0]
+set_location_assignment PIN_CH38 -to a[10]
+set_location_assignment PIN_CF38 -to a[11]
+set_location_assignment PIN_BU52 -to a[12]
+set_location_assignment PIN_BW49 -to a[13]
+set_location_assignment PIN_CA49 -to a[14]
+set_location_assignment PIN_BR41 -to a[15]
+set_location_assignment PIN_BU41 -to a[16]
+set_location_assignment PIN_CH52 -to a[1]
+set_location_assignment PIN_CC52 -to a[2]
+set_location_assignment PIN_CA52 -to a[3]
+set_location_assignment PIN_CF49 -to a[4]
+set_location_assignment PIN_CH49 -to a[5]
+set_instance_assignment -name IO_STANDARD "SSTL-12" -to a[5]
+set_location_assignment PIN_CH41 -to a[6]
+set_location_assignment PIN_CF41 -to a[7]
+set_location_assignment PIN_CC41 -to a[8]
+set_location_assignment PIN_CA41 -to a[9]
+set_location_assignment PIN_CL45 -to act_n
+set_location_assignment PIN_BU38 -to ba[0]
+set_location_assignment PIN_CA38 -to ba[1]
+set_location_assignment PIN_BW38 -to bg[0]
+set_location_assignment PIN_CL42 -to bg[1]
+set_location_assignment PIN_CL30 -to ck_n
+set_location_assignment PIN_CK33 -to ck_p
+set_location_assignment PIN_CK35 -to cke
+set_location_assignment PIN_CK48 -to cs_n
+set_location_assignment PIN_CK39 -to odt
+set_location_assignment PIN_CL26 -to par
+set_location_assignment PIN_CK45 -to dram_reset_n
+set_global_assignment -name TOP_LEVEL_ENTITY dual_ddr_memory_test_native2133_v1
+set_global_assignment -name VERILOG_FILE litedram_external_controller.v
+set_global_assignment -name SDC_FILE public_litedram.sdc
+set_location_assignment PIN_BR28 -to clock_scl
+set_location_assignment PIN_BR31 -to clock_sda
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to clock_scl
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to clock_sda
+set_global_assignment -name INI_VARS "ip_phylite_ph2_allow_unsafe_nonworking_freqs=on"
+set_global_assignment -name OPTIMIZATION_MODE "HIGH PERFORMANCE EFFORT"
+set_global_assignment -name OPTIMIZATION_TECHNIQUE SPEED
+set_global_assignment -name MUX_RESTRUCTURE OFF
+set_global_assignment -name GLOBAL_PLACEMENT_EFFORT "MAXIMUM EFFORT"
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to {a[5]}
+
+set_global_assignment -name VERILOG_MACRO "SYNTHESIS=1"
+set_location_assignment PIN_P74 -to a3[0]
+set_location_assignment PIN_T65 -to a3[10]
+set_location_assignment PIN_P65 -to a3[11]
+set_location_assignment PIN_AG79 -to a3[12]
+set_location_assignment PIN_AG72 -to a3[13]
+set_location_assignment PIN_AG75 -to a3[14]
+set_location_assignment PIN_AG83 -to a3[15]
+set_location_assignment PIN_AC83 -to a3[16]
+set_location_assignment PIN_T74 -to a3[1]
+set_location_assignment PIN_V77 -to a3[2]
+set_location_assignment PIN_T77 -to a3[3]
+set_location_assignment PIN_M74 -to a3[4]
+set_location_assignment PIN_K74 -to a3[5]
+set_location_assignment PIN_V67 -to a3[6]
+set_location_assignment PIN_T67 -to a3[7]
+set_location_assignment PIN_M65 -to a3[8]
+set_location_assignment PIN_K65 -to a3[9]
+set_location_assignment PIN_H77 -to act3_n
+set_location_assignment PIN_Y74 -to ba3[0]
+set_location_assignment PIN_Y67 -to ba3[1]
+set_location_assignment PIN_Y65 -to bg3[0]
+set_location_assignment PIN_K77 -to bg3[1]
+set_location_assignment PIN_F67 -to ck3_n
+set_location_assignment PIN_H67 -to ck3_p
+set_location_assignment PIN_M67 -to cke3
+set_location_assignment PIN_F77 -to cs3_n
+set_location_assignment PIN_D74 -to odt3
+set_location_assignment PIN_D65 -to par3
+set_location_assignment PIN_M77 -to dram_reset3_n
+set_location_assignment PIN_B82 -to dq3[0]
+set_location_assignment PIN_AC61 -to dq3[10]
+set_location_assignment PIN_Y55 -to dq3[11]
+set_location_assignment PIN_AC64 -to dq3[12]
+set_location_assignment PIN_AG61 -to dq3[13]
+set_location_assignment PIN_AG64 -to dq3[14]
+set_location_assignment PIN_Y44 -to dq3[15]
+set_location_assignment PIN_P55 -to dq3[16]
+set_location_assignment PIN_T55 -to dq3[17]
+set_location_assignment PIN_V58 -to dq3[18]
+set_location_assignment PIN_T58 -to dq3[19]
+set_location_assignment PIN_A66 -to dq3[1]
+set_location_assignment PIN_P44 -to dq3[20]
+set_location_assignment PIN_T44 -to dq3[21]
+set_location_assignment PIN_K44 -to dq3[22]
+set_location_assignment PIN_M44 -to dq3[23]
+set_location_assignment PIN_H58 -to dq3[24]
+set_location_assignment PIN_F58 -to dq3[25]
+set_location_assignment PIN_M58 -to dq3[26]
+set_location_assignment PIN_K58 -to dq3[27]
+set_location_assignment PIN_F47 -to dq3[28]
+set_location_assignment PIN_H47 -to dq3[29]
+set_location_assignment PIN_A82 -to dq3[2]
+set_location_assignment PIN_D44 -to dq3[30]
+set_location_assignment PIN_F44 -to dq3[31]
+set_location_assignment PIN_A70 -to dq3[3]
+set_location_assignment PIN_A85 -to dq3[4]
+set_location_assignment PIN_B66 -to dq3[5]
+set_location_assignment PIN_B85 -to dq3[6]
+set_location_assignment PIN_B70 -to dq3[7]
+set_location_assignment PIN_Y58 -to dq3[8]
+set_location_assignment PIN_Y47 -to dq3[9]
+set_location_assignment PIN_B76 -to dqs3_n[0]
+set_location_assignment PIN_AG53 -to dqs3_n[1]
+set_location_assignment PIN_M55 -to dqs3_n[2]
+set_location_assignment PIN_D55 -to dqs3_n[3]
+set_location_assignment PIN_A80 -to dqs3_p[0]
+set_location_assignment PIN_AG57 -to dqs3_p[1]
+set_location_assignment PIN_K55 -to dqs3_p[2]
+set_location_assignment PIN_F55 -to dqs3_p[3]
+set_location_assignment PIN_AC68 -to ref_clk3
+set_location_assignment PIN_AC79 -to rzq3
+set_global_assignment -name QIP_FILE ../../integration/dual-ddr-v1/phy-native2133-bank3-r3/generated/bank1/dual3_phy_probe_phy/dual3_phy_probe_phy.qip
+set_global_assignment -name SYSTEMVERILOG_FILE ../../integration/dual-ddr-v1/native2133-memory-v1/draft/dual_ddr_memory_test_native2133_v1.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../integration/dual-ddr-v1/native2133-memory-v1/draft/dual_ddr_bank0_path_native2133_v1.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../integration/dual-ddr-v1/native2133-memory-v1/draft/dual_ddr_bank1_path_native2133_v1.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../integration/dual-ddr-v1/native2133-memory-v1/draft/dual_ddr_csr_router_fast_v11.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../integration/dual-ddr-v1/rtl/dual_ddr_cal_service.sv
+set_global_assignment -library control_system -name VERILOG_FILE ../../integration/dual-ddr-v1/rtl-r7/dual_ddr_control_system_r7.v
+set_global_assignment -name SDC_FILE ../../integration/dual-ddr-v1/config-live-bits-review-v1/dual_ddr_native2133_config_live_bits_diagnostic_v1.sdc
+set_instance_assignment -name IO_STANDARD "SSTL-12" -to {a3[5]}
+set_instance_assignment -name SLEW_RATE 1 -to {a3[5]}
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to {a3[5]}
+
+# Preserve the exact asynchronous CSR capture boundaries used by strict CDC constraints.
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[0][0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[0][1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[0][2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[0][3]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[0][4]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[0][5]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[0][6]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[0][7]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[0][8]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[0][9]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[0][10]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[0][11]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[1][0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[1][1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[1][2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[1][3]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[1][4]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[1][5]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[1][6]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[1][7]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[1][8]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[1][9]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[1][10]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {u_router|b_config_address[1][11]}
+
+# Enable preservation only in the router and mark its exact 24 configuration captures.
+set_instance_assignment -name PRESERVE_FOR_DEBUG_ENABLE ON -to {u_router}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[0][0]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[0][1]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[0][2]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[0][3]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[0][4]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[0][5]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[0][6]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[0][7]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[0][8]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[0][9]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[0][10]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[0][11]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[1][0]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[1][1]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[1][2]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[1][3]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[1][4]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[1][5]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[1][6]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[1][7]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[1][8]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[1][9]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[1][10]}
+set_instance_assignment -name PRESERVE_FOR_DEBUG ON -to {u_router|b_config_address[1][11]}
+
+# Exact live ordinary control registers: retain local native-domain timing repair.
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_rdata_due}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_start_debt}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_0_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_0_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_0_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_0_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_0_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_0_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_0_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_0_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_1_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_1_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_1_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_1_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_1_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_1_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_1_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_1_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_2_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_2_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_2_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_2_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_2_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_2_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_2_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_2_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_3_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_3_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_3_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_3_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_3_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_3_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_3_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_3_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_4_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_4_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_4_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_4_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_4_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_4_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_4_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_4_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_5_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_5_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_5_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_5_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_5_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_5_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_5_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_5_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_6_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_6_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_6_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_6_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_6_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_6_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_6_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_6_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_7_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_7_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_7_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_7_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_7_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_7_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_7_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_7_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_8_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_8_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_8_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_8_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_8_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_8_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_8_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_8_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_9_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_9_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_9_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_9_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_9_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_9_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_9_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_9_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_10_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_10_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_10_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_10_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_10_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_10_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_10_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_10_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_11_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_11_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_11_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_11_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_11_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_11_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_11_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_11_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_12_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_12_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_12_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_12_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_12_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_12_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_12_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_12_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_13_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_13_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_13_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_13_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_13_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_13_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_13_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_13_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_14_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_14_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_14_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_14_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_14_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_14_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_14_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_14_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_15_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_15_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_15_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_15_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_15_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_15_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_15_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_pop_local_15_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_nonempty_local_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_nonempty_local_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_nonempty_local_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_nonempty_local_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_nonempty_local_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_nonempty_local_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_nonempty_local_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|dma_make_core_multiplexer_fresh_nonempty_local_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_rdata_due}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_start_debt}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_0_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_0_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_0_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_0_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_0_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_0_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_0_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_0_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_1_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_1_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_1_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_1_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_1_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_1_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_1_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_1_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_2_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_2_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_2_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_2_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_2_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_2_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_2_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_2_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_3_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_3_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_3_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_3_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_3_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_3_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_3_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_3_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_4_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_4_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_4_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_4_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_4_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_4_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_4_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_4_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_5_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_5_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_5_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_5_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_5_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_5_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_5_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_5_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_6_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_6_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_6_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_6_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_6_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_6_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_6_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_6_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_7_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_7_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_7_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_7_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_7_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_7_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_7_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_7_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_8_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_8_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_8_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_8_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_8_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_8_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_8_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_8_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_9_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_9_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_9_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_9_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_9_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_9_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_9_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_9_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_10_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_10_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_10_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_10_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_10_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_10_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_10_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_10_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_11_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_11_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_11_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_11_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_11_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_11_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_11_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_11_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_12_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_12_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_12_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_12_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_12_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_12_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_12_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_12_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_13_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_13_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_13_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_13_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_13_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_13_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_13_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_13_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_14_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_14_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_14_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_14_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_14_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_14_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_14_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_14_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_15_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_15_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_15_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_15_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_15_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_15_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_15_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_pop_local_15_7}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_nonempty_local_0}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_nonempty_local_1}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_nonempty_local_2}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_nonempty_local_3}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_nonempty_local_4}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_nonempty_local_5}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_nonempty_local_6}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|dma_make_core_multiplexer_fresh_nonempty_local_7}
+
+# Exact ordinary receiver-input capture registers.
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[3]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[4]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[5]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[6]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[7]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[8]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[9]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[10]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[11]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[12]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[13]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[14]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[15]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[16]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[17]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[18]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[19]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[20]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[21]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[22]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[23]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[24]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[25]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[26]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[27]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[28]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[29]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[30]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[31]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[32]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[33]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[34]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[35]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[36]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[37]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[38]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[39]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[40]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[41]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[42]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[43]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[44]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[45]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[46]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[47]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[48]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[49]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[50]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[51]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[52]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[53]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[54]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[55]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[56]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[57]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[58]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[59]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[60]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[61]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[62]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_0[63]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_valid_0[0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_valid_0[1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_valid_0[2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_valid_0[3]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[3]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[4]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[5]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[6]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[7]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[8]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[9]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[10]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[11]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[12]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[13]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[14]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[15]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[16]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[17]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[18]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[19]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[20]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[21]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[22]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[23]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[24]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[25]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[26]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[27]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[28]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[29]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[30]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[31]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[32]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[33]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[34]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[35]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[36]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[37]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[38]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[39]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[40]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[41]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[42]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[43]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[44]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[45]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[46]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[47]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[48]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[49]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[50]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[51]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[52]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[53]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[54]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[55]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[56]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[57]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[58]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[59]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[60]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[61]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[62]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_1[63]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_valid_1[0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_valid_1[1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_valid_1[2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_valid_1[3]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[3]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[4]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[5]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[6]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[7]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[8]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[9]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[10]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[11]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[12]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[13]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[14]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[15]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[16]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[17]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[18]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[19]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[20]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[21]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[22]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[23]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[24]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[25]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[26]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[27]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[28]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[29]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[30]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[31]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[32]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[33]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[34]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[35]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[36]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[37]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[38]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[39]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[40]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[41]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[42]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[43]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[44]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[45]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[46]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[47]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[48]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[49]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[50]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[51]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[52]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[53]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[54]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[55]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[56]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[57]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[58]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[59]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[60]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[61]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[62]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_2[63]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_valid_2[0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_valid_2[1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_valid_2[2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_valid_2[3]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[3]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[4]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[5]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[6]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[7]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[8]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[9]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[10]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[11]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[12]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[13]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[14]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[15]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[16]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[17]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[18]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[19]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[20]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[21]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[22]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[23]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[24]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[25]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[26]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[27]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[28]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[29]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[30]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[31]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[32]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[33]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[34]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[35]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[36]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[37]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[38]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[39]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[40]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[41]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[42]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[43]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[44]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[45]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[46]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[47]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[48]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[49]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[50]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[51]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[52]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[53]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[54]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[55]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[56]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[57]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[58]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[59]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[60]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[61]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[62]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_data_3[63]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_valid_3[0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_valid_3[1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_valid_3[2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank0|u_controller|phy_phase_input_valid_3[3]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[3]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[4]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[5]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[6]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[7]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[8]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[9]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[10]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[11]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[12]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[13]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[14]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[15]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[16]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[17]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[18]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[19]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[20]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[21]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[22]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[23]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[24]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[25]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[26]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[27]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[28]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[29]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[30]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[31]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[32]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[33]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[34]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[35]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[36]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[37]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[38]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[39]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[40]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[41]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[42]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[43]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[44]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[45]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[46]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[47]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[48]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[49]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[50]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[51]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[52]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[53]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[54]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[55]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[56]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[57]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[58]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[59]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[60]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[61]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[62]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_0[63]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_valid_0[0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_valid_0[1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_valid_0[2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_valid_0[3]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[3]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[4]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[5]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[6]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[7]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[8]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[9]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[10]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[11]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[12]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[13]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[14]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[15]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[16]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[17]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[18]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[19]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[20]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[21]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[22]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[23]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[24]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[25]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[26]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[27]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[28]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[29]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[30]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[31]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[32]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[33]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[34]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[35]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[36]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[37]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[38]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[39]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[40]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[41]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[42]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[43]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[44]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[45]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[46]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[47]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[48]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[49]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[50]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[51]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[52]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[53]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[54]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[55]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[56]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[57]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[58]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[59]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[60]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[61]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[62]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_1[63]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_valid_1[0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_valid_1[1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_valid_1[2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_valid_1[3]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[3]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[4]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[5]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[6]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[7]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[8]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[9]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[10]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[11]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[12]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[13]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[14]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[15]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[16]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[17]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[18]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[19]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[20]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[21]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[22]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[23]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[24]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[25]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[26]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[27]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[28]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[29]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[30]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[31]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[32]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[33]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[34]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[35]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[36]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[37]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[38]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[39]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[40]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[41]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[42]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[43]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[44]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[45]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[46]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[47]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[48]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[49]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[50]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[51]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[52]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[53]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[54]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[55]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[56]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[57]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[58]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[59]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[60]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[61]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[62]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_2[63]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_valid_2[0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_valid_2[1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_valid_2[2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_valid_2[3]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[3]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[4]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[5]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[6]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[7]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[8]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[9]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[10]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[11]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[12]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[13]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[14]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[15]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[16]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[17]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[18]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[19]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[20]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[21]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[22]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[23]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[24]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[25]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[26]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[27]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[28]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[29]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[30]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[31]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[32]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[33]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[34]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[35]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[36]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[37]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[38]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[39]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[40]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[41]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[42]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[43]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[44]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[45]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[46]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[47]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[48]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[49]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[50]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[51]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[52]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[53]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[54]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[55]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[56]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[57]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[58]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[59]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[60]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[61]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[62]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_data_3[63]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_valid_3[0]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_valid_3[1]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_valid_3[2]}
+set_instance_assignment -name ALLOW_REGISTER_RETIMING OFF -to {bank1|u_controller|phy_phase_input_valid_3[3]}
