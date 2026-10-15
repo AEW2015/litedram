@@ -133,7 +133,23 @@ class BankMachine(Module):
         row_hit    = Signal()
         row_open   = Signal()
         row_close  = Signal()
-        self.comb += row_hit.eq(row == slicer.row(cmd_buffer.source.addr))
+        if getattr(settings, "registered_row_hit", False):
+            # This mode shortens the combinational path from the buffered
+            # address to command arbitration. The capture event aligns the
+            # registered comparison with the cycle in which Buffer.source
+            # presents the captured request.
+            assert not settings.with_auto_precharge, \
+                "registered_row_hit requires with_auto_precharge=False"
+            self.sync += If(row_close,
+                row_hit.eq(0)
+            ).Elif(row_open,
+                row_hit.eq(1)
+            ).Elif(
+                cmd_buffer.sink.valid & cmd_buffer.sink.ready,
+                row_hit.eq(row == slicer.row(cmd_buffer.sink.addr))
+            )
+        else:
+            self.comb += row_hit.eq(row == slicer.row(cmd_buffer.source.addr))
         self.sync += \
             If(row_close,
                 row_opened.eq(0)
