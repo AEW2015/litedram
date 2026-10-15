@@ -1,0 +1,14 @@
+{
+  "migen": {
+    "commit": "4c2ae8dfeea37f235b52acb8166f12acaaae4f7c",
+    "source": "https://github.com/m-labs/migen"
+  },
+  "litex": {
+    "commit": "dd54d77db7a204514ff2ddc479b30fd0d21f4e53",
+    "source": "https://github.com/enjoy-digital/litex"
+  },
+  "litedram": {
+    "commit": "a1da8cb4fb7901aa6019330496d17c7c91ccc3ef",
+    "source": "https://github.com/enjoy-digital/litedram"
+  }
+}

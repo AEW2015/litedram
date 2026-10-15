@@ -1,0 +1,784 @@
+{
+  "schema_version": 1,
+  "purpose": "Verified reference board contract for Agilex 5 LiteDRAM PHY Lite work",
+  "board": "Agilex 5 E-Series 065B Modular ES",
+  "device": "A5ED065BB32AE6SR0",
+  "quartus": "26.1.1 build 130",
+  "memory": {
+    "type": "DDR4",
+    "fpga_bank": "2B",
+    "data_width_bits": 32,
+    "chip_selects": 1,
+    "ranks": 1,
+    "capacity_bytes": 8589934592,
+    "target_rate_mt_s": 1600,
+    "target_ck_mhz": 800,
+    "reference_test": "DDR4_LIVE_TEST_PASS",
+    "coverage": "Pattern test of first 1 MiB, sparse independent address tags across 8 GiB; not exhaustive",
+    "geometry_status": "audited_pending",
+    "geometry_note": "Do not infer or freeze row/column/bank-group geometry for LiteDRAM yet. Confirm the exact memory channel/component topology, EMIF generated configuration/report, and vendor device data before selecting geometry.",
+    "emif_reference_settings": {
+      "die_width_bits": 8,
+      "die_density_gbits": 16,
+      "speed_bin": "3200AA",
+      "cl_mck": 12,
+      "cwl_mck": 11,
+      "page_size_parameter": 1024,
+      "dm_enabled": false,
+      "read_dbi_enabled": false,
+      "write_dbi_enabled": false
+    },
+    "mask_policy": {
+      "dm_wiring_status": "unresolved",
+      "emif_physical_dm_enabled": false,
+      "litephy_policy": "full_burst_writes_only_until_DM_is_verified",
+      "partial_write_masks": "reject_or_handle_above_PHY; never silently ignore"
+    }
+  },
+  "pin_sources": {
+    "package_assignments": "../../agilex5-ddr4-test/memory-pins.tcl",
+    "io96_locations": "../../agilex5-ddr4-test/ip/test_system/test_system_emif/emif_io96b_ddr4comp_430/synth/io96b_0/*atom_attr_pin_locations.sv (generated EMIF mapping arrays)",
+    "location_formula": "io96_index = io96_lane * 12 + io96_pin; lane and pin copied from generated *_LOCATION_BYTE and *_LOCATION_PIN arrays.",
+    "location_scope": "IO96 mapping array values are generated hard-EMIF reference placement, not proof that a custom PHY Lite build can legally reuse those placements."
+  },
+  "pins": [
+    {
+      "signal": "i_ddr4_comp1_alert_n",
+      "package_pin": "BR38",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 3,
+        "io96_pin": 8,
+        "io96_index": 44
+      }
+    },
+    {
+      "signal": "i_ddr4_comp1_refclk_p",
+      "package_pin": "BR49",
+      "bank": "2B",
+      "io96": null
+    },
+    {
+      "signal": "i_ddr4_comp1_rzq",
+      "package_pin": "BR52",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 3,
+        "io96_pin": 2,
+        "io96_index": 38
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[0]",
+      "package_pin": "BK38",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 4,
+        "io96_pin": 10,
+        "io96_index": 58
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[10]",
+      "package_pin": "CK54",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 0,
+        "io96_pin": 11,
+        "io96_index": 11
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[11]",
+      "package_pin": "CL73",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 0,
+        "io96_pin": 3,
+        "io96_index": 3
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[12]",
+      "package_pin": "CL54",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 0,
+        "io96_pin": 9,
+        "io96_index": 9
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[13]",
+      "package_pin": "CK73",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 0,
+        "io96_pin": 2,
+        "io96_index": 2
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[14]",
+      "package_pin": "CK56",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 0,
+        "io96_pin": 8,
+        "io96_index": 8
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[15]",
+      "package_pin": "CL70",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 0,
+        "io96_pin": 1,
+        "io96_index": 1
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[16]",
+      "package_pin": "BF50",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 5,
+        "io96_pin": 8,
+        "io96_index": 68
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[17]",
+      "package_pin": "BF64",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 5,
+        "io96_pin": 3,
+        "io96_index": 63
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[18]",
+      "package_pin": "BE50",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 5,
+        "io96_pin": 9,
+        "io96_index": 69
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[19]",
+      "package_pin": "BF68",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 5,
+        "io96_pin": 0,
+        "io96_index": 60
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[1]",
+      "package_pin": "BH49",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 4,
+        "io96_pin": 2,
+        "io96_index": 50
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[20]",
+      "package_pin": "BE46",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 5,
+        "io96_pin": 10,
+        "io96_index": 70
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[21]",
+      "package_pin": "BE64",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 5,
+        "io96_pin": 2,
+        "io96_index": 62
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[22]",
+      "package_pin": "BF46",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 5,
+        "io96_pin": 11,
+        "io96_index": 71
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[23]",
+      "package_pin": "BE68",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 5,
+        "io96_pin": 1,
+        "io96_index": 61
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[24]",
+      "package_pin": "CK8",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 6,
+        "io96_pin": 10,
+        "io96_index": 82
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[25]",
+      "package_pin": "CK20",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 6,
+        "io96_pin": 3,
+        "io96_index": 75
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[26]",
+      "package_pin": "CK11",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 6,
+        "io96_pin": 8,
+        "io96_index": 80
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[27]",
+      "package_pin": "CL20",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 6,
+        "io96_pin": 2,
+        "io96_index": 74
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[28]",
+      "package_pin": "CL6",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 6,
+        "io96_pin": 11,
+        "io96_index": 83
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[29]",
+      "package_pin": "CK26",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 6,
+        "io96_pin": 1,
+        "io96_index": 73
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[2]",
+      "package_pin": "BH41",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 4,
+        "io96_pin": 9,
+        "io96_index": 57
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[30]",
+      "package_pin": "CL8",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 6,
+        "io96_pin": 9,
+        "io96_index": 81
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[31]",
+      "package_pin": "CL23",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 6,
+        "io96_pin": 0,
+        "io96_index": 72
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[3]",
+      "package_pin": "BH52",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 4,
+        "io96_pin": 3,
+        "io96_index": 51
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[4]",
+      "package_pin": "BH38",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 4,
+        "io96_pin": 8,
+        "io96_index": 56
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[5]",
+      "package_pin": "BP52",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 4,
+        "io96_pin": 1,
+        "io96_index": 49
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[6]",
+      "package_pin": "BM38",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 4,
+        "io96_pin": 11,
+        "io96_index": 59
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[7]",
+      "package_pin": "BM52",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 4,
+        "io96_pin": 0,
+        "io96_index": 48
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[8]",
+      "package_pin": "CL51",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 0,
+        "io96_pin": 10,
+        "io96_index": 10
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dq[9]",
+      "package_pin": "CK66",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 0,
+        "io96_pin": 0,
+        "io96_index": 0
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dqs_n[0]",
+      "package_pin": "BM49",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 4,
+        "io96_pin": 5,
+        "io96_index": 53
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dqs_n[1]",
+      "package_pin": "CL66",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 0,
+        "io96_pin": 5,
+        "io96_index": 5
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dqs_n[2]",
+      "package_pin": "BE57",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 5,
+        "io96_pin": 5,
+        "io96_index": 65
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dqs_n[3]",
+      "package_pin": "CL17",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 6,
+        "io96_pin": 5,
+        "io96_index": 77
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dqs_p[0]",
+      "package_pin": "BK49",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 4,
+        "io96_pin": 4,
+        "io96_index": 52
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dqs_p[1]",
+      "package_pin": "CK63",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 0,
+        "io96_pin": 4,
+        "io96_index": 4
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dqs_p[2]",
+      "package_pin": "BE61",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 5,
+        "io96_pin": 4,
+        "io96_index": 64
+      }
+    },
+    {
+      "signal": "io_ddr4_comp1_dqs_p[3]",
+      "package_pin": "CK17",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 6,
+        "io96_pin": 4,
+        "io96_index": 76
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_a[0]",
+      "package_pin": "CF52",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 2,
+        "io96_pin": 0,
+        "io96_index": 24
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_a[10]",
+      "package_pin": "CH38",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 2,
+        "io96_pin": 10,
+        "io96_index": 34
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_a[11]",
+      "package_pin": "CF38",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 2,
+        "io96_pin": 11,
+        "io96_index": 35
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_a[12]",
+      "package_pin": "BU52",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 3,
+        "io96_pin": 3,
+        "io96_index": 39
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_a[13]",
+      "package_pin": "BW49",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 3,
+        "io96_pin": 4,
+        "io96_index": 40
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_a[14]",
+      "package_pin": "CA49",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 3,
+        "io96_pin": 5,
+        "io96_index": 41
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_a[15]",
+      "package_pin": "BR41",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 3,
+        "io96_pin": 6,
+        "io96_index": 42
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_a[16]",
+      "package_pin": "BU41",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 3,
+        "io96_pin": 7,
+        "io96_index": 43
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_a[1]",
+      "package_pin": "CH52",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 2,
+        "io96_pin": 1,
+        "io96_index": 25
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_a[2]",
+      "package_pin": "CC52",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 2,
+        "io96_pin": 2,
+        "io96_index": 26
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_a[3]",
+      "package_pin": "CA52",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 2,
+        "io96_pin": 3,
+        "io96_index": 27
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_a[4]",
+      "package_pin": "CF49",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 2,
+        "io96_pin": 4,
+        "io96_index": 28
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_a[5]",
+      "package_pin": "CH49",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 2,
+        "io96_pin": 5,
+        "io96_index": 29
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_a[6]",
+      "package_pin": "CH41",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 2,
+        "io96_pin": 6,
+        "io96_index": 30
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_a[7]",
+      "package_pin": "CF41",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 2,
+        "io96_pin": 7,
+        "io96_index": 31
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_a[8]",
+      "package_pin": "CC41",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 2,
+        "io96_pin": 8,
+        "io96_index": 32
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_a[9]",
+      "package_pin": "CA41",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 2,
+        "io96_pin": 9,
+        "io96_index": 33
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_act_n",
+      "package_pin": "CL45",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 1,
+        "io96_pin": 3,
+        "io96_index": 15
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_ba[0]",
+      "package_pin": "BU38",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 3,
+        "io96_pin": 9,
+        "io96_index": 45
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_ba[1]",
+      "package_pin": "CA38",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 3,
+        "io96_pin": 10,
+        "io96_index": 46
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_bg[0]",
+      "package_pin": "BW38",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 3,
+        "io96_pin": 11,
+        "io96_index": 47
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_bg[1]",
+      "package_pin": "CL42",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 1,
+        "io96_pin": 0,
+        "io96_index": 12
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_ck_n",
+      "package_pin": "CL30",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 1,
+        "io96_pin": 9,
+        "io96_index": 21
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_ck_p",
+      "package_pin": "CK33",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 1,
+        "io96_pin": 8,
+        "io96_index": 20
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_cke",
+      "package_pin": "CK35",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 1,
+        "io96_pin": 6,
+        "io96_index": 18
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_cs_n",
+      "package_pin": "CK48",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 1,
+        "io96_pin": 2,
+        "io96_index": 14
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_odt",
+      "package_pin": "CK39",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 1,
+        "io96_pin": 4,
+        "io96_index": 16
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_par",
+      "package_pin": "CL26",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 1,
+        "io96_pin": 11,
+        "io96_index": 23
+      }
+    },
+    {
+      "signal": "o_ddr4_comp1_reset_n",
+      "package_pin": "CK45",
+      "bank": "2B",
+      "io96": {
+        "io96_lane": 1,
+        "io96_pin": 1,
+        "io96_index": 13
+      }
+    }
+  ],
+  "unassigned_board_signals": {
+    "reference_clock": {
+      "signal": "i_ddr4_comp1_refclk_p",
+      "package_pin": "BR49",
+      "bank": "2B",
+      "io96": null
+    },
+    "dm_or_dbi": {
+      "status": "not assigned by working project pin Tcl or generated EMIF locations; board wiring unresolved"
+    }
+  },
+  "reference_artifacts": {
+    "verification_json": "../../agilex5-ddr4-test/verification.json",
+    "sof": {
+      "path": "../../agilex5-ddr4-test/output_files/memory_test.sof",
+      "sha256": "fa33533dbea9d2683da70bc71286bf091e6be6ac02ee04d210ea564091ca62a7"
+    },
+    "elf": {
+      "path": "../../agilex5-ddr4-test/app/build/memory_test.elf",
+      "sha256": "f9dcd7a760cbd8bafe9da1a9fa71d42d24fafa5915930254f93d426736ae082d"
+    }
+  }
+}

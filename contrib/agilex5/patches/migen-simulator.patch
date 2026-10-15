@@ -1,0 +1,15 @@
+--- a/migen/sim/core.py
++++ b/migen/sim/core.py
+@@ -125,7 +125,11 @@
+                 else:
+                     return operands[0] - operands[1]
+             elif node.op == "m":
+-                return operands[1] if operands[0] else operands[2]
++                # Expressions such as ~Signal(1) retain Python's unbounded
++                # negative value here. Match RTL/If condition truncation
++                # before treating the value as true or false.
++                condition = operands[0] & (2**len(node.operands[0]) - 1)
++                return operands[1] if condition else operands[2]
+             else:
+                 return str2op[node.op](*operands)
+         elif isinstance(node, _Slice):

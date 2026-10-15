@@ -1,0 +1,7 @@
+third_party/
+generated/
+build/
+.venv/
+__pycache__/
+*.pyc
+*.vcd
