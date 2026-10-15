@@ -1,0 +1,94 @@
+{
+  "schema": "native2666-pair-vendor-generation-failure-v1",
+  "recorded_utc": "2026-10-14T00:40:25.758444+00:00",
+  "status": "BLOCKED_VENDOR_PARAMETER_RANGE",
+  "selected": false,
+  "hardware_qualified": false,
+  "fit_performed": false,
+  "part": "A5ED065BB32AE6SR0",
+  "tool": "Quartus/Qsys26.1.1",
+  "requested_CK_hz": "4000000000/3",
+  "native_hz": "1000000000/3",
+  "variants": {
+    "ref333": {
+      "qsys_exit_codes": [
+        3,
+        3
+      ],
+      "errors": {
+        "0": [
+          "2026.10.14.00:38:38 Error: phy_probe_phy.phy: PLL reference clock frequency of 333.3333333333333 MHz is invalid. Please select another value, or enable the option to use the recommended value.",
+          "2026.10.14.00:38:38 Error: phy_probe_phy.phy: \"Interface clock frequency\" (GUI_PHYLITE_MEM_CLK_FREQ_MHZ) 1333.3333333333333 is out of range: 150.0-1250.0",
+          "2026.10.14.00:38:38 Error: Generation failed with exit code 3: 2 Errors, 19 Warnings"
+        ],
+        "1": [
+          "2026.10.14.00:38:38 Error: dual3_phy_probe_phy.phy: PLL reference clock frequency of 333.3333333333333 MHz is invalid. Please select another value, or enable the option to use the recommended value.",
+          "2026.10.14.00:38:38 Error: dual3_phy_probe_phy.phy: \"Interface clock frequency\" (GUI_PHYLITE_MEM_CLK_FREQ_MHZ) 1333.3333333333333 is out of range: 150.0-1250.0",
+          "2026.10.14.00:38:38 Error: Generation failed with exit code 3: 2 Errors, 19 Warnings"
+        ]
+      },
+      "source_sha256": {
+        "integration/dual-ddr-v1/phy-native2666-v1/qsys-bank1.log": "a2acbe02fff9cd40adbe5f4e399630759ed779e47057f1b0452232aa986ffae1",
+        "integration/dual-ddr-v1/phy-native2666-v1/qsys-bank0.log": "0809c34589580a6d11299cd054ddb82661edf2e5a3881089d901bcc5b2485b24",
+        "integration/dual-ddr-v1/phy-native2666-v1/descriptor-preparation.json": "2045242b820e61f8bd29844207326b360bafa9e7a49de81762d4ffa59844e039",
+        "integration/dual-ddr-v1/phy-native2666-v1/prepare_descriptors.py": "e781aa5776f0fad2a41216620afe5f0f7fa28c82f359b9a84d8b55e6ca818225",
+        "integration/dual-ddr-v1/phy-native2666-v1/reproduction-ref267/preparation.json": "5ab6f0397a0317ca48a07d2dc00d2e107345517c3660e0590e63a1ccaab53c3d",
+        "integration/dual-ddr-v1/phy-native2666-v1/variant-ref267/qsys-bank1.log": "da6b922836465aa4b00750479dedda452de50b0c2060f0d42ee5f67eb1d5e9d2",
+        "integration/dual-ddr-v1/phy-native2666-v1/variant-ref267/qsys-bank0.log": "af02ab803c88f927b2add1b2ecfb62e61a3182ee2498d8f7a55495811cf4ce3a",
+        "integration/dual-ddr-v1/phy-native2666-v1/variant-ref267/descriptor-preparation.json": "2fb5ee0ff08628b0f4eef6ea25b605f9136bcd21e1b2cee54e3a1aad9f576ed2",
+        "integration/dual-ddr-v1/phy-native2666-v1/reproduction-ref267/bank1/dual3_phy_probe_phy.ip": "9cf369b69b6f33dacd15803337efb19535f024b4d81afc8781d162ef67b4bf58",
+        "integration/dual-ddr-v1/phy-native2666-v1/reproduction-ref267/bank0/phy_probe_phy.ip": "e2bd2c7efaf1addff048fa7d1aa8bd85de844cadec59eb753ec1c64d296d24d6",
+        "integration/dual-ddr-v1/phy-native2666-v1/source/bank1/dual3_phy_probe_phy.ip": "59a571844ccd61ca806d34b9b5150b8236020cb4f3385a3b894e3f667b425d6b",
+        "integration/dual-ddr-v1/phy-native2666-v1/source/bank0/phy_probe_phy.ip": "24fc118982397a0212513ec785e9bf27ace92d08e4e673f26238311f84de8003",
+        "integration/dual-ddr-v1/phy-native2666-v1/source/bank1/dual3_phy_probe_phy/dual3_phy_probe_phy_generation.rpt": "32b859368ccd4260c431d8cc3b99072f139bdc2dd467dba858457999f55b3f85",
+        "integration/dual-ddr-v1/phy-native2666-v1/source/bank0/phy_probe_phy/phy_probe_phy_generation.rpt": "e484948e94ac95aebc8f69aadcf034e21036b2827ebac1bda6c77e8b2fe4e38d",
+        "integration/dual-ddr-v1/phy-native2666-v1/variant-ref267/source/bank1/dual3_phy_probe_phy.ip": "9cf369b69b6f33dacd15803337efb19535f024b4d81afc8781d162ef67b4bf58",
+        "integration/dual-ddr-v1/phy-native2666-v1/variant-ref267/source/bank0/phy_probe_phy.ip": "e2bd2c7efaf1addff048fa7d1aa8bd85de844cadec59eb753ec1c64d296d24d6",
+        "integration/dual-ddr-v1/phy-native2666-v1/variant-ref267/source/bank1/dual3_phy_probe_phy/dual3_phy_probe_phy_generation.rpt": "488361d48bd49d410002827b2edeb0c2f82e4d992023cccd0cce258ee7fa5259",
+        "integration/dual-ddr-v1/phy-native2666-v1/variant-ref267/source/bank0/phy_probe_phy/phy_probe_phy_generation.rpt": "c7e6692345738f62e319186dcd0b2494f5fd38e873451d3f5ebbbc12ddeaac5b"
+      }
+    },
+    "ref267": {
+      "qsys_exit_codes": [
+        3,
+        3
+      ],
+      "errors": {
+        "0": [
+          "2026.10.14.00:39:54 Error: phy_probe_phy.phy: \"Interface clock frequency\" (GUI_PHYLITE_MEM_CLK_FREQ_MHZ) 1333.3333333333333 is out of range: 150.0-1250.0",
+          "2026.10.14.00:39:54 Error: Generation failed with exit code 3: 1 Error, 0 Warnings"
+        ],
+        "1": [
+          "2026.10.14.00:39:54 Error: dual3_phy_probe_phy.phy: \"Interface clock frequency\" (GUI_PHYLITE_MEM_CLK_FREQ_MHZ) 1333.3333333333333 is out of range: 150.0-1250.0",
+          "2026.10.14.00:39:54 Error: Generation failed with exit code 3: 1 Error, 0 Warnings"
+        ]
+      },
+      "source_sha256": {
+        "integration/dual-ddr-v1/phy-native2666-v1/variant-ref267/qsys-bank1.log": "da6b922836465aa4b00750479dedda452de50b0c2060f0d42ee5f67eb1d5e9d2",
+        "integration/dual-ddr-v1/phy-native2666-v1/variant-ref267/qsys-bank0.log": "af02ab803c88f927b2add1b2ecfb62e61a3182ee2498d8f7a55495811cf4ce3a",
+        "integration/dual-ddr-v1/phy-native2666-v1/variant-ref267/descriptor-preparation.json": "2fb5ee0ff08628b0f4eef6ea25b605f9136bcd21e1b2cee54e3a1aad9f576ed2",
+        "integration/dual-ddr-v1/phy-native2666-v1/variant-ref267/source/bank1/dual3_phy_probe_phy.ip": "9cf369b69b6f33dacd15803337efb19535f024b4d81afc8781d162ef67b4bf58",
+        "integration/dual-ddr-v1/phy-native2666-v1/variant-ref267/source/bank0/phy_probe_phy.ip": "e2bd2c7efaf1addff048fa7d1aa8bd85de844cadec59eb753ec1c64d296d24d6",
+        "integration/dual-ddr-v1/phy-native2666-v1/variant-ref267/source/bank1/dual3_phy_probe_phy/dual3_phy_probe_phy_generation.rpt": "488361d48bd49d410002827b2edeb0c2f82e4d992023cccd0cce258ee7fa5259",
+        "integration/dual-ddr-v1/phy-native2666-v1/variant-ref267/source/bank0/phy_probe_phy/phy_probe_phy_generation.rpt": "c7e6692345738f62e319186dcd0b2494f5fd38e873451d3f5ebbbc12ddeaac5b"
+      }
+    }
+  },
+  "outcome": "Both refs reject requested CK1333.333333 MHz against vendor GUI supported150\u20131250MHz. Ref333 additionally rejects PLL reference333.333333 MHz. Ref267 reference accepted but synthesis generation stops at CK limit. No frequency check bypass or generated supported pair exists.",
+  "intended_ref267_PLL": {
+    "M": 5,
+    "N": 1,
+    "generated_M_N_verified": false
+  },
+  "input_mapping": "Bank0 known2133descriptor unchanged except2frequencyvalues. Bank1 correctedr3descriptor unchanged except2frequencyvalues; group0data0\u20133,8\u201311 lane0 and group1data48\u201351,56\u201359 lane4. No functional output emitted to validate96maps/cal/clocks/QIPclosure.",
+  "legacy_v14_QIPs": [
+    "rtl/primitive_backend/1333/phy_probe_phy.qip",
+    "integration/dual-ddr-v1/phy-bank3-r5/dual3_phy_probe_phy.qip"
+  ],
+  "reproducible_descriptor_helper": {
+    "path": "integration/dual-ddr-v1/phy-native2666-v1/prepare_descriptors.py",
+    "sha256": "e781aa5776f0fad2a41216620afe5f0f7fa28c82f359b9a84d8b55e6ca818225",
+    "ref267_byte_identical_reproduction": true
+  },
+  "no_hardware_causality_claim": true
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "agilex5-compact-source-replay-v1",
+  "utc": "2026-10-15T15:05:41.338918+00:00",
+  "status": "PASS_SOURCE_REPLAY_ONLY",
+  "controller_outputs": {
+    "1600": {
+      "sha256": "3542b289219033f209e8031a65b412c0da4ec5d6607c9812f6b95e494b773d91",
+      "status": "PASS_BYTE_IDENTICAL",
+      "scope": "Regenerated base controller, before the separate local-reset distribution stage."
+    },
+    "2133": {
+      "sha256": "46d487437f4631bfb742e6df77e8a864ce6486f4b7be33d225faf46386c976fb",
+      "status": "PASS_BYTE_IDENTICAL",
+      "scope": "Complete repaired controller used by memory v14; internal timing passed, bank-3B hardware MPR failed."
+    },
+    "2666": {
+      "sha256": "4c044d38aaf7651e4b7a715b31acc99178bc52ee14c8cb0a68457659e33f97d2",
+      "status": "PASS_BYTE_IDENTICAL",
+      "scope": "Complete source-only repaired prototype; no fitted or passing dual-bank hardware result."
+    }
+  },
+  "registered_row_hit_tests": {
+    "result": "PASS",
+    "count": 3,
+    "command": "PYTHONPATH=third_party/migen:third_party/litex:third_party/litedram python3 tests/test_primitive_row_hit.py -v"
+  },
+  "portability_changes": [
+    "Generator seed relocated from historical build tree to source/generator_seed.py",
+    "Legacy generated RTL reset mapping replaced by compact policy JSON; unchanged generated Verilog",
+    "Pinned dependencies fetched instead of vendored"
+  ],
+  "scope": {
+    "new_quartus_ip_generation": false,
+    "new_synthesis_or_timing": false,
+    "new_hardware_tests": false,
+    "original_workspace_modified": false
+  },
+  "source_sha256": {
+    "bootstrap_deps.py": "47f8db871b6d92215a6ec49965928971cf09c349ddc33fa04e5502dfeee16e24",
+    "verify_controllers.py": "00b8b7d4ef9a14b3e1715be655c49340f69111a456588f3847382e6c8327e4f4",
+    "prepare_bank3_phy.py": "21067b4ad6b2b4ea10ff2d66e89a6fc6218495ea4848fe412266253db3ac760c",
+    "source/expected_controllers.json": "984e213b004400dea4e0d0811cf316a47558f187cb9d707690d8eb373db96e06",
+    "source/generator_seed.py": "46743a12248c442d9d0fee665d8bf75a0247c95d9d4e606850a9fb2403252114",
+    "integration/dual-ddr-v1/legacy_reset_map.json": "368b44c47b51a6c2162b4dc9036e0bd896ddee105e825175476c3d9b035b0245",
+    "integration/dual-ddr-v1/controller-native2133-fresh-v1/layer_repairs.py": "b14137e12e0f08cc486902f8ff92b2de9ba6c79ddd5e28ffb43cc293e15284e8",
+    "integration/dual-ddr-v1/controller-native2666-fresh-v1/layer_repairs.py": "b14137e12e0f08cc486902f8ff92b2de9ba6c79ddd5e28ffb43cc293e15284e8",
+    "../../litedram/core/bankmachine.py": "b78b0936eb8e7a3c740ca80bcdecd29232e774a40f5df4833125a44f88493157"
+  },
+  "fresh_virtual_environment": {
+    "editable_dependency_install": "PASS",
+    "registered_row_hit_tests": 3,
+    "controller_replays": "PASS_3_BYTE_IDENTICAL",
+    "interpreter": "Python 3.12",
+    "generated_files_committed": false
+  }
+}

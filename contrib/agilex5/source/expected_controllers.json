@@ -1,0 +1,17 @@
+{
+  "1600": {
+    "generator": "integration/dual-ddr-v1/controller-native1600-v1/generate.py",
+    "sha256": "3542b289219033f209e8031a65b412c0da4ec5d6607c9812f6b95e494b773d91",
+    "scope": "Regenerated base controller, before the separate local-reset distribution stage."
+  },
+  "2133": {
+    "generator": "integration/dual-ddr-v1/controller-native2133-dense-repair-v5/generate.py",
+    "sha256": "46d487437f4631bfb742e6df77e8a864ce6486f4b7be33d225faf46386c976fb",
+    "scope": "Complete repaired controller used by memory v14; internal timing passed, bank-3B hardware MPR failed."
+  },
+  "2666": {
+    "generator": "integration/dual-ddr-v1/controller-native2666-dense-repair-v4/generate.py",
+    "sha256": "4c044d38aaf7651e4b7a715b31acc99178bc52ee14c8cb0a68457659e33f97d2",
+    "scope": "Complete source-only repaired prototype; no fitted or passing dual-bank hardware result."
+  }
+}

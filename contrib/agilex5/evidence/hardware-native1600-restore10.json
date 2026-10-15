@@ -1,0 +1,256 @@
+{
+  "schema": "native1600-restoration-memory-v1",
+  "recorded_utc": "2026-10-14T07:14:43.860712+00:00",
+  "run_id": "dual-native1600-restore10",
+  "result": "PASS_MEMORY_AND_CONSOLE_READY_DEFAULT_A5_5",
+  "hardware_qualified": false,
+  "qualification": "Nominalfunctionaltestingonly; noexternalI/O/CDC/PVTqualification.",
+  "scope": "Freshboth8GiB fullwrite/read, automaticrefresh,sparseretention/isolation,concurrentDMA andconsole_ready",
+  "configuration": {
+    "SOF": "build/dual_ddr1600_opentpu_native_v1/memory_test.sof",
+    "SOF_sha256": "8e30596259bcab6f772f1a140eea71da5d233225b3ecc078c1c3ac75ceaaa06f",
+    "ELF": "build/dual-ddr-opentpu-native1600-fw-v2/dual_ddr_diagnostic.elf",
+    "ELF_sha256": "aee68cdbb688e77d5737c956999a3ce4149c462f9f3434c5fa4897bf322b9dd4",
+    "DDR_MT_s": 1600,
+    "native_ref_MHz": 200,
+    "accelerator_MHz": 100,
+    "default_A5": 5,
+    "runtime_A5_override_used": false,
+    "read_alignment": 1
+  },
+  "clock": {
+    "bank0_native_MHz": 199.956728689,
+    "bank1_native_MHz": 200.043290043,
+    "nominal_DMA_Hz": 200000000
+  },
+  "validation": {
+    "record": "integration/dual-ddr-v1/results/hardware-native1600-restore10-strict-validator.json",
+    "sha256": "d4ddfd80cd0d281f0ec95c0a4b33c7e3241c2678a2ea3634d1c3ba403c6bf558",
+    "counts": {
+      "bank_diagnostics": 2,
+      "calibration_passes": 8,
+      "calibration_read_trials": 132,
+      "calibration_selections": 2,
+      "calibration_write_results": 4,
+      "dma_ramp_passes": 2,
+      "dual_sparse_passes": 2,
+      "final_diagnostic_passes": 1,
+      "full_dma_cases": 8,
+      "full_dma_passes": 32,
+      "log_lines": 1171,
+      "memory_passes": 2,
+      "normal_dma_cases": 3,
+      "normal_dma_passes": 12,
+      "overlap_observations": 22,
+      "pattern_passes": 12,
+      "sparse_passes": 2,
+      "training_passes": 2
+    },
+    "per_bank": {
+      "0": {
+        "bandwidth_clock_assumption_hz": 200000000,
+        "full_bandwidth_bytes_per_second_estimate": 4973015558,
+        "full_dma_bytes": 17179869184,
+        "full_dma_cases": 8,
+        "full_dma_cycles_total": 690923605,
+        "full_dma_words": 536870912,
+        "memory_bytes": 6291456,
+        "normal_bandwidth_bytes_per_second_estimate": 4970394312,
+        "normal_dma_bytes": 402653184,
+        "normal_dma_cases": 3,
+        "normal_dma_cycles_total": 16202062,
+        "normal_dma_words": 12582912,
+        "pattern_bytes": 6291456,
+        "sparse_locations": 30
+      },
+      "1": {
+        "bandwidth_clock_assumption_hz": 200000000,
+        "full_bandwidth_bytes_per_second_estimate": 4973337003,
+        "full_dma_bytes": 17179869184,
+        "full_dma_cases": 8,
+        "full_dma_cycles_total": 690878948,
+        "full_dma_words": 536870912,
+        "memory_bytes": 6291456,
+        "normal_bandwidth_bytes_per_second_estimate": 4971346418,
+        "normal_dma_bytes": 402653184,
+        "normal_dma_cases": 3,
+        "normal_dma_cycles_total": 16198959,
+        "normal_dma_words": 12582912,
+        "pattern_bytes": 6291456,
+        "sparse_locations": 30
+      }
+    }
+  },
+  "artifacts_sha256": {
+    "integration/dual-ddr-v1/check_hardware_log.py": "1a00feb823443d68625376b76384e32465a9ecb130b1ecab005c10414ad40215",
+    "integration/dual-ddr-v1/check_hardware_log_native1600_v1.py": "be73ecf5c8024126527de64cacb386718eec28a83a16d3350cb452bdcf820463",
+    "integration/dual-ddr-v1/record_native1600_restore10_r2.py": "b0e69cfcf73d5f41b582b0217db50920bdc2196d276e0d5178b1d6997da0b404",
+    "integration/dual-ddr-v1/results/hardware-native1600-restore10-strict-validator.json": "d4ddfd80cd0d281f0ec95c0a4b33c7e3241c2678a2ea3634d1c3ba403c6bf558",
+    "integration/dual-ddr-v1/results/hardware-native1600-restore9-board-state.json": "6bac3cad885ad1b6825f65ad32706f2f49a879918bfa3d1a389cff0a325da9c1",
+    "integration/dual-ddr-v1/results/hardware-native1600-restore9-fixtures.json": "1cd83077cef93ff0257f5f1f1faaf2a2cba0a7e97f58b6925598fa6b290e50a1",
+    "integration/dual-ddr-v1/results/hardware-native1600-restore9.json": "2ee5a91b90c95d22d293a43f0d034c3731607613bf76ade2cad785ca9dbae543",
+    "integration/dual-ddr-v1/results/hardware-native2133-v14-fw10-snapshot-run1.json": "bdfd2a05d28fb0cfb60079a4bf5fe4098c0b23823fc99de33d11e4bd11ce556e",
+    "integration/dual-ddr-v1/results/hardware-native2133-v14-fw11-fifo-run1.json": "1788b3fd226b417a5e2c8d5604e78299f00f6ab49e6b964c044da6efa02b2e5d",
+    "integration/dual-ddr-v1/results/hardware-native2133-v14-fw12-reset-run1.json": "29ebe353bd6532fd78bc37d58c04f841236bdc352205ac92bad81125dd26deb5",
+    "integration/dual-ddr-v1/results/hardware-native2133-v14-fw13-dqs-run1.json": "8d13af033e7363f0ebf06546c6f490bf1787d974fb37a508463b69c83aea3291",
+    "integration/dual-ddr-v1/results/hardware-native2133-v14-fw14-bank0first-run1.json": "98151f70ee6dc1547a68876f56a2a8bb4b4c07ced010d7b1d52df22e770c4d53",
+    "integration/dual-ddr-v1/results/hardware-native2133-v14-fw8-startup5-run1.json": "0f58f96100c5b84332be87b5477fddf8d26fe0a6a14a18a418f630ed39d83e98",
+    "integration/dual-ddr-v1/results/hardware-native2133-v14-fw9-telemetry-run1.json": "2845bed52d1833d2aa3082f92d153a472df300bded38044cb46599b8f3cc68d8",
+    "integration/dual-ddr-v1/results/hardware-native2133-v14-memory1-negative-root-r1.json": "7695e155cb26c242eb2f0448193f1888082cd7d1f8ea1b6ee5892121f0d7aa88",
+    "integration/dual-ddr-v1/results/native1600-restore10-root-artifact-verification-r1.json": "6453dd199054313bf021e8f7bb2af3c42cff3c42ead0d54c9140b619b47316cb",
+    "integration/dual-ddr-v1/results/native2133-v14-FW13-dqs-root-hardware-preflight-r1.json": "ead1e80158193bb101fc84215c5bcb0025247777a8568e2f683de5becd541393",
+    "integration/dual-ddr-v1/results/native2133-v14-FW14-bank0first-root-hardware-preflight-r1.json": "be03456cbab38c8652ddd9edb2cf4f912c05d6c80c865f10052c5f46e39f1045",
+    "integration/dual-ddr-v1/results/native2133-v14-MPR-byte-lane-binding-amendment-r1.json": "7664bf9c1606ba08b2750b8ce56f21c2cdc8bc633c09d51c7af48d89315777d1",
+    "integration/dual-ddr-v1/results/native2133-v14-MPR-startup-A5-source-review-r1.json": "46c2acccf5b1f4047ed8be248047288935acb05096a83c5db831d7557ecb012f",
+    "logs/dual-native1600-restore10-abs-w00.log": "941a22b0b43d7fcd6579652524a2388c0aed99f3dfda5c99bba44d714b70bb96",
+    "logs/dual-native1600-restore10-clock-driver-r1.log": "ba2eb5b3ec97a052ab846063d3de540e8d9ef66eb0e5dcc7a5c3e9e781af69fb",
+    "logs/dual-native1600-restore10-clocks-r1.log": "0775c1bd91ca62e2b8237f2448a67ecb27d35f11b883b0cad7f07af4ca5ed6d6",
+    "logs/dual-native1600-restore10-diagnostic-payload.log": "f7f3c952f5aedf1f85902dae3ec67e10fa22e83df937c3b5cf927e3fc06eced3",
+    "logs/dual-native1600-restore10-dma-w00.log": "e4a7141187a22cc2311110aa2fa0f0b519949ecd213272c92b0542f2c14a939f",
+    "logs/dual-native1600-restore10-program-r1.log": "3f43e0e944aaeb0ad430ed09e6053d4b4ff2c38ddf485320c5e7b3106df0c113",
+    "logs/dual-native1600-restore10-reset-r1.log": "14965d0476a86658e9d495c4bc0dd078d1312da5c57da12445f443e3ff6339aa",
+    "logs/dual-native1600-restore10-run1-download.log": "b2445e3c71801725bc8ed214a6178f7f7863f4bb3986101314c6f1564115770e",
+    "logs/dual-native1600-restore10-run1-driver.log": "4ecfe9ff6afabc513f85379a0cb14af9deb078cbb1a31424d35957d1d254841b",
+    "logs/dual-native1600-restore10-run1-jtag.log": "32899b1f3d7bb65ca5a8bddb0c97c39ee23e736f81e7c0d5c536a205622da1d5",
+    "logs/dual-native1600-restore10-run1-load.log": "bc9204ef19b79a1eef2f0e427798b0def7bb326bbdc9251623d1442179baee10",
+    "logs/dual-native1600-restore10-run1-uart.log": "3ba3ad04beaf15afb64b0453f4413bb75b0b2498e8a7271d20dc893408a29ff2",
+    "logs/dual-native1600-restore10-state-driver.log": "4a2309b36f77efb3f20adeeade9874a58a14ef971b9789b41d8f0010015f5032",
+    "logs/dual-native1600-restore10-state.log": "dd0cdc1420092cd360af49d0e4b366afcab63a550c27b28b2ba8f9ed32928ac2",
+    "logs/dual-shared-reference-200mhz-native1600-restore10-clock-r1-after-dump.log": "8e94e773ab934e0251d17e4d83ef44eb8b3c2372539cacd3507da4e18fe44f82",
+    "logs/dual-shared-reference-200mhz-native1600-restore10-clock-r1-apply.log": "58b0abd868ad649cca42c06c9c4d76c4d037c9693eaed250b04fa4e625b6bf61",
+    "logs/dual-shared-reference-200mhz-native1600-restore10-clock-r1-before-dump.log": "883fd1732a9eb6c65791a0f798825d49827c6c0dccc34478ebbc6b068ca72ab2",
+    "logs/dual-shared-reference-200mhz-native1600-restore10-clock-r1-dividers.tsv": "c8fb7c63abfa93dfa001adb990d38575d336ec5ce5689732a4aa5c6f00f8bfaf",
+    "logs/dual-shared-reference-200mhz-native1600-restore10-clock-r1-jtag.log": "32899b1f3d7bb65ca5a8bddb0c97c39ee23e736f81e7c0d5c536a205622da1d5",
+    "logs/dual-shared-reference-200mhz-native1600-restore10-clock-r1-program.log": "6c941119bfb9e38c14db2d88c55391305977663af8aaea6f239c4a9020793cc9",
+    "logs/dual-shared-reference-200mhz-native1600-restore10-clock-r1-verified.json": "24093e72a9fd4efb0d95143be6bc75f1a0256b14e4c48cf7036506af25481fdd",
+    "integration/dual-ddr-v1/results/native1600-restore10-post-program-source-verification.json": "9b41e3f96e0d6a3238fa44b537de9ca42fac723a32b6453aae509b7222f82478",
+    "integration/dual-ddr-v1/results/native1600-restore10-clock-profile-verification.json": "853017005db74afba4a498dfef40070430ffc4609274a4ef6f157f580b9aebea"
+  },
+  "limits": [
+    "DDR2666bank3B remainsunqualified.",
+    "No real9Bmodeldeployment/TPS.",
+    "Read/writebandwidth usesnominal200MHz, correctedstrictprofile.",
+    "Expectedboundedtrainingsearchmismatchesarepreservedseparatelybystrictvalidator."
+  ],
+  "post_failure_restore": {
+    "negative_result": {
+      "path": "integration/dual-ddr-v1/results/hardware-native2133-v14-memory1-negative-root-r1.json",
+      "sha256": "7695e155cb26c242eb2f0448193f1888082cd7d1f8ea1b6ee5892121f0d7aa88"
+    },
+    "lane_binding_amendment": {
+      "path": "integration/dual-ddr-v1/results/native2133-v14-MPR-byte-lane-binding-amendment-r1.json",
+      "sha256": "7664bf9c1606ba08b2750b8ce56f21c2cdc8bc633c09d51c7af48d89315777d1"
+    },
+    "startup_A5_source_review": {
+      "path": "integration/dual-ddr-v1/results/native2133-v14-MPR-startup-A5-source-review-r1.json",
+      "sha256": "46c2acccf5b1f4047ed8be248047288935acb05096a83c5db831d7557ecb012f"
+    },
+    "post_program_source_verification": "integration/dual-ddr-v1/results/native1600-restore6-post-program-source-verification.json",
+    "clock_profile_verification": "integration/dual-ddr-v1/results/native1600-restore6-clock-profile-verification.json"
+  },
+  "post_high_rate_experiment_restore": {
+    "prior_v14_negative_result": {
+      "path": "integration/dual-ddr-v1/results/hardware-native2133-v14-memory1-negative-root-r1.json",
+      "sha256": "7695e155cb26c242eb2f0448193f1888082cd7d1f8ea1b6ee5892121f0d7aa88"
+    },
+    "startup_A5_trial": {
+      "path": "integration/dual-ddr-v1/results/hardware-native2133-v14-fw8-startup5-run1.json",
+      "sha256": "0f58f96100c5b84332be87b5477fddf8d26fe0a6a14a18a418f630ed39d83e98"
+    },
+    "FW9_telemetry_trial": {
+      "path": "integration/dual-ddr-v1/results/hardware-native2133-v14-fw9-telemetry-run1.json",
+      "sha256": "2845bed52d1833d2aa3082f92d153a472df300bded38044cb46599b8f3cc68d8"
+    },
+    "FW10_read_only_receiver_snapshot": {
+      "path": "integration/dual-ddr-v1/results/hardware-native2133-v14-fw10-snapshot-run1.json",
+      "sha256": "bdfd2a05d28fb0cfb60079a4bf5fe4098c0b23823fc99de33d11e4bd11ce556e",
+      "classification": "NOMINAL_PROFILE_BANK1_SNAPSHOT_DIAGNOSTIC_ONLY",
+      "result": "FAIL_BANK1_INITIAL_MPR",
+      "hardware_qualification": false,
+      "SOF": {
+        "path": "build/dual_ddr2133_memory_v14/memory_test.sof",
+        "sha256": "9d52885ca910d0de0f957dc512b6960faaebefc1c59e5125fbec6e727e6c58c4"
+      },
+      "scope": "read-only receiver-register snapshot; no sweep or analog conclusion"
+    },
+    "FW11_FIFO_response_diagnostic": {
+      "path": "integration/dual-ddr-v1/results/hardware-native2133-v14-fw11-fifo-run1.json",
+      "sha256": "1788b3fd226b417a5e2c8d5604e78299f00f6ab49e6b964c044da6efa02b2e5d",
+      "classification": "NOMINAL_PROFILE_DIAGNOSTIC_ONLY",
+      "result": "FAIL_BANK1_INITIAL_MPR_FIFO_DIAGNOSTIC",
+      "hardware_qualification": false,
+      "SOF": {
+        "path": "build/dual_ddr2133_memory_v14/memory_test.sof",
+        "sha256": "9d52885ca910d0de0f957dc512b6960faaebefc1c59e5125fbec6e727e6c58c4"
+      },
+      "scope": "direct idle FIFO field 5/7 response diagnostic only; no other receiver/clock/reset changes"
+    },
+    "FW12_reset_comparison_diagnostic": {
+      "path": "integration/dual-ddr-v1/results/hardware-native2133-v14-fw12-reset-run1.json",
+      "sha256": "29ebe353bd6532fd78bc37d58c04f841236bdc352205ac92bad81125dd26deb5",
+      "schema": "native2133-v14-fw12-reset-diagnostic-hardware-outcome-r2",
+      "result": "FAIL_BANK1_INITIAL_MPR_RESET_FIFO_DIAGNOSTIC",
+      "hardware_qualification": false,
+      "SOF": {
+        "path": "build/dual_ddr2133_memory_v14/memory_test.sof",
+        "sha256": "9d52885ca910d0de0f957dc512b6960faaebefc1c59e5125fbec6e727e6c58c4"
+      },
+      "scope": "FW12 reset-comparison diagnostic only; recorded as prior experimental evidence"
+    },
+    "FW13_lane4_DQS_diagnostic": {
+      "path": "integration/dual-ddr-v1/results/hardware-native2133-v14-fw13-dqs-run1.json",
+      "sha256": "8d13af033e7363f0ebf06546c6f490bf1787d974fb37a508463b69c83aea3291",
+      "schema": "native2133-v14-fw13-dqs-diagnostic-hardware-outcome-r2",
+      "result": "FAIL_BANK1_INITIAL_MPR_DQS_DIAGNOSTIC",
+      "hardware_qualification": false,
+      "SOF": {
+        "path": "build/dual_ddr2133_memory_v14/memory_test.sof",
+        "sha256": "9d52885ca910d0de0f957dc512b6960faaebefc1c59e5125fbec6e727e6c58c4"
+      },
+      "preflight": {
+        "path": "integration/dual-ddr-v1/results/native2133-v14-FW13-dqs-root-hardware-preflight-r1.json",
+        "sha256": "ead1e80158193bb101fc84215c5bcb0025247777a8568e2f683de5becd541393"
+      },
+      "scope": "bounded lane-4 receive-DQS phase diagnostic only; initial MPR errors=6, nine points codes 0..112 step 16 plus restored 32 all errors=6, 64 writes/8 exact pin restores/9 reset groups; no calibration or full-capacity claim"
+    },
+    "FW14_bank0_first_diagnostic": {
+      "path": "integration/dual-ddr-v1/results/hardware-native2133-v14-fw14-bank0first-run1.json",
+      "sha256": "98151f70ee6dc1547a68876f56a2a8bb4b4c07ced010d7b1d52df22e770c4d53",
+      "schema": "native2133-v14-fw14-bank0first-hardware-outcome-r2",
+      "result": "FAIL_STOPPED",
+      "hardware_programmed": true,
+      "hardware_qualified": false,
+      "diagnostic_order": [
+        0,
+        1
+      ],
+      "bank0_first_diagnostic_claim": true,
+      "bank1_diagnostic_claim": false,
+      "terminal_marker": "BANK=1 PUBLIC_MPR_CHECK_FAIL",
+      "downstream_full_capacity_and_concurrency_reached": false,
+      "SOF": {
+        "path": "build/dual_ddr2133_memory_v14/memory_test.sof",
+        "sha256": "9d52885ca910d0de0f957dc512b6960faaebefc1c59e5125fbec6e727e6c58c4"
+      },
+      "preflight": {
+        "path": "integration/dual-ddr-v1/results/native2133-v14-FW14-bank0first-root-hardware-preflight-r1.json",
+        "sha256": "be03456cbab38c8652ddd9edb2cf4f912c05d6c80c865f10052c5f46e39f1045"
+      },
+      "scope": "bank0 local diagnostic pass then bank1 initial MPR fail-stop; no full-capacity or concurrent qualification"
+    },
+    "prior_restore9_memory_record": {
+      "path": "integration/dual-ddr-v1/results/hardware-native1600-restore9.json",
+      "sha256": "2ee5a91b90c95d22d293a43f0d034c3731607613bf76ade2cad785ca9dbae543"
+    },
+    "lane_binding_amendment": {
+      "path": "integration/dual-ddr-v1/results/native2133-v14-MPR-byte-lane-binding-amendment-r1.json",
+      "sha256": "7664bf9c1606ba08b2750b8ce56f21c2cdc8bc633c09d51c7af48d89315777d1"
+    },
+    "startup_A5_source_review": {
+      "path": "integration/dual-ddr-v1/results/native2133-v14-MPR-startup-A5-source-review-r1.json",
+      "sha256": "46c2acccf5b1f4047ed8be248047288935acb05096a83c5db831d7557ecb012f"
+    },
+    "post_program_source_verification": "integration/dual-ddr-v1/results/native1600-restore10-post-program-source-verification.json",
+    "clock_profile_verification": "integration/dual-ddr-v1/results/native1600-restore10-clock-profile-verification.json"
+  }
+}

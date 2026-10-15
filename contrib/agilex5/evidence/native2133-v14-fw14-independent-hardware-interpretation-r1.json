@@ -1,0 +1,203 @@
+{
+  "bank0": {
+    "bank_level_diagnostic_pass": true,
+    "cpu_litedram_patterns": {
+      "bytes_each": 1048576,
+      "errors_each": 0,
+      "modes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "dma": {
+      "all_bulk_records_pass": true,
+      "bulk_records": 18,
+      "counter_records": 27,
+      "cpu_verify_records": 11,
+      "descriptor_records": [
+        {
+          "base": 2097152,
+          "seed": 1831565813,
+          "words": 2097152
+        },
+        {
+          "base": 4194304,
+          "seed": 2463401482,
+          "words": 2097152
+        },
+        {
+          "base": 6291456,
+          "seed": 262785979,
+          "words": 2097152
+        }
+      ],
+      "early_128_word_cpu_verify_errors": [
+        296
+      ],
+      "failed_calibration_read_trials": 5,
+      "failed_search_history": [
+        {
+          "errors": 29,
+          "mode": "R",
+          "words": 128
+        },
+        {
+          "errors": 42,
+          "mode": "R",
+          "words": 128
+        },
+        {
+          "errors": 63,
+          "mode": "R",
+          "words": 128
+        },
+        {
+          "errors": 57,
+          "mode": "R",
+          "words": 128
+        },
+        {
+          "errors": 37,
+          "mode": "R",
+          "words": 128
+        }
+      ],
+      "qualification_note": "Exploratory calibration trial failures and the early scratch-buffer CPU verification error precede the selected successful A5/frame and final DMA ramp; they remain recorded as search history.",
+      "ramp_pass_markers": 1,
+      "selected_frame": 1,
+      "selected_marker": "DMA_CAL_SELECTED a5=6 frame=1 write_a5=5",
+      "selected_read_a5": 6,
+      "selected_write_a5": 5
+    },
+    "initial_mpr_errors": 0,
+    "initial_mpr_valid_masks": {
+      "ff": "ffff",
+      "zero": "ffff"
+    },
+    "memory_check": {
+      "bytes": 6291456,
+      "errors": 0,
+      "patterns": 6,
+      "status": "PASS"
+    },
+    "native_training": {
+      "cpu_a5": 2,
+      "errors": 0,
+      "first_age": 17,
+      "flags": "0",
+      "last_age": 17,
+      "r": 4,
+      "read_age_policy": "serialized CPU only; accepted counter delta 1 or 2; age window 16..18",
+      "read_alignment": 1,
+      "w": 3
+    },
+    "recalibration_mpr_errors": 0,
+    "sparse_check": {
+      "bytes": 960,
+      "errors": 0,
+      "locations": 30,
+      "range_GiB": 8,
+      "retention_ms": 250
+    }
+  },
+  "bank1": {
+    "downstream_stages_reached": false,
+    "initial_mpr_errors": 6,
+    "mismatching_observation_count": 6,
+    "mismatching_observations": [
+      {
+        "a5": 2,
+        "actual": "00006300",
+        "expected": "00000000",
+        "gate": 4,
+        "index": 6,
+        "phase": 3,
+        "valid": "ffff"
+      },
+      {
+        "a5": 2,
+        "actual": "00009c00",
+        "expected": "00000000",
+        "gate": 4,
+        "index": 7,
+        "phase": 3,
+        "valid": "ffff"
+      },
+      {
+        "a5": 2,
+        "actual": "ffff63ff",
+        "expected": "ffffffff",
+        "gate": 4,
+        "index": 4,
+        "phase": 3,
+        "valid": "ffff"
+      },
+      {
+        "a5": 2,
+        "actual": "ffff9cff",
+        "expected": "ffffffff",
+        "gate": 4,
+        "index": 5,
+        "phase": 3,
+        "valid": "ffff"
+      },
+      {
+        "a5": 2,
+        "actual": "ffff63ff",
+        "expected": "ffffffff",
+        "gate": 4,
+        "index": 6,
+        "phase": 3,
+        "valid": "ffff"
+      },
+      {
+        "a5": 2,
+        "actual": "ffff9cff",
+        "expected": "ffffffff",
+        "gate": 4,
+        "index": 7,
+        "phase": 3,
+        "valid": "ffff"
+      }
+    ],
+    "terminal_marker": "BANK=1 PUBLIC_MPR_CHECK_FAIL",
+    "valid_masks": {
+      "ff": "ffff",
+      "zero": "ffff"
+    }
+  },
+  "bank_order": [
+    0,
+    1
+  ],
+  "hardware_qualified": false,
+  "not_reached": [
+    "bank1 recalibration/training/pattern/memory/DMA",
+    "dual-bank full-capacity scan",
+    "dual-bank concurrent DMA",
+    "full strict-v3 completion validator"
+  ],
+  "outcome": {
+    "path": "integration/dual-ddr-v1/results/hardware-native2133-v14-fw14-bank0first-run1.json",
+    "result": "FAIL_STOPPED",
+    "sha256": "98151f70ee6dc1547a68876f56a2a8bb4b4c07ced010d7b1d52df22e770c4d53",
+    "terminal_marker": "BANK=1 PUBLIC_MPR_CHECK_FAIL"
+  },
+  "raw_uart": {
+    "path": "logs/dual-native2133-v14-fw14-bank0first-run1-uart.log",
+    "sha256": "51a55298e79f78d418d91548ed13d864b0fb1241c80bc1729e3cc72c9783702d"
+  },
+  "recorder": {
+    "format_note": "FW14 reports only mismatching MPR observations; this review does not infer unlogged matching words.",
+    "path": "integration/dual-ddr-v1/record_native2133_v14_fw14_bank0first_run2.py",
+    "schema": "native2133-v14-fw14-bank0first-hardware-outcome-r2",
+    "sha256": "8239d50abff8b3677d474d008abf1409e27b5750b35cee9c7a31a6a27dc762f7"
+  },
+  "review_status": "PASS_INTERPRETATION_MATCHES_FROZEN_RESULT",
+  "schema": "native2133-v14-fw14-independent-hardware-interpretation-r1",
+  "scope": "One nominal-profile bank0-first diagnostic run. Bank0 reached and passed its bank-level suite, including CPU training, patterns, sparse addresses over an 8 GiB address range, selected A5 DMA, and DMA ramp. Bank1 stopped at initial MPR. This is not an end-to-end two-bank qualification."
+}

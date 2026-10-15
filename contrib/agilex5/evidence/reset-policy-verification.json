@@ -1,0 +1,50 @@
+{
+  "all_pass": true,
+  "scope": "Pure local_resets functions only; byte-identical output Verilog and equal metadata using preserved raw inputs. No source generation, synthesis, model execution, hardware or original-workspace mutation.",
+  "policy_sha256": "368b44c47b51a6c2162b4dc9036e0bd896ddee105e825175476c3d9b035b0245",
+  "policy_entries": 1527,
+  "policy_bytes": 77143,
+  "donor_rtl_sha256": "4392b2b524845df6a0f79dbebd2f021e510c8caa0750ad54c6b41f7b3a781f5f",
+  "changes_sha256": "743c360c87c250785077dbdbe7942c0424172d351e084a0c85fc0c9f6346fd60",
+  "patches": [
+    {
+      "source": "integration/dual-ddr-v1/controller-native2133-fresh-v1/layer_repairs.py",
+      "original_sha256": "3d1464744cafffdeb608fa77af7861517e200f7ec4f6b4851001f1fd0e07f82a",
+      "patched_sha256": "b14137e12e0f08cc486902f8ff92b2de9ba6c79ddd5e28ffb43cc293e15284e8",
+      "cases": [
+        {
+          "raw_input": "integration/dual-ddr-v1/controller-native2133-fresh-v1/generated-base23/litedram_external_controller_raw.v",
+          "raw_sha256": "4769e4b200bc17fd2a44f1f8ed799d445939fa868ef63c153f2ab3c44cbf48b1",
+          "output_sha256": "41ba7790bdca03776b7bea4be7482eda8fdac74fac154fae9a1e9dfea2368689",
+          "verilog_identical": true,
+          "metadata_identical": true,
+          "reset_assignment_count": 1545
+        },
+        {
+          "raw_input": "integration/dual-ddr-v1/controller-native2133-dense-repair-v5/generated-draft1/raw.v",
+          "raw_sha256": "1c76acb09fcd9ee12298b988cbc6a52140c361468347d89091b249dcb406963b",
+          "output_sha256": "f6610e4214e3123fb02ca4a137d473cbd96be4a58512f52bcb9577c1bde22702",
+          "verilog_identical": true,
+          "metadata_identical": true,
+          "reset_assignment_count": 1734
+        }
+      ]
+    },
+    {
+      "source": "integration/dual-ddr-v1/controller-native2666-fresh-v1/layer_repairs.py",
+      "original_sha256": "3d1464744cafffdeb608fa77af7861517e200f7ec4f6b4851001f1fd0e07f82a",
+      "patched_sha256": "b14137e12e0f08cc486902f8ff92b2de9ba6c79ddd5e28ffb43cc293e15284e8",
+      "cases": [
+        {
+          "raw_input": "integration/dual-ddr-v1/controller-native2666-dense-repair-v4/generated-draft1/raw.v",
+          "raw_sha256": "9728da73a746928188efd0b1a9653afb957e830d2c47e0f8109932e0ef5523d9",
+          "output_sha256": "44882cfbc6f973cdd3f9f9c05ade3fe993d2a802bdade5d6526cd36fb232fb86",
+          "verilog_identical": true,
+          "metadata_identical": true,
+          "reset_assignment_count": 1734
+        }
+      ]
+    }
+  ],
+  "retained_dependency": "controller-fast-v11/prepare.py remains the unchanged pure transformation source used by v11_layers; changes.json remains donor provenance."
+}

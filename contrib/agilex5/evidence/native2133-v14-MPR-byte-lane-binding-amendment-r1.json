@@ -1,0 +1,41 @@
+{
+  "status": "PASS_READ_ONLY_SOURCE_BINDING",
+  "hardware_qualified": false,
+  "raw_error_mask": "0000ff00",
+  "logical_DFI_byte_zero_based": 1,
+  "logical_DQ_bits": [
+    8,
+    15
+  ],
+  "PHY_group": 1,
+  "BANK3_physical_IO96_lane": 4,
+  "basis": [
+    "rawCSRwordi corresponds DFI32bit samplei; only bits15:8 differ",
+    "dense_phy.py maps groupbyte1 to allphysicalDFI sample bits8..15",
+    "wrapper group1_data_io uses dq8..15 and DQS1",
+    "selected r3 xml GROUP_1_START_LANE_ID=4; group2/lane5 belongs DQ16..23"
+  ],
+  "failure_temporal_shape": {
+    "zero_bad_samples": [
+      6,
+      7
+    ],
+    "ff_bad_samples": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "observed_bad_byte_values": [
+      "0x63",
+      "0x9c"
+    ]
+  },
+  "causality": "No analog or command cause established; no reroute suggested. Partiallate-sample pattern is informative but doesnot aloneprove stalecapture orFIFOmisalignment.",
+  "source_sha256": {
+    "integration/dual-ddr-v1/controller-native2133-dense-repair-v5/dense_phy.py": "c58ace2ffaacbfe319417ba6f8cde801bbc94d73b20e82db18fe38ce5a2e45c1",
+    "integration/dual-ddr-v1/native2133-memory-v1/draft/dual_ddr_bank1_path_native2133_v1.sv": "30b3156e765ed3e3782aa2a6b067f4d016205651893f4d5ac6929b6968e21c99",
+    "integration/dual-ddr-v1/phy-native2133-bank3-r3/generated/bank1/dual3_phy_probe_phy/dual3_phy_probe_phy.xml": "cd9703376fdc78050a885bec29e4704a7258e46c1f2e989f67ac918e4216c0b5"
+  },
+  "parent_source_analysis": "integration/dual-ddr-v1/results/native2133-v14-MPR-startup-A5-source-review-r1.json"
+}

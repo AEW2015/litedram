@@ -1,0 +1,1622 @@
+{
+  "ELF": {
+    "path": "build/dual-ddr-native2133-memory-fw-draft-v14-bank0first/dual_ddr_diagnostic.elf",
+    "sha256": "52905f3c48feabc546bbaf3241f2c4f45dcafb4cce29cd5e7c58bc16b4d3a7ec"
+  },
+  "SOF": {
+    "path": "build/dual_ddr2133_memory_v14/memory_test.sof",
+    "sha256": "9d52885ca910d0de0f957dc512b6960faaebefc1c59e5125fbec6e727e6c58c4"
+  },
+  "author_assessment": {
+    "path": "integration/dual-ddr-v1/results/native2133-fw14-bank0first-author-source-build-assessment-r1.json",
+    "sha256": "4d56ddb80563885f300c0aa40517c61e641d16fb83805255cf53994e9a541040"
+  },
+  "bank0_first_diagnostic_claim": true,
+  "bank1_diagnostic_claim": false,
+  "banks": {
+    "0": {
+      "alignment_policy_markers": [
+        "NATIVE2133_ALIGNMENT policy=1 only stage=native_training_cpu_DMA_console model_profile=base25_frontend27_trial"
+      ],
+      "attempted": true,
+      "dma_basic_records": [
+        {
+          "cycles": 8312,
+          "errors": 0,
+          "gap": 64,
+          "issued": 128,
+          "mode": "W",
+          "moved": 128,
+          "status": "PASS",
+          "words": 128
+        },
+        {
+          "cycles": 8474,
+          "errors": 0,
+          "gap": 64,
+          "issued": 128,
+          "mode": "R",
+          "moved": 128,
+          "status": "PASS",
+          "words": 128
+        },
+        {
+          "cycles": 1201,
+          "errors": 0,
+          "gap": 8,
+          "issued": 128,
+          "mode": "W",
+          "moved": 128,
+          "status": "PASS",
+          "words": 128
+        },
+        {
+          "cycles": 1234,
+          "errors": 0,
+          "gap": 8,
+          "issued": 128,
+          "mode": "R",
+          "moved": 128,
+          "status": "PASS",
+          "words": 128
+        },
+        {
+          "cycles": 440,
+          "errors": 0,
+          "gap": 2,
+          "issued": 128,
+          "mode": "W",
+          "moved": 128,
+          "status": "PASS",
+          "words": 128
+        },
+        {
+          "cycles": 626,
+          "errors": 0,
+          "gap": 2,
+          "issued": 128,
+          "mode": "R",
+          "moved": 128,
+          "status": "PASS",
+          "words": 128
+        },
+        {
+          "cycles": 232,
+          "errors": 0,
+          "gap": 0,
+          "issued": 128,
+          "mode": "W",
+          "moved": 128,
+          "status": "PASS",
+          "words": 128
+        },
+        {
+          "cycles": 382,
+          "errors": 0,
+          "gap": 0,
+          "issued": 128,
+          "mode": "R",
+          "moved": 128,
+          "status": "PASS",
+          "words": 128
+        },
+        {
+          "cycles": 5630,
+          "errors": 0,
+          "gap": 0,
+          "issued": 4096,
+          "mode": "W",
+          "moved": 4096,
+          "status": "PASS",
+          "words": 4096
+        },
+        {
+          "cycles": 5318,
+          "errors": 0,
+          "gap": 0,
+          "issued": 4096,
+          "mode": "R",
+          "moved": 4096,
+          "status": "PASS",
+          "words": 4096
+        },
+        {
+          "cycles": 687279,
+          "errors": 0,
+          "gap": 0,
+          "issued": 524288,
+          "mode": "W",
+          "moved": 524288,
+          "status": "PASS",
+          "words": 524288
+        },
+        {
+          "cycles": 671250,
+          "errors": 0,
+          "gap": 0,
+          "issued": 524288,
+          "mode": "R",
+          "moved": 524288,
+          "status": "PASS",
+          "words": 524288
+        },
+        {
+          "cycles": 2749044,
+          "errors": 0,
+          "gap": 0,
+          "issued": 2097152,
+          "mode": "W",
+          "moved": 2097152,
+          "status": "PASS",
+          "words": 2097152
+        },
+        {
+          "cycles": 2684654,
+          "errors": 0,
+          "gap": 0,
+          "issued": 2097152,
+          "mode": "R",
+          "moved": 2097152,
+          "status": "PASS",
+          "words": 2097152
+        },
+        {
+          "cycles": 2747411,
+          "errors": 0,
+          "gap": 0,
+          "issued": 2097152,
+          "mode": "W",
+          "moved": 2097152,
+          "status": "PASS",
+          "words": 2097152
+        },
+        {
+          "cycles": 2684794,
+          "errors": 0,
+          "gap": 0,
+          "issued": 2097152,
+          "mode": "R",
+          "moved": 2097152,
+          "status": "PASS",
+          "words": 2097152
+        },
+        {
+          "cycles": 2748917,
+          "errors": 0,
+          "gap": 0,
+          "issued": 2097152,
+          "mode": "W",
+          "moved": 2097152,
+          "status": "PASS",
+          "words": 2097152
+        },
+        {
+          "cycles": 2684698,
+          "errors": 0,
+          "gap": 0,
+          "issued": 2097152,
+          "mode": "R",
+          "moved": 2097152,
+          "status": "PASS",
+          "words": 2097152
+        }
+      ],
+      "dma_cal_attempts": [
+        {
+          "cycles": 241,
+          "errors": 29,
+          "gap": 0,
+          "issued": 128,
+          "mode": "R",
+          "moved": 128,
+          "result": "FAIL",
+          "words": 128
+        },
+        {
+          "cycles": 241,
+          "errors": 42,
+          "gap": 0,
+          "issued": 128,
+          "mode": "R",
+          "moved": 128,
+          "result": "FAIL",
+          "words": 128
+        },
+        {
+          "cycles": 241,
+          "errors": 63,
+          "gap": 0,
+          "issued": 128,
+          "mode": "R",
+          "moved": 128,
+          "result": "FAIL",
+          "words": 128
+        },
+        {
+          "cycles": 241,
+          "errors": 57,
+          "gap": 0,
+          "issued": 128,
+          "mode": "R",
+          "moved": 128,
+          "result": "FAIL",
+          "words": 128
+        },
+        {
+          "cycles": 241,
+          "errors": 0,
+          "gap": 0,
+          "issued": 128,
+          "mode": "R",
+          "moved": 128,
+          "result": "PASS",
+          "words": 128
+        },
+        {
+          "cycles": 279,
+          "errors": 0,
+          "gap": 0,
+          "issued": 128,
+          "mode": "W",
+          "moved": 128,
+          "result": "PASS",
+          "words": 128
+        },
+        {
+          "cycles": 241,
+          "errors": 37,
+          "gap": 0,
+          "issued": 128,
+          "mode": "R",
+          "moved": 128,
+          "result": "FAIL",
+          "words": 128
+        },
+        {
+          "cycles": 371,
+          "errors": 0,
+          "gap": 0,
+          "issued": 128,
+          "mode": "W",
+          "moved": 128,
+          "result": "PASS",
+          "words": 128
+        },
+        {
+          "cycles": 242,
+          "errors": 0,
+          "gap": 0,
+          "issued": 128,
+          "mode": "R",
+          "moved": 128,
+          "result": "PASS",
+          "words": 128
+        }
+      ],
+      "dma_cpu_verify_records": [
+        {
+          "errors": 296,
+          "tap": null,
+          "words": 128
+        },
+        {
+          "errors": 0,
+          "tap": null,
+          "words": 128
+        },
+        {
+          "errors": 0,
+          "tap": null,
+          "words": 128
+        },
+        {
+          "errors": 0,
+          "tap": null,
+          "words": 128
+        },
+        {
+          "errors": 0,
+          "tap": null,
+          "words": 128
+        },
+        {
+          "errors": 0,
+          "tap": null,
+          "words": 128
+        },
+        {
+          "errors": 0,
+          "tap": null,
+          "words": 4096
+        },
+        {
+          "errors": 0,
+          "tap": null,
+          "words": 524288
+        },
+        {
+          "errors": 0,
+          "tap": null,
+          "words": 2097152
+        },
+        {
+          "errors": 0,
+          "tap": null,
+          "words": 2097152
+        },
+        {
+          "errors": 0,
+          "tap": null,
+          "words": 2097152
+        }
+      ],
+      "dma_descriptors": [
+        {
+          "base": 2097152,
+          "seed": 1831565813,
+          "words": 2097152
+        },
+        {
+          "base": 4194304,
+          "seed": 2463401482,
+          "words": 2097152
+        },
+        {
+          "base": 6291456,
+          "seed": 262785979,
+          "words": 2097152
+        }
+      ],
+      "dma_diag_counters": [
+        {
+          "bank_management": 4,
+          "command_conflict": 0,
+          "read_cas": 128,
+          "refresh_cycles": 44118,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 0
+        },
+        {
+          "bank_management": 4,
+          "command_conflict": 0,
+          "read_cas": 128,
+          "refresh_cycles": 44118,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 0
+        },
+        {
+          "bank_management": 4,
+          "command_conflict": 0,
+          "read_cas": 128,
+          "refresh_cycles": 44118,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 0
+        },
+        {
+          "bank_management": 4,
+          "command_conflict": 0,
+          "read_cas": 128,
+          "refresh_cycles": 44118,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 0
+        },
+        {
+          "bank_management": 4,
+          "command_conflict": 0,
+          "read_cas": 128,
+          "refresh_cycles": 44118,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 0
+        },
+        {
+          "bank_management": 4,
+          "command_conflict": 0,
+          "read_cas": 0,
+          "refresh_cycles": 44185,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 128
+        },
+        {
+          "bank_management": 4,
+          "command_conflict": 0,
+          "read_cas": 128,
+          "refresh_cycles": 44289,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 0
+        },
+        {
+          "bank_management": 4,
+          "command_conflict": 0,
+          "read_cas": 0,
+          "refresh_cycles": 44277,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 128
+        },
+        {
+          "bank_management": 4,
+          "command_conflict": 0,
+          "read_cas": 128,
+          "refresh_cycles": 44289,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 0
+        },
+        {
+          "bank_management": 36,
+          "command_conflict": 0,
+          "read_cas": 0,
+          "refresh_cycles": 44295,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 128
+        },
+        {
+          "bank_management": 33,
+          "command_conflict": 0,
+          "read_cas": 128,
+          "refresh_cycles": 44182,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 0
+        },
+        {
+          "bank_management": 8,
+          "command_conflict": 0,
+          "read_cas": 0,
+          "refresh_cycles": 44123,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 128
+        },
+        {
+          "bank_management": 8,
+          "command_conflict": 0,
+          "read_cas": 128,
+          "refresh_cycles": 44118,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 0
+        },
+        {
+          "bank_management": 4,
+          "command_conflict": 0,
+          "read_cas": 0,
+          "refresh_cycles": 44233,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 128
+        },
+        {
+          "bank_management": 8,
+          "command_conflict": 0,
+          "read_cas": 128,
+          "refresh_cycles": 44289,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 0
+        },
+        {
+          "bank_management": 4,
+          "command_conflict": 0,
+          "read_cas": 0,
+          "refresh_cycles": 44289,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 128
+        },
+        {
+          "bank_management": 4,
+          "command_conflict": 0,
+          "read_cas": 128,
+          "refresh_cycles": 44278,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 0
+        },
+        {
+          "bank_management": 56,
+          "command_conflict": 0,
+          "read_cas": 0,
+          "refresh_cycles": 44354,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 4096
+        },
+        {
+          "bank_management": 52,
+          "command_conflict": 0,
+          "read_cas": 4096,
+          "refresh_cycles": 44290,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 0
+        },
+        {
+          "bank_management": 6693,
+          "command_conflict": 0,
+          "read_cas": 0,
+          "refresh_cycles": 138416,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 524288
+        },
+        {
+          "bank_management": 6645,
+          "command_conflict": 0,
+          "read_cas": 524288,
+          "refresh_cycles": 134078,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 0
+        },
+        {
+          "bank_management": 26800,
+          "command_conflict": 0,
+          "read_cas": 0,
+          "refresh_cycles": 509439,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 2097152
+        },
+        {
+          "bank_management": 26582,
+          "command_conflict": 0,
+          "read_cas": 2097152,
+          "refresh_cycles": 491603,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 0
+        },
+        {
+          "bank_management": 26789,
+          "command_conflict": 0,
+          "read_cas": 0,
+          "refresh_cycles": 508983,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 2097152
+        },
+        {
+          "bank_management": 26588,
+          "command_conflict": 0,
+          "read_cas": 2097152,
+          "refresh_cycles": 491616,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 0
+        },
+        {
+          "bank_management": 26789,
+          "command_conflict": 0,
+          "read_cas": 0,
+          "refresh_cycles": 509366,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 2097152
+        },
+        {
+          "bank_management": 26584,
+          "command_conflict": 0,
+          "read_cas": 2097152,
+          "refresh_cycles": 491680,
+          "striped_drained": 1,
+          "striped_errors": 0,
+          "write_cas": 0
+        }
+      ],
+      "dma_error_word_records": [
+        "DMA_BAD addr=0000000c got=f31c0050 expected=f31c0040",
+        "DMA_BAD addr=00000003 got=f31c005f expected=f31c004f",
+        "DMA_BAD addr=00000006 got=f31c005a expected=f31c004a",
+        "DMA_BAD addr=00000009 got=f31c0055 expected=f31c0045",
+        "DMA_CPU_BAD a=00000000 lane=0 got=4c62fda7 exp=4c62fdb7",
+        "DMA_CPU_BAD a=00000000 lane=1 got=ee3b776c exp=ee3b777c",
+        "DMA_CPU_BAD a=00000000 lane=2 got=08f3e935 exp=08f3e925",
+        "DMA_CPU_BAD a=00000000 lane=3 got=aa8862fa exp=aa8862ea",
+        "DMA_BAD addr=00000000 got=4c62fda7 expected=4c62fdb7"
+      ],
+      "dma_evidence_lines": [
+        "DUAL_DDR_BEGIN banks=2 capacity_GiB=16 rate_MT_s=2133.333333 ecc=disabled",
+        "PUBLIC_LITEDRAM_PATTERN mode=0 bytes=1048576 errors=0",
+        "PUBLIC_LITEDRAM_PATTERN mode=1 bytes=1048576 errors=0",
+        "PUBLIC_LITEDRAM_PATTERN mode=2 bytes=1048576 errors=0",
+        "PUBLIC_LITEDRAM_PATTERN mode=3 bytes=1048576 errors=0",
+        "PUBLIC_LITEDRAM_PATTERN mode=4 bytes=1048576 errors=0",
+        "PUBLIC_LITEDRAM_PATTERN mode=5 bytes=1048576 errors=0",
+        "PUBLIC_LITEDRAM_SPARSE bytes=960 locations=30 range_GiB=8 retention_ms=250 errors=0",
+        "PUBLIC_LITEDRAM_MEM_PASS bytes=6291456 patterns=6 errors=0",
+        "DMA_CAL_READ_TRIAL a5=2 frame=1",
+        "DMA_DIAG read_cas=128 write_cas=0 bank_management=4 refresh_cycles=44118 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_CAL_FAIL mode=R words=128 gap=0 cycles=00000000000000f1 issued=128 moved=128 errors=29",
+        "DMA_BAD addr=0000000c got=f31c0050 expected=f31c0040",
+        "DMA_CAL_READ_TRIAL a5=5 frame=1",
+        "DMA_DIAG read_cas=128 write_cas=0 bank_management=4 refresh_cycles=44118 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_CAL_FAIL mode=R words=128 gap=0 cycles=00000000000000f1 issued=128 moved=128 errors=42",
+        "DMA_BAD addr=00000003 got=f31c005f expected=f31c004f",
+        "DMA_CAL_READ_TRIAL a5=4 frame=1",
+        "DMA_DIAG read_cas=128 write_cas=0 bank_management=4 refresh_cycles=44118 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_CAL_FAIL mode=R words=128 gap=0 cycles=00000000000000f1 issued=128 moved=128 errors=63",
+        "DMA_BAD addr=00000006 got=f31c005a expected=f31c004a",
+        "DMA_CAL_READ_TRIAL a5=3 frame=1",
+        "DMA_DIAG read_cas=128 write_cas=0 bank_management=4 refresh_cycles=44118 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_CAL_FAIL mode=R words=128 gap=0 cycles=00000000000000f1 issued=128 moved=128 errors=57",
+        "DMA_BAD addr=00000009 got=f31c0055 expected=f31c0045",
+        "DMA_CAL_READ_TRIAL a5=6 frame=1",
+        "DMA_DIAG read_cas=128 write_cas=0 bank_management=4 refresh_cycles=44118 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_CAL_PASS mode=R words=128 gap=0 cycles=00000000000000f1 issued=128 moved=128 errors=0",
+        "DMA_DIAG read_cas=0 write_cas=128 bank_management=4 refresh_cycles=44185 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_CAL_PASS mode=W words=128 gap=0 cycles=0000000000000117 issued=128 moved=128 errors=0",
+        "DMA_CPU_BAD a=00000000 lane=0 got=4c62fda7 exp=4c62fdb7",
+        "DMA_CPU_BAD a=00000000 lane=1 got=ee3b776c exp=ee3b777c",
+        "DMA_CPU_BAD a=00000000 lane=2 got=08f3e935 exp=08f3e925",
+        "DMA_CPU_BAD a=00000000 lane=3 got=aa8862fa exp=aa8862ea",
+        "DMA_CPU_VERIFY_TAP tap=2",
+        "DMA_CPU_VERIFY words=128 errors=296",
+        "DMA_DIAG read_cas=128 write_cas=0 bank_management=4 refresh_cycles=44289 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_CAL_FAIL mode=R words=128 gap=0 cycles=00000000000000f1 issued=128 moved=128 errors=37",
+        "DMA_BAD addr=00000000 got=4c62fda7 expected=4c62fdb7",
+        "DMA_CAL_WRITE_RESULT read_a5=6 write_a5=4 frame=1 count=1 cpu=0 dma_readback=0",
+        "DMA_DIAG read_cas=0 write_cas=128 bank_management=4 refresh_cycles=44277 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_CAL_PASS mode=W words=128 gap=0 cycles=0000000000000173 issued=128 moved=128 errors=0",
+        "DMA_CPU_VERIFY_TAP tap=2",
+        "DMA_CPU_VERIFY words=128 errors=0",
+        "DMA_DIAG read_cas=128 write_cas=0 bank_management=4 refresh_cycles=44289 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_CAL_PASS mode=R words=128 gap=0 cycles=00000000000000f2 issued=128 moved=128 errors=0",
+        "DMA_CAL_WRITE_RESULT read_a5=6 write_a5=5 frame=1 count=1 cpu=1 dma_readback=1",
+        "DMA_CAL_SELECTED a5=6 frame=1 write_a5=5",
+        "DMA_GPIO_A5 delay=6 frame=1",
+        "DMA_GPIO_A5_DIRECTION read=6 write=5 cpu=2 frame=1",
+        "DMA_DIAG read_cas=0 write_cas=128 bank_management=36 refresh_cycles=44295 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=W words=128 gap=64 cycles=0000000000002078 issued=128 moved=128 errors=0",
+        "DMA_CPU_VERIFY_TAP tap=2",
+        "DMA_CPU_VERIFY words=128 errors=0",
+        "DMA_DIAG read_cas=128 write_cas=0 bank_management=33 refresh_cycles=44182 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=R words=128 gap=64 cycles=000000000000211a issued=128 moved=128 errors=0",
+        "DMA_DIAG read_cas=0 write_cas=128 bank_management=8 refresh_cycles=44123 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=W words=128 gap=8 cycles=00000000000004b1 issued=128 moved=128 errors=0",
+        "DMA_CPU_VERIFY_TAP tap=2",
+        "DMA_CPU_VERIFY words=128 errors=0",
+        "DMA_DIAG read_cas=128 write_cas=0 bank_management=8 refresh_cycles=44118 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=R words=128 gap=8 cycles=00000000000004d2 issued=128 moved=128 errors=0",
+        "DMA_DIAG read_cas=0 write_cas=128 bank_management=4 refresh_cycles=44233 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=W words=128 gap=2 cycles=00000000000001b8 issued=128 moved=128 errors=0",
+        "DMA_CPU_VERIFY_TAP tap=2",
+        "DMA_CPU_VERIFY words=128 errors=0",
+        "DMA_DIAG read_cas=128 write_cas=0 bank_management=8 refresh_cycles=44289 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=R words=128 gap=2 cycles=0000000000000272 issued=128 moved=128 errors=0",
+        "DMA_DIAG read_cas=0 write_cas=128 bank_management=4 refresh_cycles=44289 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=W words=128 gap=0 cycles=00000000000000e8 issued=128 moved=128 errors=0",
+        "DMA_CPU_VERIFY_TAP tap=2",
+        "DMA_CPU_VERIFY words=128 errors=0",
+        "DMA_DIAG read_cas=128 write_cas=0 bank_management=4 refresh_cycles=44278 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=R words=128 gap=0 cycles=000000000000017e issued=128 moved=128 errors=0",
+        "DMA_DIAG read_cas=0 write_cas=4096 bank_management=56 refresh_cycles=44354 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=W words=4096 gap=0 cycles=00000000000015fe issued=4096 moved=4096 errors=0",
+        "DMA_CPU_VERIFY_TAP tap=2",
+        "DMA_CPU_VERIFY words=4096 errors=0",
+        "DMA_DIAG read_cas=4096 write_cas=0 bank_management=52 refresh_cycles=44290 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=R words=4096 gap=0 cycles=00000000000014c6 issued=4096 moved=4096 errors=0",
+        "DMA_DIAG read_cas=0 write_cas=524288 bank_management=6693 refresh_cycles=138416 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=W words=524288 gap=0 cycles=00000000000a7caf issued=524288 moved=524288 errors=0",
+        "DMA_CPU_VERIFY_TAP tap=2",
+        "DMA_CPU_VERIFY words=524288 errors=0",
+        "DMA_DIAG read_cas=524288 write_cas=0 bank_management=6645 refresh_cycles=134078 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=R words=524288 gap=0 cycles=00000000000a3e12 issued=524288 moved=524288 errors=0",
+        "DMA_DESCRIPTOR base=00200000 words=2097152 seed=6d2b79f5",
+        "DMA_DIAG read_cas=0 write_cas=2097152 bank_management=26800 refresh_cycles=509439 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=W words=2097152 gap=0 cycles=000000000029f274 issued=2097152 moved=2097152 errors=0",
+        "DMA_CPU_VERIFY_TAP tap=2",
+        "DMA_CPU_VERIFY words=2097152 errors=0",
+        "DMA_DIAG read_cas=2097152 write_cas=0 bank_management=26582 refresh_cycles=491603 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=R words=2097152 gap=0 cycles=000000000028f6ee issued=2097152 moved=2097152 errors=0",
+        "DMA_DESCRIPTOR base=00400000 words=2097152 seed=92d4860a",
+        "DMA_DIAG read_cas=0 write_cas=2097152 bank_management=26789 refresh_cycles=508983 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=W words=2097152 gap=0 cycles=000000000029ec13 issued=2097152 moved=2097152 errors=0",
+        "DMA_CPU_VERIFY_TAP tap=2",
+        "DMA_CPU_VERIFY words=2097152 errors=0",
+        "DMA_DIAG read_cas=2097152 write_cas=0 bank_management=26588 refresh_cycles=491616 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=R words=2097152 gap=0 cycles=000000000028f77a issued=2097152 moved=2097152 errors=0",
+        "DMA_DESCRIPTOR base=00600000 words=2097152 seed=0fa9cbbb",
+        "DMA_DIAG read_cas=0 write_cas=2097152 bank_management=26789 refresh_cycles=509366 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=W words=2097152 gap=0 cycles=000000000029f1f5 issued=2097152 moved=2097152 errors=0",
+        "DMA_CPU_VERIFY_TAP tap=2",
+        "DMA_CPU_VERIFY words=2097152 errors=0",
+        "DMA_DIAG read_cas=2097152 write_cas=0 bank_management=26584 refresh_cycles=491680 striped_errors=0 striped_drained=1 command_conflict=0",
+        "DMA_PASS mode=R words=2097152 gap=0 cycles=000000000028f71a issued=2097152 moved=2097152 errors=0",
+        "DMA_RAMP_PASS",
+        "DUAL_BANK_DIAGNOSTIC_PASS"
+      ],
+      "dma_ramp_pass_count": 1,
+      "dual_bank_diagnostic_pass": true,
+      "initial_mpr": {
+        "bank": 0,
+        "complete_raw_words_logged": false,
+        "errors": 0,
+        "ff_valid": 65535,
+        "observations": [],
+        "reported_mismatch_observations": 0,
+        "zero_valid": 65535
+      },
+      "memory_check": [
+        {
+          "bytes": 6291456,
+          "errors": 0,
+          "patterns": 6,
+          "status": "PASS"
+        }
+      ],
+      "pattern_checks": [
+        {
+          "bytes": 1048576,
+          "errors": 0,
+          "mode": 0
+        },
+        {
+          "bytes": 1048576,
+          "errors": 0,
+          "mode": 1
+        },
+        {
+          "bytes": 1048576,
+          "errors": 0,
+          "mode": 2
+        },
+        {
+          "bytes": 1048576,
+          "errors": 0,
+          "mode": 3
+        },
+        {
+          "bytes": 1048576,
+          "errors": 0,
+          "mode": 4
+        },
+        {
+          "bytes": 1048576,
+          "errors": 0,
+          "mode": 5
+        }
+      ],
+      "read_age_policy_marker_count": 1,
+      "read_age_policy_markers": [
+        "NATIVE2133_READ_AGE policy=counter_delta_1_or_2 first_age_16_to_18 last_minus_first=delta_minus_1 scope=serialized_CPU_only alignment=1"
+      ],
+      "read_alignment_marker_count": 1,
+      "recal_mpr": {
+        "bank": 0,
+        "complete_raw_words_logged": false,
+        "errors": 0,
+        "reported_mismatch_observations": 0
+      },
+      "sparse_checks": [
+        {
+          "bytes": 960,
+          "errors": 0,
+          "locations": 30,
+          "range_GiB": 8,
+          "retention_ms": 250
+        }
+      ],
+      "training_attempt_count": 29,
+      "training_attempts": [
+        {
+          "a5": 2,
+          "errors": 720,
+          "first_age": 16,
+          "flags": 0,
+          "last_age": 16,
+          "r": 3,
+          "w": 4
+        },
+        {
+          "a5": 1,
+          "errors": 720,
+          "first_age": 16,
+          "flags": 0,
+          "last_age": 16,
+          "r": 3,
+          "w": 4
+        },
+        {
+          "a5": 3,
+          "errors": 720,
+          "first_age": 16,
+          "flags": 0,
+          "last_age": 16,
+          "r": 3,
+          "w": 4
+        },
+        {
+          "a5": 4,
+          "errors": 720,
+          "first_age": 16,
+          "flags": 0,
+          "last_age": 16,
+          "r": 3,
+          "w": 4
+        },
+        {
+          "a5": 2,
+          "errors": 720,
+          "first_age": 17,
+          "flags": 0,
+          "last_age": 17,
+          "r": 4,
+          "w": 4
+        },
+        {
+          "a5": 1,
+          "errors": 720,
+          "first_age": 17,
+          "flags": 0,
+          "last_age": 17,
+          "r": 4,
+          "w": 4
+        },
+        {
+          "a5": 3,
+          "errors": 720,
+          "first_age": 17,
+          "flags": 0,
+          "last_age": 17,
+          "r": 4,
+          "w": 4
+        },
+        {
+          "a5": 4,
+          "errors": 720,
+          "first_age": 17,
+          "flags": 0,
+          "last_age": 17,
+          "r": 4,
+          "w": 4
+        },
+        {
+          "a5": 2,
+          "errors": 720,
+          "first_age": 18,
+          "flags": 0,
+          "last_age": 18,
+          "r": 5,
+          "w": 4
+        },
+        {
+          "a5": 1,
+          "errors": 720,
+          "first_age": 18,
+          "flags": 0,
+          "last_age": 18,
+          "r": 5,
+          "w": 4
+        },
+        {
+          "a5": 3,
+          "errors": 720,
+          "first_age": 18,
+          "flags": 0,
+          "last_age": 18,
+          "r": 5,
+          "w": 4
+        },
+        {
+          "a5": 4,
+          "errors": 720,
+          "first_age": 18,
+          "flags": 0,
+          "last_age": 18,
+          "r": 5,
+          "w": 4
+        },
+        {
+          "a5": 2,
+          "errors": 810,
+          "first_age": 14,
+          "flags": 0,
+          "last_age": 14,
+          "r": 1,
+          "w": 4
+        },
+        {
+          "a5": 1,
+          "errors": 810,
+          "first_age": 14,
+          "flags": 0,
+          "last_age": 14,
+          "r": 1,
+          "w": 4
+        },
+        {
+          "a5": 3,
+          "errors": 810,
+          "first_age": 14,
+          "flags": 0,
+          "last_age": 14,
+          "r": 1,
+          "w": 4
+        },
+        {
+          "a5": 4,
+          "errors": 810,
+          "first_age": 14,
+          "flags": 0,
+          "last_age": 14,
+          "r": 1,
+          "w": 4
+        },
+        {
+          "a5": 2,
+          "errors": 810,
+          "first_age": 15,
+          "flags": 0,
+          "last_age": 15,
+          "r": 2,
+          "w": 4
+        },
+        {
+          "a5": 1,
+          "errors": 810,
+          "first_age": 15,
+          "flags": 0,
+          "last_age": 15,
+          "r": 2,
+          "w": 4
+        },
+        {
+          "a5": 3,
+          "errors": 810,
+          "first_age": 15,
+          "flags": 0,
+          "last_age": 15,
+          "r": 2,
+          "w": 4
+        },
+        {
+          "a5": 4,
+          "errors": 810,
+          "first_age": 15,
+          "flags": 0,
+          "last_age": 15,
+          "r": 2,
+          "w": 4
+        },
+        {
+          "a5": 2,
+          "errors": 810,
+          "first_age": 19,
+          "flags": 0,
+          "last_age": 19,
+          "r": 6,
+          "w": 4
+        },
+        {
+          "a5": 1,
+          "errors": 810,
+          "first_age": 19,
+          "flags": 0,
+          "last_age": 19,
+          "r": 6,
+          "w": 4
+        },
+        {
+          "a5": 3,
+          "errors": 810,
+          "first_age": 19,
+          "flags": 0,
+          "last_age": 19,
+          "r": 6,
+          "w": 4
+        },
+        {
+          "a5": 4,
+          "errors": 810,
+          "first_age": 19,
+          "flags": 0,
+          "last_age": 19,
+          "r": 6,
+          "w": 4
+        },
+        {
+          "a5": 2,
+          "errors": 720,
+          "first_age": 16,
+          "flags": 0,
+          "last_age": 16,
+          "r": 3,
+          "w": 3
+        },
+        {
+          "a5": 1,
+          "errors": 720,
+          "first_age": 16,
+          "flags": 0,
+          "last_age": 16,
+          "r": 3,
+          "w": 3
+        },
+        {
+          "a5": 3,
+          "errors": 720,
+          "first_age": 16,
+          "flags": 0,
+          "last_age": 16,
+          "r": 3,
+          "w": 3
+        },
+        {
+          "a5": 4,
+          "errors": 720,
+          "first_age": 16,
+          "flags": 0,
+          "last_age": 16,
+          "r": 3,
+          "w": 3
+        },
+        {
+          "a5": 2,
+          "errors": 0,
+          "first_age": 17,
+          "flags": 0,
+          "last_age": 17,
+          "r": 4,
+          "w": 3
+        }
+      ],
+      "training_mismatch_count": 100,
+      "training_mismatch_examples": [
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=0 e=190ed867 g=00000000",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=1 e=6120ed6a g=00000000",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=2 e=d032f8ca g=00000000",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=3 e=5faf9482 g=00000000",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=0 e=190ed867 g=00000000",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=1 e=6120ed6a g=00000000",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=2 e=d032f8ca g=00000000",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=3 e=5faf9482 g=00000000",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=0 e=190ed867 g=00000000",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=1 e=6120ed6a g=00000000",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=2 e=d032f8ca g=00000000",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=3 e=5faf9482 g=00000000",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=0 e=190ed867 g=00000000",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=1 e=6120ed6a g=00000000",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=2 e=d032f8ca g=00000000",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=3 e=5faf9482 g=00000000",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=0 e=190ed867 g=ffffffff",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=1 e=6120ed6a g=ffffffff",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=2 e=d032f8ca g=ffffffff",
+        "PRIM_TRAIN_MISMATCH p=0 a=0 i=3 e=5faf9482 g=ffffffff"
+      ],
+      "training_pass": [
+        {
+          "a5": 2,
+          "r": 4,
+          "w": 3
+        }
+      ],
+      "tx_shift_marker_count": 1
+    },
+    "1": {
+      "alignment_policy_markers": [],
+      "attempted": true,
+      "dma_basic_records": [],
+      "dma_cal_attempts": [],
+      "dma_cpu_verify_records": [],
+      "dma_descriptors": [],
+      "dma_diag_counters": [],
+      "dma_error_word_records": [],
+      "dma_evidence_lines": [],
+      "dma_ramp_pass_count": 0,
+      "dual_bank_diagnostic_pass": false,
+      "initial_mpr": {
+        "bank": 1,
+        "complete_raw_words_logged": false,
+        "errors": 6,
+        "ff_valid": 65535,
+        "observations": [
+          {
+            "a5": 2,
+            "actual": 25344,
+            "bank": 1,
+            "expected": 0,
+            "gate": 4,
+            "index": 6,
+            "line": 1401,
+            "phase": 3,
+            "valid_mask": 65535
+          },
+          {
+            "a5": 2,
+            "actual": 39936,
+            "bank": 1,
+            "expected": 0,
+            "gate": 4,
+            "index": 7,
+            "line": 1402,
+            "phase": 3,
+            "valid_mask": 65535
+          },
+          {
+            "a5": 2,
+            "actual": 4294927359,
+            "bank": 1,
+            "expected": 4294967295,
+            "gate": 4,
+            "index": 4,
+            "line": 1403,
+            "phase": 3,
+            "valid_mask": 65535
+          },
+          {
+            "a5": 2,
+            "actual": 4294941951,
+            "bank": 1,
+            "expected": 4294967295,
+            "gate": 4,
+            "index": 5,
+            "line": 1404,
+            "phase": 3,
+            "valid_mask": 65535
+          },
+          {
+            "a5": 2,
+            "actual": 4294927359,
+            "bank": 1,
+            "expected": 4294967295,
+            "gate": 4,
+            "index": 6,
+            "line": 1405,
+            "phase": 3,
+            "valid_mask": 65535
+          },
+          {
+            "a5": 2,
+            "actual": 4294941951,
+            "bank": 1,
+            "expected": 4294967295,
+            "gate": 4,
+            "index": 7,
+            "line": 1406,
+            "phase": 3,
+            "valid_mask": 65535
+          }
+        ],
+        "reported_mismatch_observations": 6,
+        "zero_valid": 65535
+      },
+      "memory_check": [],
+      "pattern_checks": [],
+      "read_age_policy_marker_count": 0,
+      "read_age_policy_markers": [],
+      "read_alignment_marker_count": 0,
+      "recal_mpr": null,
+      "sparse_checks": [],
+      "training_attempt_count": 0,
+      "training_attempts": [],
+      "training_mismatch_count": 0,
+      "training_mismatch_examples": [],
+      "training_pass": [],
+      "tx_shift_marker_count": 0
+    }
+  },
+  "classification": "NOMINAL_PROFILE_MEMORY_DIAGNOSTIC_ONLY",
+  "clock_probe_records": {
+    "A5D3DBG": {
+      "board_MHz": 100.0,
+      "counter_quantization_uncertainty_MHz": [
+        0.15831272358315118,
+        0.15844955394061344
+      ],
+      "expected_MHz": 266.666666667,
+      "measured_MHz": 266.652267819,
+      "sample_count_intervals": 15,
+      "sample_counter_sums": {
+        "board": 2315,
+        "phy": 6173
+      },
+      "sample_ratio_MHz": 266.6522678185745
+    },
+    "A5TOPDBG": {
+      "board_MHz": 100.0,
+      "counter_quantization_uncertainty_MHz": [
+        0.15831272358315118,
+        0.15844955394061344
+      ],
+      "expected_MHz": 266.666666667,
+      "measured_MHz": 266.652267819,
+      "sample_count_intervals": 15,
+      "sample_counter_sums": {
+        "board": 2315,
+        "phy": 6173
+      },
+      "sample_ratio_MHz": 266.6522678185745
+    }
+  },
+  "clock_raw_samples": {
+    "A5D3DBG": {
+      "0": {
+        "board_count": 3241,
+        "phy_count": 3168
+      },
+      "1": {
+        "board_count": 3395,
+        "phy_count": 3579
+      },
+      "2": {
+        "board_count": 3550,
+        "phy_count": 3991
+      },
+      "3": {
+        "board_count": 3704,
+        "phy_count": 306
+      },
+      "4": {
+        "board_count": 3859,
+        "phy_count": 718
+      },
+      "5": {
+        "board_count": 4014,
+        "phy_count": 1131
+      },
+      "6": {
+        "board_count": 72,
+        "phy_count": 1544
+      },
+      "7": {
+        "board_count": 227,
+        "phy_count": 1956
+      },
+      "8": {
+        "board_count": 381,
+        "phy_count": 2367
+      },
+      "9": {
+        "board_count": 537,
+        "phy_count": 2782
+      },
+      "10": {
+        "board_count": 691,
+        "phy_count": 3192
+      },
+      "11": {
+        "board_count": 844,
+        "phy_count": 3602
+      },
+      "12": {
+        "board_count": 998,
+        "phy_count": 4012
+      },
+      "13": {
+        "board_count": 1152,
+        "phy_count": 327
+      },
+      "14": {
+        "board_count": 1306,
+        "phy_count": 738
+      },
+      "15": {
+        "board_count": 1460,
+        "phy_count": 1149
+      }
+    },
+    "A5TOPDBG": {
+      "0": {
+        "board_count": 3241,
+        "phy_count": 3167
+      },
+      "1": {
+        "board_count": 3395,
+        "phy_count": 3578
+      },
+      "2": {
+        "board_count": 3549,
+        "phy_count": 3989
+      },
+      "3": {
+        "board_count": 3704,
+        "phy_count": 305
+      },
+      "4": {
+        "board_count": 3858,
+        "phy_count": 717
+      },
+      "5": {
+        "board_count": 4013,
+        "phy_count": 1129
+      },
+      "6": {
+        "board_count": 72,
+        "phy_count": 1542
+      },
+      "7": {
+        "board_count": 226,
+        "phy_count": 1955
+      },
+      "8": {
+        "board_count": 381,
+        "phy_count": 2366
+      },
+      "9": {
+        "board_count": 536,
+        "phy_count": 2781
+      },
+      "10": {
+        "board_count": 690,
+        "phy_count": 3191
+      },
+      "11": {
+        "board_count": 844,
+        "phy_count": 3601
+      },
+      "12": {
+        "board_count": 998,
+        "phy_count": 4011
+      },
+      "13": {
+        "board_count": 1152,
+        "phy_count": 326
+      },
+      "14": {
+        "board_count": 1306,
+        "phy_count": 737
+      },
+      "15": {
+        "board_count": 1460,
+        "phy_count": 1148
+      }
+    }
+  },
+  "clock_tag": "native2133-v14-fw14-bank0first-clock-r1",
+  "controller": {
+    "path": "integration/dual-ddr-v1/controller-native2133-dense-repair-v5/generated-draft1/litedram_external_controller.v",
+    "sha256": "46d487437f4631bfb742e6df77e8a864ce6486f4b7be33d225faf46386c976fb"
+  },
+  "diagnostic_order": [
+    0,
+    1
+  ],
+  "downstream_full_capacity_and_concurrency_reached": false,
+  "dual_dma_records": [],
+  "dual_sparse_isolation": [],
+  "fail_stop_markers": [
+    {
+      "bank": 1,
+      "marker": "PUBLIC_MPR_CHECK_FAIL"
+    }
+  ],
+  "firmware_metadata": {
+    "input_count": 598,
+    "parent_metadata_sha256": "1e4d3b41b919eabb1e19200b56ae0dd889b894b526ac7af06501d8ede8f29d2a",
+    "path": "integration/dual-ddr-v1/metadata/firmware-native2133-memory-draft-v14-bank0first.json",
+    "sha256": "18cda7b665a0b9ca88235c85a6f196893124d0d4adbc22064fa6d70a2b28aa23"
+  },
+  "hardware_programmed": true,
+  "hardware_qualification": false,
+  "hardware_qualified": false,
+  "independent_source_peer": {
+    "path": "integration/dual-ddr-v1/results/native2133-fw14-bank0first-independent-peer-review-r1.json",
+    "sha256": "81e7a0d5ab282a0f6c739e58beb5d02bda0c8c8ccc4d8f8a0e4ac41fc98b0d7f"
+  },
+  "input_manifest": {
+    "path": "build/dual_ddr2133_memory_v14/dual_ddr_inputs.json",
+    "sha256": "65c5cff9cfa0cf312c43d5b487937a530b395a24127cd6faf6ea1d498698a4b3"
+  },
+  "logs": {
+    "clocks": {
+      "path": "logs/dual-native2133-v14-fw14-bank0first-clocks-r1.log",
+      "sha256": "35068b4f25f1d34da14381012f0425730218f34b2c57e0a4de068f65e0f25835"
+    },
+    "download": {
+      "path": "logs/dual-native2133-v14-fw14-bank0first-run1-download.log",
+      "sha256": "904857ec919be4ce230d1727c36fafcbccd078b151070930051a9791be05d799"
+    },
+    "driver": {
+      "path": "logs/dual-native2133-v14-fw14-bank0first-run1-driver.log",
+      "sha256": "95a227c535c6ee601cc55345d32dd05baf9d014d602eecdc51f9d1c4505ed1be"
+    },
+    "load": {
+      "path": "logs/dual-native2133-v14-fw14-bank0first-run1-load.log",
+      "sha256": "5de967e50439507dadcbcba4ecbb81ae09d8d615e2ca18cfc9376469f758d5bf"
+    },
+    "program": {
+      "path": "logs/dual-native2133-v14-fw14-bank0first-program-r1.log",
+      "sha256": "d91d84ed6c5f5fffcd7c09c1deb1c61e66a901b7e4c0db9a6c9039510e7a83fb"
+    },
+    "reset": {
+      "path": "logs/dual-native2133-v14-fw14-bank0first-reset-r1.log",
+      "sha256": "c7b90e89d7ce54d12a6af12a34718b98cb2077b977d9ac47eeb906d025282d63"
+    },
+    "uart": {
+      "path": "logs/dual-native2133-v14-fw14-bank0first-run1-uart.log",
+      "sha256": "51a55298e79f78d418d91548ed13d864b0fb1241c80bc1729e3cc72c9783702d"
+    }
+  },
+  "measured_native_clocks_MHz": {
+    "0": 266.652267819,
+    "1": 266.652267819
+  },
+  "mpr_format_limitation": "FW14 logs only mismatching MPR words; full eight-word raw vectors are not available in this firmware output.",
+  "observed_initial_mpr_checks": [
+    {
+      "bank": 0,
+      "complete_raw_words_logged": false,
+      "errors": 0,
+      "ff_valid": 65535,
+      "observations": [],
+      "reported_mismatch_observations": 0,
+      "zero_valid": 65535
+    },
+    {
+      "bank": 1,
+      "complete_raw_words_logged": false,
+      "errors": 6,
+      "ff_valid": 65535,
+      "observations": [
+        {
+          "a5": 2,
+          "actual": 25344,
+          "bank": 1,
+          "expected": 0,
+          "gate": 4,
+          "index": 6,
+          "line": 1401,
+          "phase": 3,
+          "valid_mask": 65535
+        },
+        {
+          "a5": 2,
+          "actual": 39936,
+          "bank": 1,
+          "expected": 0,
+          "gate": 4,
+          "index": 7,
+          "line": 1402,
+          "phase": 3,
+          "valid_mask": 65535
+        },
+        {
+          "a5": 2,
+          "actual": 4294927359,
+          "bank": 1,
+          "expected": 4294967295,
+          "gate": 4,
+          "index": 4,
+          "line": 1403,
+          "phase": 3,
+          "valid_mask": 65535
+        },
+        {
+          "a5": 2,
+          "actual": 4294941951,
+          "bank": 1,
+          "expected": 4294967295,
+          "gate": 4,
+          "index": 5,
+          "line": 1404,
+          "phase": 3,
+          "valid_mask": 65535
+        },
+        {
+          "a5": 2,
+          "actual": 4294927359,
+          "bank": 1,
+          "expected": 4294967295,
+          "gate": 4,
+          "index": 6,
+          "line": 1405,
+          "phase": 3,
+          "valid_mask": 65535
+        },
+        {
+          "a5": 2,
+          "actual": 4294941951,
+          "bank": 1,
+          "expected": 4294967295,
+          "gate": 4,
+          "index": 7,
+          "line": 1406,
+          "phase": 3,
+          "valid_mask": 65535
+        }
+      ],
+      "reported_mismatch_observations": 6,
+      "zero_valid": 65535
+    }
+  ],
+  "observed_recal_mpr_checks": [
+    {
+      "bank": 0,
+      "complete_raw_words_logged": false,
+      "errors": 0,
+      "reported_mismatch_observations": 0
+    }
+  ],
+  "preflight": {
+    "expected_sha256": "be03456cbab38c8652ddd9edb2cf4f912c05d6c80c865f10052c5f46e39f1045",
+    "path": "integration/dual-ddr-v1/results/native2133-v14-FW14-bank0first-root-hardware-preflight-r1.json",
+    "sha256": "be03456cbab38c8652ddd9edb2cf4f912c05d6c80c865f10052c5f46e39f1045"
+  },
+  "profile": {
+    "path": "integration/dual-ddr-v1/controller-native2133-dense-repair-v5/profile-final-r2.json",
+    "sha256": "857f08082683242bd2458bc1c351851b0a2460e2cf4758cc728b2be1a40c9831"
+  },
+  "recorded_utc": "2026-10-14T07:07:22.132926+00:00",
+  "result": "FAIL_STOPPED",
+  "schema": "native2133-v14-fw14-bank0first-hardware-outcome-r2",
+  "scope": "FW14 attempts bank0 then bank1 diagnostics. Bank-level and post-bank tests are recorded only when their concrete markers are present. A fail-stop prevents claims for unexecuted stages. Full-capacity/concurrent claims require both bank diagnostics, both sparse records, final full marker and strict v3 validator; this recorder never promotes hardware qualification.",
+  "sparse_mpr_mismatch_observations": [
+    {
+      "a5": 2,
+      "actual": 25344,
+      "bank": 1,
+      "expected": 0,
+      "gate": 4,
+      "index": 6,
+      "line": 1401,
+      "phase": 3,
+      "valid_mask": 65535
+    },
+    {
+      "a5": 2,
+      "actual": 39936,
+      "bank": 1,
+      "expected": 0,
+      "gate": 4,
+      "index": 7,
+      "line": 1402,
+      "phase": 3,
+      "valid_mask": 65535
+    },
+    {
+      "a5": 2,
+      "actual": 4294927359,
+      "bank": 1,
+      "expected": 4294967295,
+      "gate": 4,
+      "index": 4,
+      "line": 1403,
+      "phase": 3,
+      "valid_mask": 65535
+    },
+    {
+      "a5": 2,
+      "actual": 4294941951,
+      "bank": 1,
+      "expected": 4294967295,
+      "gate": 4,
+      "index": 5,
+      "line": 1404,
+      "phase": 3,
+      "valid_mask": 65535
+    },
+    {
+      "a5": 2,
+      "actual": 4294927359,
+      "bank": 1,
+      "expected": 4294967295,
+      "gate": 4,
+      "index": 6,
+      "line": 1405,
+      "phase": 3,
+      "valid_mask": 65535
+    },
+    {
+      "a5": 2,
+      "actual": 4294941951,
+      "bank": 1,
+      "expected": 4294967295,
+      "gate": 4,
+      "index": 7,
+      "line": 1406,
+      "phase": 3,
+      "valid_mask": 65535
+    }
+  ],
+  "strict_v3_validation": null,
+  "terminal_marker": "BANK=1 PUBLIC_MPR_CHECK_FAIL"
+}

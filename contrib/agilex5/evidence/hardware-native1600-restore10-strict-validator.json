@@ -1,0 +1,90 @@
+{
+  "assumptions": [
+    "Bandwidth estimates use the nominal 200 MHz DMA/sys_clk; require the matching native1600 image and separate measured clock evidence."
+  ],
+  "counts": {
+    "bank_diagnostics": 2,
+    "calibration_passes": 8,
+    "calibration_read_trials": 132,
+    "calibration_selections": 2,
+    "calibration_write_results": 4,
+    "dma_ramp_passes": 2,
+    "dual_sparse_passes": 2,
+    "final_diagnostic_passes": 1,
+    "full_dma_cases": 8,
+    "full_dma_passes": 32,
+    "log_lines": 1171,
+    "memory_passes": 2,
+    "normal_dma_cases": 3,
+    "normal_dma_passes": 12,
+    "overlap_observations": 22,
+    "pattern_passes": 12,
+    "sparse_passes": 2,
+    "training_passes": 2
+  },
+  "expected_search_failures": {
+    "dma_bad": 132,
+    "dma_cal_fail": 132,
+    "dma_cpu_bad": 8,
+    "primitive_training_mismatches": 208
+  },
+  "expected_search_failures_by_bank": {
+    "0": {
+      "dma_bad": 66,
+      "dma_cal_fail": 66,
+      "dma_cpu_bad": 4,
+      "primitive_training_mismatches": 104
+    },
+    "1": {
+      "dma_bad": 66,
+      "dma_cal_fail": 66,
+      "dma_cpu_bad": 4,
+      "primitive_training_mismatches": 104
+    }
+  },
+  "expected_search_failures_note": "These markers were confined to pre-selection primitive training or DMA calibration search; they are not post-selection pass evidence.",
+  "inputs_sha256": {
+    "hardware_log": "f7f3c952f5aedf1f85902dae3ec67e10fa22e83df937c3b5cf927e3fc06eced3",
+    "native1600_wrapper": "be73ecf5c8024126527de64cacb386718eec28a83a16d3350cb452bdcf820463",
+    "validator": "1a00feb823443d68625376b76384e32465a9ecb130b1ecab005c10414ad40215"
+  },
+  "log_bytes": 90521,
+  "log_sha256": "f7f3c952f5aedf1f85902dae3ec67e10fa22e83df937c3b5cf927e3fc06eced3",
+  "per_bank": {
+    "0": {
+      "bandwidth_clock_assumption_hz": 200000000,
+      "full_bandwidth_bytes_per_second_estimate": 4973015558,
+      "full_dma_bytes": 17179869184,
+      "full_dma_cases": 8,
+      "full_dma_cycles_total": 690923605,
+      "full_dma_words": 536870912,
+      "memory_bytes": 6291456,
+      "normal_bandwidth_bytes_per_second_estimate": 4970394312,
+      "normal_dma_bytes": 402653184,
+      "normal_dma_cases": 3,
+      "normal_dma_cycles_total": 16202062,
+      "normal_dma_words": 12582912,
+      "pattern_bytes": 6291456,
+      "sparse_locations": 30
+    },
+    "1": {
+      "bandwidth_clock_assumption_hz": 200000000,
+      "full_bandwidth_bytes_per_second_estimate": 4973337003,
+      "full_dma_bytes": 17179869184,
+      "full_dma_cases": 8,
+      "full_dma_cycles_total": 690878948,
+      "full_dma_words": 536870912,
+      "memory_bytes": 6291456,
+      "normal_bandwidth_bytes_per_second_estimate": 4971346418,
+      "normal_dma_bytes": 402653184,
+      "normal_dma_cases": 3,
+      "normal_dma_cycles_total": 16198959,
+      "normal_dma_words": 12582912,
+      "pattern_bytes": 6291456,
+      "sparse_locations": 30
+    }
+  },
+  "profile": "native1600_CK800_native200",
+  "qualification": "nominalBoardOnlyNotPVT",
+  "result": "PASS"
+}
