@@ -1,0 +1,7 @@
+"""Native200 fresh-frame valid pipeline matching payload alignment."""
+VALIDITY_BLOCK="        # Assemble fresh phase slices independently of the sticky diagnostic mask.\n        # Completion is registered with read_words, then follows exactly the\n        # same enabled-free history/alignment pipeline as captured_word.\n        frame_mask=Signal(16)\n        frame_valid=Signal()\n        valid_history=[Signal(name=f'fullrate_read_valid_history_{i}') for i in range(15)]\n        aligned_valid=Signal(name='fullrate_aligned_valid')\n        aligned_valid.attr.add('no_retiming')\n        self.sync += If(self.clear_capture,\n            frame_mask.eq(0),frame_valid.eq(0),aligned_valid.eq(0),\n            *[v.eq(0) for v in valid_history]\n        ).Else(\n            frame_valid.eq((frame_mask | combined_valid)==0xffff),\n            If((frame_mask | combined_valid)==0xffff,frame_mask.eq(0))\n            .Else(frame_mask.eq(frame_mask | combined_valid)),\n            valid_history[0].eq(frame_valid),\n            *[valid_history[i].eq(valid_history[i-1]) for i in range(1,15)],\n            aligned_valid.eq(Array([frame_valid]+valid_history)[self.read_alignment])\n        )\n"
+def apply(s):
+    marker="        combined_valid=Cat(*[g.valid for g in self.groups])\n"
+    assert s.count(marker)==1
+    s=s.replace(marker,marker+VALIDITY_BLOCK)
+    return s.replace("phase.rddata_valid.eq(self.capture_mask==0xffff)","phase.rddata_valid.eq(aligned_valid)")
